@@ -1,0 +1,7 @@
+#summary What software is used in this project
+
+ * [http://www.solidworks.com/ Solidworks 2009] is used for the frame design
+ * [http://cadsoft.de/ Cadsoft Eagle] 5.7 is used for the circuit design
+ * [http://www.microsoft.com/express/Downloads/#2008-Visual-CS Visual C# Express 2008] is used for some of the utilites
+ * The flight controller firmware is written with [http://code.google.com/p/avr-project-ide/ AVR Project IDE]
+ * Some documentation are written with [http://www.openoffice.org/ OpenOffice.org]
