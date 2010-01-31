@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<Project>
+  <DirPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3</DirPath>
+  <HasBeenConfigged>true</HasBeenConfigged>
+  <Device>atmega644p</Device>
+  <ClockFreq>20000000.00</ClockFreq>
+  <LinkerOpt />
+  <OtherOpt>-Wall -gdwarf-2</OtherOpt>
+  <OtherOptionsForC>-std=gnu99</OtherOptionsForC>
+  <OtherOptionsForCPP>-std=c99</OtherOptionsForCPP>
+  <OtherOptionsForS />
+  <OutputDir>output</OutputDir>
+  <Optimization>-Os</Optimization>
+  <UseInitStack>false</UseInitStack>
+  <InitStackAddr>0xFFFF</InitStackAddr>
+  <PackStructs>true</PackStructs>
+  <ShortEnums>true</ShortEnums>
+  <UnsignedBitfields>true</UnsignedBitfields>
+  <UnsignedChars>true</UnsignedChars>
+  <FunctionSections>true</FunctionSections>
+  <DataSections>true</DataSections>
+  <IncludeDirList />
+  <LibraryDirList />
+  <LinkObjList />
+  <LinkLibList />
+  <MemorySegList />
+  <BurnPart>atmega644p</BurnPart>
+  <BurnProgrammer>dragon_isp</BurnProgrammer>
+  <BurnOptions />
+  <BurnPort>usb</BurnPort>
+  <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
+  <BurnBaud>0</BurnBaud>
+  <BurnAutoReset>false</BurnAutoReset>
+  <LastFile>calc.h</LastFile>
+  <FileList>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c</AbsPath>
+      <RelPath>main.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\pindef.h</AbsPath>
+      <RelPath>pindef.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.h</AbsPath>
+      <RelPath>main.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\macros.h</AbsPath>
+      <RelPath>macros.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\test.c</AbsPath>
+      <RelPath>test.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\test.h</AbsPath>
+      <RelPath>test.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\esc.c</AbsPath>
+      <RelPath>esc.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\esc.h</AbsPath>
+      <RelPath>esc.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\config.h</AbsPath>
+      <RelPath>config.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\timer.c</AbsPath>
+      <RelPath>timer.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\timer.h</AbsPath>
+      <RelPath>timer.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\sensor.c</AbsPath>
+      <RelPath>sensor.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\sensor.h</AbsPath>
+      <RelPath>sensor.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calc.c</AbsPath>
+      <RelPath>calc.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calc.h</AbsPath>
+      <RelPath>calc.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\trig_tbl.h</AbsPath>
+      <RelPath>trig_tbl.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration.h</AbsPath>
+      <RelPath>calibration.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration.c</AbsPath>
+      <RelPath>calibration.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration_struct.h</AbsPath>
+      <RelPath>calibration_struct.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ser.c</AbsPath>
+      <RelPath>ser.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ser.h</AbsPath>
+      <RelPath>ser.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ppm.h</AbsPath>
+      <RelPath>ppm.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ppm.c</AbsPath>
+      <RelPath>ppm.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
+      <Bookmarks />
+    </File>
+  </FileList>
+  <ArduinoCoreOverride />
+  <AVRStudioXMLStuff />
+</Project>
