@@ -1,0 +1,12 @@
+#summary Details about the Walkera IMU
+
+Walkera makes several "UFO" toy quadrotor helicopters. They also sell replacement PCBs for these toys, these PCBs comes with an attached daughter-board that contains 3 gyroscopic sensors and a triple axis accelerometer sensor. The entire PCB is sold for about $45 CAD on most online stores, making them the cheapest IMU option available. The disadvantage is that the Walkera factory does not stock these boards until you backorder them, which can take several weeks.
+
+The daughterboard is convenient to use, there are 6 analog outputs on one side, and 3 pins for power supply on the opposite side. The outputs are filtered with both high-pass and low-pass filters on the daughterboard. The 6 output pins and 3 power pins do not fit on a 0.1" by 0.1" grid but it will still be able to fit on a breadboard at a slight angle.
+
+The sensors are:
+
+ * Three [http://ro-4-copter.googlecode.com/svn/trunk/doc/ENC-03J.pdf ENC-03J]
+ * A [http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=MMA7260QT MMA7260]
+
+[http://ro-4-copter.googlecode.com/svn/trunk/doc/imu_drawing.png Here is a diagram describing the entire PCB]
