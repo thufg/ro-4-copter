@@ -1,0 +1,17 @@
+#summary Battery, power regulation, power distribution, etc
+
+== Battery ==
+
+A three cell (3S1P, 11.1 volts) lithium polymer battery with a 20C discharge rate should be used.
+
+At the time of writing this wiki entry, Hobby King offers a decent [http://www.hobbyking.com/hobbycity/store/uh_viewItem.asp?idProduct=8579 3S1P 20C 5000mAH battery] for $26.72.
+
+A graph depicting expected flight times is shown on [http://www.rcgroups.com/forums/showthread.php?t=768115 this forum thread]. Here is a [http://www.af9y.com/PowerChart.jpg direct image link].
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
