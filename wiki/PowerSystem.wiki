@@ -19,3 +19,7 @@ Remember, using polarized connectors will save you from a lot of headaches and e
 The ESCs are connected to the battery directly, and a 5V output is provided on their control wire. This is used to power the flight controller. The four ESCs should be able to provide enough power for several servos as well.
 
 A 3.3V voltage regulator is required for the IMU sensors.
+
+== Power Distribution ==
+
+The power from the battery needs a wire to be split for each ESC. This is done by a terminal block strip. This is the most durable way since the strip can be bolted to the frame and no soldering or electrical tape is required during construction or repairs.
