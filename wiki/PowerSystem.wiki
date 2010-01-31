@@ -6,7 +6,7 @@ A three cell (3S1P, 11.1 volts) lithium polymer battery with a 20C discharge rat
 
 At the time of writing this wiki entry, Hobby King offers a decent [http://www.hobbyking.com/hobbycity/store/uh_viewItem.asp?idProduct=8579 3S1P 20C 5000mAH battery] for $26.72.
 
-A graph depicting expected flight times is shown on [http://www.rcgroups.com/forums/showthread.php?t=768115 this forum thread]. Here is a [http://www.af9y.com/PowerChart.jpg direct image link]. 
+A graph depicting expected flight times is shown on [http://www.rcgroups.com/forums/showthread.php?t=768115 this forum thread]. Here is a [http://www.af9y.com/PowerChart.jpg direct image link].
 
 A [http://www.hobbyking.com/hobbycity/store/uh_viewItem.asp?idProduct=4175 three cell battery monitor] is recommended to prevent damage to a lithium polymer cell if one cell becomes too depleted. It is also recommended that the connector on this particular battery monitor be replaced by a matching connector (5 pin JST-XH) to prevent the user from plugging in the battery backwards. This battery monitor should be mounted on the frame using adhesive-backed velcro.
 
