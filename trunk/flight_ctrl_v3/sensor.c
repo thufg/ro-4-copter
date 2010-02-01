@@ -17,12 +17,22 @@ static volatile unsigned short adc_offset[8];
 static volatile unsigned char adc_chan;
 static volatile unsigned char adc_new_cycle;
 
+#ifdef use_ordered_sensors
+static unsigned char adc_chan_order[6];
+#endif
+
 ISR(ADC_vect)
 {
 	adc_res_t[adc_chan] = ADC; // read
 	adc_chan++; // next channel
 	adc_chan %= 6; // overflow channel count
+	
+	#ifdef use_ordered_sensors
+	ADMUX = (ADMUX & 0b11100000) | adc_chan_order[adc_chan]; // set channel
+	#else
 	ADMUX = (ADMUX & 0b11100000) | adc_chan; // set channel
+	#endif
+	
 	ADCSRA = _BV(ADEN) | _BV(ADSC) | _BV(ADIE) | _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0); // start read
 	if(adc_chan == 0)
 	{
@@ -49,6 +59,17 @@ void adc_wait_stop()
 // initialize the sensor module and start the ADC
 void sens_init()
 {
+	#ifdef use_ordered_sensors
+	// set channel read order
+	adc_chan_order[0] = roll_accel_chan;
+	adc_chan_order[1] = roll_gyro_chan;
+	adc_chan_order[2] = pitch_accel_chan;
+	adc_chan_order[3] = pitch_gyro_chan;
+	adc_chan_order[4] = vert_accel_chan;
+	adc_chan_order[5] = yaw_gyro_chan;
+	#endif
+	
+	// reset all values
 	for(unsigned char i = 0; i < 8; i++)
 	{
 		adc_offset[i] = 0;

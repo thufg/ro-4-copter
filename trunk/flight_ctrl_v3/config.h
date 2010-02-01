@@ -11,6 +11,7 @@
 //#define use_asin
 #define use_comp_filter
 //#define use_kalman_filter
+#define use_ordered_sensors
 
 #define delta_time_const 10000
 
