@@ -11,3 +11,5 @@ Here's a tech-note on PPM
 
  * [http://ro-4-copter.googlecode.com/svn/trunk/doc/mectn003_ppm_part1.pdf part 1]
  * [http://ro-4-copter.googlecode.com/svn/trunk/doc/mectn003_ppm_part2.pdf part 2]
+
+If a PPM radio could not be found, another microcontroller could control the flight controller via the extension port.
