@@ -1,0 +1,13 @@
+#summary Choosing an RC Radio
+
+The radio used with the first prototype is a [http://www.allelectronics.com/make-a-store/item/JS-6/6-CHANNEL-TRANSMITTER-AND-RECEIVER/-/1.html VEX transmitter + receiver kit]. This may be hard to find now, but any receiver with a PPM output should work with the flight controller.
+
+Here's some examples of radio systems that has a PPM output.
+
+ * Placeholder
+ * Placeholder
+
+Here's a tech-note on PPM
+
+ * [http://ro-4-copter.googlecode.com/svn/trunk/doc/mectn003_ppm_part1.pdf part 1]
+ * [http://ro-4-copter.googlecode.com/svn/trunk/doc/mectn003_ppm_part2.pdf part 2]
