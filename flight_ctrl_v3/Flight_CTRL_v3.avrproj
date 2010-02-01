@@ -31,7 +31,7 @@
   <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
   <BurnBaud>0</BurnBaud>
   <BurnAutoReset>false</BurnAutoReset>
-  <LastFile>calc.h</LastFile>
+  <LastFile>trig_tbl.h</LastFile>
   <FileList>
     <File>
       <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c</AbsPath>
@@ -48,7 +48,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>192</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -111,7 +111,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>266</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -138,7 +138,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>1824</CursorPos>
       <Bookmarks />
     </File>
     <File>
