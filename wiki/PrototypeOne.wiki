@@ -19,7 +19,24 @@
  * 3/4" aluminum angle beam (4x 12" long pieces needed)
  * 32 gauge sheet aluminum
  * 1/8" thick sheet polycarbonate
- * 
+
+== Flight Controller Components ==
+
+ * 1x ATmega644P + socket
+ * 1x 20 MHz oscillator + socket
+ * 1x 74HC164 8 bit serial to parallel shift register + socket
+ * 1x 4 bit DIP switch
+ * 2x tactile push button
+ * 2x 0.1 uF capacitor
+ * 1x 7805 5V voltage regulator
+ * 1x 7833 3.3V voltage regulator
+ * 1x 7809 9V voltage regulator
+ * 1x WalkeraIMU
+ * 3x LEDs + 330R current limiting resistors
+ * 4x screw terminal blocks
+ * 5x 2 by 5 box header
+ * 1x 2 by 3 box header
+ * A lot of male and female pin headers
 
 = Build =
 
