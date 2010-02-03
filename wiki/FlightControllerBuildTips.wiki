@@ -11,3 +11,9 @@ Using a 2x5 header for two ESC lines can prevent you from plugging in the wires 
 The 20MHz oscillator should be mounted in a 14 pin DIP socket. This allows you to use both full size and half sized oscillators. In the event that an oscillator is damaged during a crash, the socket allows for a quick replacement.
 
 The JTAG and multiple ISP headers shown in the circuit diagrams are optional, add them according to the equipment available to you.
+
+Use polarized connectors where possible. Use coloured permanent markers to help distinguish pins.
+
+Add test points if possible, adding test hoops on board will allow you to use various clips and probes to quickly check voltages and signals.
+
+If you get a Li-polymer battery monitor, replace the original male header with a polarized JST-XH header.
