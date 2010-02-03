@@ -8,6 +8,7 @@
  * 4x 3mm prop saver Kits
  * 1x Li-polymer 11.1V 3S1P 20C battery
  * 32x terminal blocks (4x 3 unit long pieces, 4x 2 unit long pieces, 2x 6 unit long pieces, 5x 2 unit long pieces)
+ * 1x 20A power switch
 
 == Optional Parts ==
 
