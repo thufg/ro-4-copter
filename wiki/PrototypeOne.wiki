@@ -1,0 +1,28 @@
+#summary The first prototype helicopter
+
+= Part List =
+
+== Essential Parts ==
+
+ * 4x 2410-10T brushless motor and 18A ESC combo
+ * 4x 3mm prop saver Kits
+ * 1x Li-polymer 11.1V 3S1P 20C battery
+ * 32x terminal blocks (4x 3 unit long pieces, 4x 2 unit long pieces, 2x 6 unit long pieces, 5x 2 unit long pieces)
+
+== Optional Parts ==
+
+ * 1x Li-polymer battery monitor
+ 
+== Materials ==
+
+ * 3/4" aluminum angle beam (4x 12" long pieces needed)
+ * 32 gauge sheet aluminum
+ * 1/8" thick sheet polycarbonate
+ * 
+
+= Build =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
