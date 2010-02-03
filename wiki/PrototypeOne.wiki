@@ -13,12 +13,15 @@
 == Optional Parts ==
 
  * 1x Li-polymer battery monitor
+ * 1x JST-XH male to female extension cable
+ * 1x JST-XH male header
  
 == Materials ==
 
  * 3/4" aluminum angle beam (4x 12" long pieces needed)
  * 32 gauge sheet aluminum
  * 1/8" thick sheet polycarbonate
+ * 1/2" wide adhesive backed velcro strips
 
 == Flight Controller Components ==
 
