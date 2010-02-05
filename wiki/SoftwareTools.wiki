@@ -1,5 +1,12 @@
 #summary What software is used in this project
 
+== Internal Tools ==
+
+ * Trig Table Generator, used for generating trig function result tables to be stored in flash memory.
+ * Settings Generator, used to generate declarations for all setting variables using a CSV file, and to generate a function to restore their default values.
+
+== Other External Tools ==
+
  * [http://www.solidworks.com/ Solidworks 2009] is used for the frame design
  * [http://cadsoft.de/ Cadsoft Eagle 5.7] is used for the circuit design
  * [http://www.microsoft.com/express/Downloads/#2008-Visual-CS Visual C# Express 2008] is used for some of the utilites
