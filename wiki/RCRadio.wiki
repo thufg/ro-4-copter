@@ -9,14 +9,13 @@ Here's some examples of radio systems that has a PPM output.
 
 Here's a tech-note on PPM
 
- * [http://ro-4-copter.googlecode.com/svn/trunk/doc/mectn003_ppm_part1.pdf part 1]
- * [http://ro-4-copter.googlecode.com/svn/trunk/doc/mectn003_ppm_part2.pdf part 2]
- * [http://ro-4-copter.googlecode.com/svn/trunk/doc/mectn003_ppm_part3.pdf part 3]
+ * [http://www.omegaco.demon.co.uk/mectnpdf/mectn003.pdf part 1]
+ * [http://www.omegaco.demon.co.uk/mectnpdf/mectn004.pdf part 2]
+ * [http://www.omegaco.demon.co.uk/mectnpdf/mectn005.pdf part 3]
 
 Some more notes on PPM
 
  * [http://diydrones.com/profiles/blogs/705844:BlogPost:38393 How to hack the PPM signal from any receiver (Futaba) with Arduino]
  * [http://paparazzi.enac.fr/wiki/Other_Hardware Paparazzi RC Radio Page]
- * 
 
 If a PPM radio could not be found, another microcontroller could control the flight controller via the extension port.
