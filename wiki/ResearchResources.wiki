@@ -11,10 +11,15 @@
 === Software Filters ===
 
  * [http://web.mit.edu/scolton/www/filter.pdf The Balance Filter]
+ * [http://en.wikipedia.org/wiki/Kalman_filter Wikipedia: Kalman Filter]
 
-== RC ==
+=== PID (Proportional, Integral, Derivative) ===
 
-=== PPM ===
+ * [http://en.wikipedia.org/wiki/PID_controller Wikipedia: PID Controller]
+ 
+== RC Equipment ==
+
+=== PPM (Pulse Position Modulation) ===
 
  * [http://diydrones.com/profiles/blogs/705844:BlogPost:38393 How to hack the PPM signal from any receiver (Futaba) with Arduino]
  * [http://paparazzi.enac.fr/wiki/Other_Hardware Paparazzi RC Radio Page]
@@ -24,6 +29,11 @@
  * [http://www.omegaco.demon.co.uk/mectnpdf/mectn003.pdf part 1]
  * [http://www.omegaco.demon.co.uk/mectnpdf/mectn004.pdf part 2]
  * [http://www.omegaco.demon.co.uk/mectnpdf/mectn005.pdf part 3]
+
+== Power ==
+
+ * [http://www.rcgroups.com/forums/showthread.php?t=209187 RC Groups: Complete Guide to Lithium Polymer Batteries]
+ * [http://www.rcgroups.com/forums/showthread.php?t=768115 RC Groups: A New 1000mm Quad Copter Design]
 
 == Others ==
 
