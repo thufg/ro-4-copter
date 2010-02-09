@@ -1,3 +1,0 @@
-#summary Project Research Resources
-
- * [http://ro-4-copter.googlecode.com/svn/trunk/doc/Complementary%20Filter.pdf Complementary Filter]
