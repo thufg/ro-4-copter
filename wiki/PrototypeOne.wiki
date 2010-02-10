@@ -22,6 +22,7 @@
  * 32 gauge sheet aluminum
  * 1/8" thick sheet polycarbonate
  * 1/2" wide adhesive backed velcro strips
+ * Lots of #6 machine screws, lock washers, and nuts of various lengths
 
 == Flight Controller Components ==
 
@@ -31,6 +32,7 @@
  * 1x 4 bit DIP switch
  * 2x tactile push button
  * 2x 0.1 uF capacitor
+ * 1x 470 uF capacitor
  * 1x 7805 5V voltage regulator
  * 1x 7833 3.3V voltage regulator
  * 1x 7809 9V voltage regulator
