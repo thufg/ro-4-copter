@@ -24,6 +24,7 @@
  * [http://diydrones.com/profiles/blogs/705844:BlogPost:38393 How to hack the PPM signal from any receiver (Futaba) with Arduino]
  * [http://paparazzi.enac.fr/wiki/Other_Hardware Paparazzi RC Radio Page]
  * [http://skymixer.engineering.free.fr/index.php?option=com_content&view=article&id=72:rc-receiver-hacking-tutorial&catid=51:rc-receivers&Itemid=49 SkyMixer: RC Receiver Hacking Tutorial]
+ * [http://skymixer.engineering.free.fr/index.php?option=com_content&view=article&id=80:rc-receivers-hacked&catid=51:rc-receivers&Itemid=49 SkyMixer: RC Receivers Hacked]
 
 ==== M.E.C PPM Tech-Notes ====
 
@@ -39,3 +40,4 @@
 == Others ==
 
  * [http://decibel.ni.com/content/blogs/quadrotor National Instruments Quadrotor Blog Entries]
+ * [http://www.rcgroups.com/forums/showthread.php?t=1097355 RCGroups: Quadrotor Helicopter Link Index]
