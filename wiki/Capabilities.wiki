@@ -4,6 +4,6 @@
  * [http://www.rcgroups.com/forums/showthread.php?t=768115 RCGroups post] shows a chart of flight weight vs power and battery life
  * [http://www.hobbyking.com/hobbyking/store/tp_motor.html TowerPro motor chart]
 
-Looking at the data from the motor performance chart, it looks like the absolute maximum weight the motors can support is 560 * 4 grams, 2240 grams. This is when the motors are working at 100%, using 95.2 watts, which means about 8.6 amps at 11.1 volts.
+Looking at the data from the motor performance chart, it looks like the absolute maximum weight the motors can support is 560 each, so 2240 grams. This is when the motors are working at 100%, using 95.2 watts, which means about 8.6 amps at 11.1 volts.
 
 Looking at the data from the flight weight vs power and battery life graph, it seems that the helicopter should not exceed 61 ounces (1700 grams). At that weight, 61 watts of power is used, which is 5.5 amps at 11.1 volts.
