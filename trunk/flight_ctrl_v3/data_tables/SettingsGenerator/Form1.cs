@@ -118,8 +118,47 @@ namespace SettingsGenerator
 
                 writer.WriteLine("}");
 
-                writer.WriteLine("*/");
+                writer.WriteLine();
+                writer.WriteLine();
 
+                writer.WriteLine("void calibration_write(Calibration * x, signed long addr, signed long data)");
+                writer.WriteLine("{");
+
+                writer.WriteLine("\tswitch(addr)");
+                writer.WriteLine("\t{");
+
+                cnt = 0;
+                foreach (Variable v in vars)
+                {
+                    writer.WriteLine("\t\tcase {0}:", cnt);
+                    writer.WriteLine("\t\t\tx->{0} = ({1})data;", v.Name, v.Type);
+                    writer.WriteLine("\t\t\tbreak;");
+                    cnt++;
+                }
+
+                writer.WriteLine("\t\tdefault:");
+                writer.WriteLine("\t\t\tbreak;");
+
+                writer.WriteLine("\t}");
+
+                writer.WriteLine("}");
+
+                writer.WriteLine();
+                writer.WriteLine();
+
+                writer.WriteLine("void debug_report_vars(Calibration * x)");
+                writer.WriteLine("{");
+
+                int cnt = 0;
+                foreach (Variable v in vars)
+                {
+                    writer.WriteLine("\tfprintf_P(&serstream, PSTR(\"{0}, {1} (%d), {2}: %d\\r\\n\"), (unsigned char)sizeof({1}), x->{2});", cnt, v.Type, v.Name);
+                    cnt++;
+                }
+
+                writer.WriteLine("}");
+
+                writer.WriteLine("*/");
                 writer.WriteLine();
 
                 writer.WriteLine("#endif");

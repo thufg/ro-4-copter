@@ -320,6 +320,8 @@ void test_ppm_to_esc()
 	
 	ppm_calibrate(10);
 	
+	hold_esc();
+	
 	while (1)
 	{
 		// switch 1 is used as safety switch

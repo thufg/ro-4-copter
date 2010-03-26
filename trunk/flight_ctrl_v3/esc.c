@@ -124,8 +124,40 @@ inline void esc_safe(unsigned char c)
 	esc_safety = c;
 }
 
+void esc_set_speed(unsigned char c, unsigned short w)
+{
+	if (w > ticks_500us * 2) // limit top range
+	{
+		w = ticks_500us * 2;
+	}
+	
+	esc_chan_width[c] = ticks_500us * 2 + w;
+}
+
+void esc_set_speed_with_mode(unsigned char c, unsigned short w, unsigned char m)
+{
+	unsigned short r;
+	if (bit_is_set(m, c * 2)) // starting point at 1500 us
+	{
+		r = ticks_500us * 3 + w / 2;
+	}
+	else // starting point at 1000 us
+	{
+		r = ticks_500us * 2 + w;
+	}
+	
+	// reverse
+	if (bit_is_set(m, c * 2 + 1))
+	{
+		r = ticks_500us * 6 - w;
+	}
+	
+	esc_set_width(c, r);
+}
+
 void esc_set_width(unsigned char c, unsigned short w)
 {
+	// limit range from 1000 to 2000 us
 	if(w < ticks_500us * 2)
 	{
 		w = ticks_500us * 2;

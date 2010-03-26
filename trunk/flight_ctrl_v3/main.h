@@ -4,6 +4,7 @@
 #define main_h
 
 void user_io_init();
+void hold_esc();
 void init();
 void loop();
 int main();

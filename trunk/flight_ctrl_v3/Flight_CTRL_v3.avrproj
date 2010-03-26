@@ -31,213 +31,240 @@
   <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
   <BurnBaud>0</BurnBaud>
   <BurnAutoReset>false</BurnAutoReset>
-  <LastFile>trig_tbl.h</LastFile>
+  <LastFile>calc.c</LastFile>
   <FileList>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c'-->
       <RelPath>main.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>8292</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\pindef.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\pindef.h'-->
       <RelPath>pindef.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>192</CursorPos>
+      <CursorPos>695</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.h'-->
       <RelPath>main.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>143</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\macros.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\macros.h'-->
       <RelPath>macros.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\test.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\test.c'-->
       <RelPath>test.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>5455</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\test.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\test.h'-->
       <RelPath>test.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\esc.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\esc.c'-->
       <RelPath>esc.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>2253</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\esc.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\esc.h'-->
       <RelPath>esc.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>160</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\config.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\config.h'-->
       <RelPath>config.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>266</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>55</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\timer.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\timer.c'-->
       <RelPath>timer.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\timer.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\timer.h'-->
       <RelPath>timer.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\sensor.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\sensor.c'-->
       <RelPath>sensor.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>1824</CursorPos>
+      <CursorPos>2903</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\sensor.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\sensor.h'-->
       <RelPath>sensor.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>357</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calc.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calc.c'-->
       <RelPath>calc.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>1752</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calc.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calc.h'-->
       <RelPath>calc.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>1126</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\trig_tbl.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\trig_tbl.h'-->
       <RelPath>trig_tbl.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration.h'-->
       <RelPath>calibration.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>241</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration.c'-->
       <RelPath>calibration.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>2104</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration_struct.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration_struct.h'-->
       <RelPath>calibration_struct.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>1569</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ser.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ser.c'-->
       <RelPath>ser.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>2708</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ser.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ser.h'-->
       <RelPath>ser.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>591</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ppm.h</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ppm.h'-->
       <RelPath>ppm.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>123</CursorPos>
       <Bookmarks />
     </File>
     <File>
-      <AbsPath>C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ppm.c</AbsPath>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\ppm.c'-->
       <RelPath>ppm.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>2108</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\in_flight_debug.c'-->
+      <RelPath>in_flight_debug.c</RelPath>
+      <ToCompile>true</ToCompile>
+      <Options />
+      <WasOpen>false</WasOpen>
+      <CursorPos>42</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\in_flight_debug.h'-->
+      <RelPath>in_flight_debug.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>false</WasOpen>
+      <CursorPos>95</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\data_tables\calibration_variables.csv'-->
+      <RelPath>data_tables\calibration_variables.csv</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>false</WasOpen>
+      <CursorPos>153</CursorPos>
       <Bookmarks />
     </File>
   </FileList>
