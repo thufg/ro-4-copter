@@ -43,15 +43,7 @@ inline signed long calc_asin(signed long opp, signed long hyp)
 	// using look up table with the division of opp/hyp as the address
 	signed long addr = calc_multi(opp, asin_multiplier, hyp);
 	signed long r = pgm_read_dword(&(asin_tbl[calc_abs(addr)]));
-	if(addr < 0)
-	{
-		return -r;
-	}
-	else
-	{
-		return r;
-	}
-	// note that angle is returned in the form stored in the lookup table
+	return addr < 0 ? -r : r;
 }
 
 #endif
@@ -101,14 +93,7 @@ inline signed long calc_atan2(signed long y, signed long x)
 	}
 	else
 	{
-		if(y >= 0)
-		{
-			r = (180 * MATH_MULTIPLIER) - _r;
-		}
-		else
-		{
-			r = (-180 * MATH_MULTIPLIER) + _r;
-		}
+		r = y >= 0 ? (180 * MATH_MULTIPLIER) - _r : (-180 * MATH_MULTIPLIER) + _r;
 	}
 
 	return r;
@@ -117,7 +102,7 @@ inline signed long calc_atan2(signed long y, signed long x)
 
 #endif
 
-inline signed long PID_mv(PID_data * pid, PID_const k, signed long current, signed long target)
+inline signed long PID_mv(PID_data * pid, signed long kp, signed long ki, signed long kd, signed long current, signed long target)
 {
 	// proportional, integral, derivative
 	// refer to external resources to learn more about this functioln
@@ -128,7 +113,7 @@ inline signed long PID_mv(PID_data * pid, PID_const k, signed long current, sign
 
 	signed long delta_err = err - pid->err_last;
 
-	signed long mv = err * k.p + pid->err_sum * k.i + delta_err * k.d;
+	signed long mv = err * kp + pid->err_sum * ki + delta_err * kd;
 
 	pid->err_last = err;
 

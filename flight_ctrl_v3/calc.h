@@ -12,13 +12,6 @@
 #define calc_constrain(in,min,max) 	(in < min ? min : (in > max ? max : in))
 #define calc_multi(in,numer,denom) 	((in * numer) + (denom / 2)) / denom
 
-typedef struct PID_const_
-{
-	signed long p;
-	signed long i;
-	signed long d;
-} PID_const;
-
 typedef struct PID_data_
 {
 	signed long err_sum;
@@ -34,7 +27,7 @@ typedef struct kalman_data_
 } kalman_data;
 
 //signed long calc_multi(signed long, signed long, signed long);
-signed long PID_mv(PID_data *, PID_const, signed long, signed long);
+signed long PID_mv(PID_data *, signed long, signed long, signed long, signed long, signed long);
 PID_data PID_init();
 signed long complementary_filter(signed long *, signed long, signed long, signed long, signed long);
 double kalman_filter(kalman_data *, double, double, double);

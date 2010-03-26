@@ -6,5 +6,6 @@
 void calibration_default(Calibration *);
 void calibration_save(Calibration *);
 void calibration_load(Calibration *);
+void calibration_write(Calibration *, signed long, signed long);
 
 #endif
