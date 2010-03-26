@@ -1,0 +1,85 @@
+
+/* main default header */
+#jive-global-header {
+    background: #bc7504 url(../images/jive-hdr-bg1.png) repeat-x top;
+    border-bottom: 1px #e9e9e9 solid;
+    }
+#jive-global-header-texture {
+    background: transparent url(../images/jive-hdr-bg2.png) no-repeat;
+    padding: 10px 15px;
+    width: 836px;
+    }
+
+/* default logos */
+#jive-global-header .jive-header-logo-internal,
+#jive-global-header .jive-header-logo-external {
+    background-repeat: no-repeat;
+    height: 52px;
+    overflow: hidden;
+    }
+#jive-global-header .jive-header-logo-internal {
+    background-image: url(../images/jive-hdr-logo-int.png);
+    width: 182px;
+	}
+#jive-global-header .jive-header-logo-external {
+    background-image: url(../images/jive-hdr-logo-ext.png);
+    width: 273px;
+	}
+#jive-global-header .jive-header-logo-internal a.jive-global-header-logolink,
+#jive-global-header .jive-header-logo-external a.jive-global-header-logolink {
+    display: block;
+    height: 52px;
+    left: 15px;
+    position: absolute;
+    top: 9px;
+    }
+#jive-global-header .jive-header-logo-internal a.jive-global-header-logolink {
+    width: 182px;
+    }
+#jive-global-header .jive-header-logo-external a.jive-global-header-logolink {
+    width: 273px;
+    }
+
+
+/* custom uploaded logo */
+#jive-global-header img {
+    border: none;
+    display: block;
+    position: relative;
+    }
+/* custom entered text */
+h1#jive-global-header-title {
+    color: #fff;
+    font-size: 16pt;
+    padding: 15px 15px 13px 15px;
+    }
+
+
+/* footer */
+#jive-footer {
+	border-top: 1px solid #dcdcdc;
+	clear: both;
+	color: #666;
+	display: block;
+	font-size: 8pt;
+	min-width: 100%;
+	width: 100%;
+	
+	}
+.jive-footer-nav {
+	float: left;
+	margin-right: -101px;
+	overflow: hidden;
+	padding: 6px 0 10px;
+	text-align: center;
+	width: 100%;
+	}
+.jive-footer-nav a {
+	padding: 0 5px;
+	}
+.jive-footer-copyright {
+	float: right;
+	overflow: hidden;
+	padding: 6px 0 10px;
+	width: 100px;
+	}

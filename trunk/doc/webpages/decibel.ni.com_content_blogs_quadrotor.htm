@@ -1,0 +1,1505 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0045)http://decibel.ni.com/content/blogs/quadrotor -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <TITLE>Communities: 
+        Building a Quadrotor Helicopter UAV
+        
+        
+    </TITLE>
+   
+
+<META http-equiv="Content-Language" content="en-US">
+<META name="MSSmartTagsPreventParsing" content="TRUE">
+<META name="nigen15" content="Building a Quadrotor Helicopter UAV">
+<META name="robots" content="NOINDEX, NOFOLLOW">
+<LINK rel="search" href="http://decibel.ni.com/content/opensearch.xml;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" title="Communities" type="application/opensearchdescription+xml">
+
+
+    <LINK rel="shortcut icon" href="http://www.ni.com/favicon.ico">
+    <LINK rel="icon" type="image/ico" href="http://www.ni.com/favicon.ico">
+
+    <SCRIPT type="text/javascript">
+        if (typeof(_jive_base_url) == "undefined") {
+            var _jive_base_url = "/content/;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0";
+            <!-- need to strip ;jsessionid=3rjp0oit23hk7 from urls -->
+            if (_jive_base_url.indexOf(";") > 0) {
+                _jive_base_url = _jive_base_url.substring(0, _jive_base_url.indexOf(";"));
+            }
+            if (_jive_base_url.charAt(_jive_base_url.length -1) == '/') {
+                _jive_base_url = _jive_base_url.substring(0,_jive_base_url.length -1);
+            }
+        }
+    </SCRIPT>
+
+
+
+    <SCRIPT type="text/javascript">
+        window.SPELL_LANGS = "English (Canada)=en_ca,English (United Kingdom)=en_gb,+English (United States)=en_us,French=fr,French (Canada)=fr_ca,German=de,Italian=it,Spanish=es";
+        window.CS_BASE_URL = "/content";
+        window.tinyMCEPreInit = {
+            suffix : "_src",
+            base : CS_BASE_URL + "/resources/scripts/tiny_mce3"
+        };
+    </SCRIPT>
+     
+
+
+
+
+
+
+    
+
+    <SCRIPT type="text/javascript">
+        var profileShortUrl = "/content/profile-short.jspa;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0";
+        var profileLoadingTooltip = "Loading user profile";
+        var profileErrorTooltip = "There was an error loading that profile information.";
+
+        var projectChooserUrl = "/content/project-chooser!input.jspa;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0";
+        var groupChooserUrl = "/content/group-chooser!input.jspa;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0";
+    </SCRIPT>
+
+
+
+    <LINK rel="stylesheet" href="./decibel.ni.com_content_blogs_quadrotor_files/aqua.css" type="text/css" media="all">
+    <LINK rel="stylesheet" href="./decibel.ni.com_content_blogs_quadrotor_files/jive-global.css" type="text/css" media="all">
+    <LINK rel="stylesheet" href="./decibel.ni.com_content_blogs_quadrotor_files/jive-userbar.css" type="text/css" media="all">
+    <LINK rel="stylesheet" href="./decibel.ni.com_content_blogs_quadrotor_files/jive-sidebar.css" type="text/css" media="all">
+        <LINK rel="stylesheet" href="./decibel.ni.com_content_blogs_quadrotor_files/jive-external.css" type="text/css" media="all">
+        <LINK rel="stylesheet" href="./decibel.ni.com_content_blogs_quadrotor_files/feedblog.css" type="text/css" media="all">
+
+        <LINK rel="stylesheet" href="./decibel.ni.com_content_blogs_quadrotor_files/theme.css" type="text/css">
+
+    
+	<STYLE type="text/css" media="screen">
+        @import "http://www.ni.com/css/global/us/clearspacex/default.css";
+        @import "http://www.ni.com/css/global/us/clearspacex/nispace.css";
+    </STYLE>
+
+
+    <!--[if IE 6]>
+    <style type="text/css">
+    /* hack for IE6's lack of alpha PNG support */
+    * html #jive-wrapper .ie6png,
+    * html #jive-wrapper #jive-global-header *.ie6png,
+    * html #jive-wrapper #user-bar-wrapper *.ie6png,
+    * html #jive-wrapper #jive-body *.ie6png,
+    * html #jive-wrapper #jive-footer *.ie6png {
+        background-image: expression(
+        this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" +
+        (this.tagName=='IMG' ? this.src : this.currentStyle.backgroundImage.split('\"')[1]) + ")",
+        this.runtimeStyle.backgroundImage = "none",
+        this.src = "/content/images/transparent.png;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0"
+        );
+        }
+    </style>
+    <![endif]-->
+
+  
+    <SCRIPT type="text/javascript" src="./decibel.ni.com_content_blogs_quadrotor_files/jquery.js"></SCRIPT>
+    <SCRIPT type="text/javascript">
+       if (jQuery) { jQuery.noConflict(); }
+    </SCRIPT>    
+  
+     
+    
+    
+    <LINK rel="EditURI" type="application/rsd+xml" title="RSD" href="http://decibel.ni.com/content/blogs/xmlrpc/?blog=2287">
+
+
+        <LINK rel="alternate" type="application/rss+xml" title="Recent Posts Feed" href="http://decibel.ni.com/content/blogs/quadrotor/feeds/posts">
+
+        <LINK rel="alternate" type="application/rss+xml" title="Recent Comments Feed" href="http://decibel.ni.com/content/blogs/quadrotor/feeds/comments">
+
+        <LINK rel="alternate" type="application/rss+xml" title="Recent Trackbacks Feed" href="http://decibel.ni.com/content/blogs/quadrotor/feeds/trackbacks">
+
+
+    <STYLE type="text/css" media="all">
+        @import "/content/styles/jive-blog.css;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0";
+    </STYLE>
+
+    
+
+
+        
+
+    <STYLE type="text/css">/* custom-css */</STYLE>
+    <STYLE type="text/css">/* custom-css-container */</STYLE>
+
+<SCRIPT type="text/javascript" language="JavaScript" src="./decibel.ni.com_content_blogs_quadrotor_files/7582bc5fd53a1342b7ea6a1ff23ec4c0.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript">
+        // begin list of custom CSS
+        jive.rte.defaultStyles = new Array();
+            jive.rte.defaultStyles.push("/content/plugins/feedblog/resources/feedblog.css;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0");
+        // end list of custom CSS
+
+
+            var jiveControl = new jive.model.Controller();
+
+
+        Zapatec.Calendar._TT["DEF_DATE_FORMAT"] = "%m/%d/%Y";
+
+
+        var quickuserprofile = new QuickUserProfile("jive-note-user-body", profileShortUrl, profileLoadingTooltip,
+                profileErrorTooltip);
+        var jiveprojectchooser = new JiveProjectChooser(projectChooserUrl);
+        var jivegroupchooser = new JiveGroupChooser(groupChooserUrl);
+
+
+</SCRIPT>
+
+</HEAD><BODY class="jive-body-content jive-body-content-blog"><DIV id="ZoomSpin" style="position: absolute; left: 10px; top: 10px; visibility: hidden; z-index: 525; "><IMG id="SpinImage" src="./decibel.ni.com_content_blogs_quadrotor_files/saved_resource"></DIV><DIV id="ZoomBox" style="position: absolute; left: 10px; top: 10px; visibility: hidden; z-index: 499; "><IMG src="./decibel.ni.com_content_blogs_quadrotor_files/saved_resource(1)" id="ZoomImage" border="0" style="-webkit-box-shadow: rgba(0, 0, 0, 0) 0px 5px 25px; display: block; width: 10px; height: 10px; cursor: pointer; "><DIV id="ZoomClose" style="position: absolute; left: -15px; top: -15px; visibility: hidden; "><IMG src="./decibel.ni.com_content_blogs_quadrotor_files/saved_resource(2)" width="30" height="30" border="0" style="cursor: pointer; "></DIV></DIV><DIV id="ZoomCapDiv" style="position: absolute; visibility: hidden; margin-left: auto; margin-right: auto; z-index: 501; "><TABLE border="0" cellpadding="0" cellspacing="0"><TBODY><TR><TD align="right"><IMG src="./decibel.ni.com_content_blogs_quadrotor_files/saved_resource(3)" width="13" height="26" style="display: block; "></TD><TD background="./decibel.ni.com_content_blogs_quadrotor_files/saved_resource(4)" id="ZoomCaption" valign="middle" style="font-size: 14px; font-family: Helvetica; font-weight: bold; color: rgb(255, 255, 255); text-shadow: rgb(0, 0, 0) 0px 2px 4px; white-space: nowrap; "><TD><IMG src="./decibel.ni.com_content_blogs_quadrotor_files/saved_resource(5)" width="13" height="26" style="display: block; "></TD></TR></TBODY></TABLE></DIV>
+
+<DIV id="jive-wrapper" class="clearfix">
+
+<!-- BEGIN header -->
+    <TABLE width="750" cellspacing="0" cellpadding="0" border="0">
+					<TBODY>
+
+						<TR>
+							<TD width="157" valign="top" nowrap=""><A href="http://www.ni.com/"><IMG width="157" height="64" border="0" alt="NI Home" src="./decibel.ni.com_content_blogs_quadrotor_files/logo.gif"></A></TD>
+
+							<TD width="593" valign="middle" nowrap="" align="right"><FORM action="http://search.ni.com/nisearch/main/p" name="search"><A href="http://sine.ni.com/apps/utf8/nios.store?action=view_cart"><IMG border="0" alt="Cart" src="./decibel.ni.com_content_blogs_quadrotor_files/cart.gif"> Cart</A>  |  <A href="http://www.ni.com/help/">Help</A>   <INPUT type="text" class="mainsearchinputbox" onclick="this.value=&#39;&#39;;" value="Search" maxlength="254" size="16" name="q"> <INPUT type="image" class="topalign" src="./decibel.ni.com_content_blogs_quadrotor_files/cta_arrow.gif"></FORM><!--NOTES_FORM_TAG2--></TD>
+						</TR>
+					</TBODY>
+
+				</TABLE>
+				<!-- End Utility Logo -->
+
+				<!-- Begin Global Navigation -->
+				<MAP name="globalnav">
+					<AREA href="http://www.ni.com/company/" coords="684,0,751,19" alt="Company" title="Company" shape="rect">
+					<AREA href="http://www.ni.com/events" coords="629,0,682,19" alt="Events" title="Events" shape="rect">
+					<AREA href="http://www.ni.com/academic/" coords="557,0,627,19" alt="Academic" title="Academic" shape="rect">
+					<AREA href="http://zone.ni.com/" coords="441,0,555,19" alt="NI Developer Zone" title="NI Developer Zone" shape="rect">
+					<AREA href="http://www.ni.com/support/" coords="378,0,439,19" alt="Support" title="Support" shape="rect">
+
+					<AREA href="http://www.ni.com/solutions/" coords="307,0,376,19" alt="Solutions" title="Solutions" shape="rect">
+
+					<AREA href="http://www.ni.com/products/" coords="180,0,305,19" alt="Products &amp; Services" title="Products &amp; Services" shape="rect">
+					<AREA href="http://sine.ni.com/apps/we/nicc.call_me?p_lang_id=US" coords="91,0,179,19" alt="Contact NI" title="Contact NI" shape="rect">
+					<AREA href="http://my.ni.com/myni/myni" coords="0,0,90,19" alt="MyNI" title="MyNI" shape="rect">
+				</MAP>
+				<TABLE width="100%" cellspacing="0" cellpadding="0" border="0">
+					<TBODY>
+						<TR valign="bottom" height="20">
+							<TD width="750" rowspan="2"><IMG width="752" height="20" border="0" usemap="#globalnav" src="./decibel.ni.com_content_blogs_quadrotor_files/devzone1_on.gif"></TD>
+
+							<TD width="100%" bgcolor="#6c96ce" background="./decibel.ni.com_content_blogs_quadrotor_files/globalbar.gif">
+								<IMG width="1" border="0" alt="" src="./decibel.ni.com_content_blogs_quadrotor_files/invis.gif">
+							</TD>
+						</TR>
+					</TBODY>
+				</TABLE>
+<!-- END header -->
+<!-- BEGIN user bar -->
+<DIV id="user-bar-wrapper">
+        
+        
+<DIV class="blue_round_cap"><DIV></DIV></DIV>
+<DIV id="jive-userbar-wrapper">
+<DIV id="jive-userbar">
+   	<DIV class="white_round_cap"><DIV></DIV></DIV>
+
+
+        <DIV id="jive-userbar-login">
+            <FORM action="http://decibel.ni.com/content/cs_login;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" method="post" name="loginform" autocomplete="off">
+                
+                
+				<SPAN class="jive-userbar-login-welcome" id="jiveLoginWelcome">
+					<SPAN class="jive-userbar-login-guest">
+						Welcome,
+                        Guest
+                    </SPAN>
+
+                    <SPAN class="jive-userbar-login-loginlink">
+						<A href="http://decibel.ni.com/content/blogs/quadrotor#" onclick="jivetoggleLogin(); return false;" accesskey="L"><U>L</U>ogin</A>
+                    </SPAN>
+
+						<SPAN class="jive-userbar-login-new">
+							<A></A><A href="http://decibel.ni.com/content/create-account.jspa;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0?du=%2Fblogs%2Fquadrotor" accesskey="R"><U>R</U>egister</A>
+						</SPAN>
+                </SPAN>
+
+                <SPAN class="jive-userbar-login-form" id="jiveLoginForm" style="display: none;">
+
+					<SPAN class="jive-userbar-login-username">
+						<LABEL for="login-username">
+Email:						</LABEL>
+						<INPUT type="text" name="username" size="20" maxlength="150" value="" tabindex="1" id="login-username">
+					</SPAN>
+
+					<SPAN class="jive-userbar-login-password">
+						<LABEL for="login-password">
+Password:						</LABEL>
+						<INPUT type="password" name="password" size="20" maxlength="150" value="" tabindex="2" id="login-password">
+					</SPAN>
+					
+					<INPUT type="hidden" name="autoLogin" id="login-auto" value="false">
+
+					<SPAN class="jive-userbar-login-submit">
+						<INPUT type="submit" name="login" value="Login" tabindex="4" class="jive-login-button">
+						<INPUT type="reset" name="doCancel" value="Cancel" tabindex="5" class="jive-cancel-button" onclick="jivetoggleLogin();">
+					</SPAN>
+
+				</SPAN>
+
+            </FORM>
+        </DIV>
+
+
+    <!-- BEGIN choose-container create panel -->
+    <DIV class="jive-contentcreate-menu" id="jiveContentCreatePanel" style="display: none;">
+        <DIV class="jive-contentcreate-menu-container" id="jiveContentCreateContainer"></DIV>
+    </DIV>
+    <!-- END choose-container create panel -->
+
+    <!-- BEGIN task create panel -->
+    <DIV class="jive-taskcreate-menu" id="jiveTaskCreatePanel" style="display: none;">
+        <DIV class="jive-taskcreate-menu-container" id="jiveTaskCreateContainer"></DIV>
+    </DIV>
+    <!-- END task create panel -->
+
+	<!-- BEGIN right-aligned user bar items -->
+    <DIV id="jive-userbar-right">
+
+        <DIV id="jive-userbar-search">
+            <FORM action="http://decibel.ni.com/content/search.jspa;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" method="get">
+
+                    <INPUT type="hidden" name="resultTypes" value="BLOG_POST">
+
+                    <INPUT type="hidden" name="resultTypes" value="DOCUMENT">
+
+                    <INPUT type="hidden" name="resultTypes" value="MESSAGE">
+
+                    <INPUT type="hidden" name="resultTypes" value="BLOG">
+
+                    <INPUT type="hidden" name="resultTypes" value="COMMUNITY">
+
+                    <INPUT type="hidden" name="resultTypes" value="TASK">
+
+                    <INPUT type="hidden" name="resultTypes" value="PROJECT">
+
+                    <INPUT type="hidden" name="resultTypes" value="SOCIAL_GROUP">
+
+                    <INPUT type="hidden" name="resultTypes" value="COMMENT">
+            <INPUT type="hidden" name="peopleEnabled" value="true">
+                <INPUT type="text" id="jive-query" name="q" value="" class="jive-userbar-search-field" autocomplete="off">
+            <BUTTON type="submit" value="Search" class="jive-userbar-search-button">Search</BUTTON>
+            <A href="http://decibel.ni.com/content/blogs/quadrotor#" onfocus="$(&#39;jive-query&#39;).focus(); return false;" accesskey="S"></A>
+            </FORM>
+
+                <DIV id="jive-spotlight-search-container"></DIV>
+                    <SCRIPT type="text/javascript">
+                        var spotlightSearchUrl = "/content/spotlight-search.jspa;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0";
+                    </SCRIPT>
+
+        </DIV>
+
+
+    <SPAN id="userbar-search-label">Search within community:</SPAN></DIV>
+    <!-- END right-aligned user bar items -->
+	<BR style="clear:both; height:1px;">
+    <DIV class="white_round_foot"><DIV></DIV></DIV>
+</DIV>
+</DIV>
+<DIV class="blue_round_foot"><DIV></DIV></DIV>
+
+
+</DIV>
+<!-- END user bar -->
+		
+
+        <DIV id="jive-body">
+
+<!-- BEGIN breadcrumb -->
+<DIV id="jive-breadcrumb">
+
+
+    <SPAN>
+
+       <A href="http://www.ni.com/">NI Home</A> &gt; 
+
+
+
+        <A href="http://decibel.ni.com/content/;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0">Communities</A> &gt; 
+
+
+
+        <A href="http://decibel.ni.com/content/people;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0">People</A> &gt; 
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-pptB1bcRN0boIDxl" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A> &gt;         <A class="jive-breadcrumb-last" href="./decibel.ni.com_content_blogs_quadrotor_files/decibel.ni.com_content_blogs_quadrotor.htm">Building a Quadrotor Helicopter UAV</A></SPAN>
+</DIV>
+<!-- END breadcrumb -->
+
+            
+
+<!-- BEGIN header & intro  -->
+<DIV id="jive-body-intro">
+
+    <DIV id="jive-body-intro-content">
+
+        
+    </DIV>
+</DIV>
+<!-- END header & intro -->
+
+
+<!-- BEGIN main body -->
+<DIV id="jive-body-main">
+
+
+
+    <!-- BEGIN main body column -->
+    <DIV id="jive-body-maincol-container">
+        <DIV id="jive-body-maincol">
+
+            <DIV id="blog.watch.notify" class="jive-success-box" style="display:none">
+            </DIV>
+
+            <DIV class="jive-blog-info">
+
+                <H3><A href="./decibel.ni.com_content_blogs_quadrotor_files/decibel.ni.com_content_blogs_quadrotor.htm" style="text-decoration:none">Building a Quadrotor Helicopter UAV</A></H3>
+                <SPAN class="jive-blog-info-details">
+                        <STRONG>14 Posts</STRONG>
+                </SPAN>
+
+            </DIV>
+
+
+
+
+         <A id="a2730"></A>
+         <DIV class="jive-blog-post " id="entry-2730">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/daughter-card--revisited-and-generalizedslight-side-topic"> Daughter Card - revisited and generalized...slight side topic</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-vgwC98hhpmvzq137" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Dec 11, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:9f8c7eb8-cf13-4add-8810-b37061fc90b4] --><DIV class="jive-rendered-content"><P>In the early stages of this project, I realized that I would need to have a board laid out that would be both the mechanical and electrical interface between the sbRIO and the rest of the world.&nbsp; I realized that there were serious power issues when it came to making the sbRIO boot up as well as power distribution issues to get current to all of the sensors and add-ons.&nbsp; I took a first stab at it, and generated the daughter board that I'm using for quadcopter.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2730-8819/IMG_2406.JPG"><IMG alt="IMG_2406.JPG" class="jive-image-thumbnail jive-image" height="540" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2406.JPG" width="620"></A></P><P>The quadcopter daughter board is very specific.&nbsp; There are pinouts for the specific accelerometer and gyro boards that we chose from SparkFun.&nbsp; It has a header for the 3 axis accel / 2 axis gyro board that we chose from SparkFun as well as a header for the Honeywell compass (also from Sparkfun) and a third gyro (a breakout board that we got as a sample from our good friends at Analog Devices).&nbsp; The board also has a 3.3V regulator, some power filtering, and headers for 3.3V and 5V sources to external things.&nbsp; In an attempt to keep things expandable, I added a few extras to the board.&nbsp; I made sure to populate more motor driver headers than I originally planned on using (there are 6 dedicated servo driver lines even the copter only needs 4...maybe we need a pan tilt turret with a foam shooter or a camera).&nbsp; Similarly, I added headers for extra analog and digital IO just in case we needed something.&nbsp; It turns out that I made a smart move by staying flexible.&nbsp; I didn't think about it originally, but it's a really good idea to measure the battery voltage to protect the LiPo batteries, and to do that I needed a spare AI line.&nbsp; It was as simple as adding a wire to a harness and adding a block to the FPGA firmware. Here's a closeup picture of the board on my VEX-RIO bot.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>That said, I decided it might also be useful to have a general use robotics daughter board for the single board RIOs.&nbsp; I had some urging from a couple of customers and some urging from a field sales person, so I thought it would be a good use of my time.&nbsp; Like I said, I based my design on some of the other systems that I've worked with along the way...the IFI controller (originally used for the FIRST Robotics Competition), the Arduino, the VEX kit (based not so loosely off the IFI controller), OOPIC controllers, the Bitwhacker, the good old handi-board, and even a few homespun PIC based development boards that I've made over the years.&nbsp; The goal of the project was to facilitate an easy swap between most of those and a sbRIO.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>You might think "why would I pay XX for a sbRIO when I can get by with a $35 arduino?"&nbsp; That's a really good question, and I'm not saying that the sbRIO will be the answer for all applications, but let me give you at least one very solid example.&nbsp; The VEX controller and the earlier IFI controller are based on a PIC microcontroller.&nbsp; If you want to accurately read sensor data from an encoder using a PIC or Atmel based microprocessor, it involves using interrupts.&nbsp; What happens is that an interrupt gets triggered on the rising and / or falling edge of the encoder signal, some math is done to either increment or decrement a position value, and then the main control code goes back to what it was doing.&nbsp; To begin with, the interrupts are somewhat costly because you're essentially switching from thread to thread (granted, this is all much cleaner if you're programming in assembly, but c'mon...life is just so much easier if you program in a normal readable language like C or LabVIEW).&nbsp; Ok, thread switching causes issues, but the real problem is that when the encoder speeds up (either due to a fast spinning motor or a high resolution encoder), the interrupts are happening faster and faster as well.&nbsp; If you're not careful, you get to a point that the interrupts are happening so frequently that the main code isn't allowed to execute.&nbsp; The problem gets compounded when you want to move from a tachometer-type encoder (one single disk and one single pulse train like the original VEX encoders) to a quadrature encoder (which has two disks, two sets of DIO lines with interrupts, and potentially twice or four times as many interrupts per revolution).&nbsp; The problem gets further compounded because frequently you'll want to have a minimum of two encoders (say, left and right wheel).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>What this means in practice is that 2 quadrature encoder were about all that the FRC robots could handle without hosing the rest of their code.&nbsp; Here comes the paradigm shift...wait for it...</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>FPGA devices behave completely differently from microcontrollers.&nbsp; The idea of the interrupt actually gets replaced by a polling structure written directly into the FPGA fabric.&nbsp; Because the FPGA IO can run so quickly (20MHz), a loop is written to constantly poll and catch events.&nbsp; Then code is executed based on that event.&nbsp; In the quadrature encoder example, on a state change of line A, the algorithm looks at whether B is high or low and then either increments the position or decrements the position.&nbsp; This all gets executed at 20MHz so that nothing gets missed.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Enough of a diatribe about why I think the sbRIO is a great robotics platform...I'm starting to sound like a sales person, or even the one of those silly koolaid-drinking marketing people.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>For a moment let's forget about the benefits (the built in memory space, the built in ethernet connection, the built in serial port, the RT controller paired with the FPGA).&nbsp; I went off on a project to come up with a board that would let it be a drop-in replacement for a generic robotics kit.&nbsp; I have had some history with the VEX people (by the way, I like these guys...I was a spokes-model for them at a few FIRST events and at the CES show in Las Vegas...apparently they couldn't find anyone nerdier and dorkier than me, so they kept asking for my help...thanks?), and over the years of working with them and using their hardware and software as a teaching platform, I've collected a decent stack of the hardware / sensors / electronics as well as a very good working knowledge of the software and control abilities of their system.&nbsp; I've helped students prepare for big competitions, and I've built boards to drive "real" DC motors from the VEX controller.&nbsp; I'm comfortable with the system, so why not make that part of my first attempt.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I wanted to pimp it out a little but definitely retain all of the features that the VEX system offered.&nbsp; Here's what my solution has boiled down to</P><UL><LI>8 motor connectors - 3-pin connectors that provide G, Vbat and a servo PWM signal</LI><LI>8 DIO connectors - 3-pin connectors that provide G, 5V and a general use DIO pin (turns out that to replicate VEX, this needs to be pulled up)</LI><LI>8 AI connectors - 3-pin connectors that provide G, 5V and signal</LI></UL><P>I also wanted to up the ante a little, so I added a few more bells and whistles</P><UL><LI>1 DC-DC step-up converter - converts a 6-12V battery pack to 20V to power the sbRIO - with fuse protection and a power LED</LI><LI>4 AO connectors - 3-pin with G, 5V and signal - honestly I'm not sure what they're good for, but I felt they were appropriate</LI><LI>1 dedicated RJ-11 port for VEX radio communication - along with the driver VIs, it gives full access to the remote control</LI><LI>1 dedicated I2C connector</LI><LI>2 extra bitrate flexible RS-232 ports - connected to DIO lines via a MAX-232 chip</LI><LI>2 extra 8-bit ports - a 10-pin connector for 8 bits plus G and 5V</LI></UL><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I polled a lot of people about other suggestions.&nbsp; The most common one was to include some sort of h-bridge drive on the board to drive DC motors directly.&nbsp; I'm not averse to doing that, and I've done some tests with the LMD18200 and other chips.&nbsp; My main concern is that someone might blow one of those chips and then kill their entire daughter board.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The only thing that makes this VEX specific is the controller connection (and possibly the gender of the headers that it gets populated with...but that's not really board specific, more component specific).&nbsp; The 3-pin connectors are pretty popular for analog sensors, motor controllers as well as some digital sensors.&nbsp; However, I'd be really interested if anyone has thoughts about how to make the board more universally applicable or if there are features that I'm missing.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I've attached eagle files for my current revision.&nbsp; I got the boards today for the 4th version of this, and I'm going to populate and test Monday.&nbsp; There were a couple of small errors in the last revision that I fixed, but I feel pretty confident that this one is 99% solid.&nbsp; If you're interested, by all means send it off to have it fabbed (BatchPCB.com does a great job), and I would LOVE to hear your feedback.&nbsp; I know it's a side project and some side issues, but I'll also post some video of my VEX-RIO sometime in the near future.&nbsp; In the mean time, here's a picture of the little rascal.&nbsp; Hopefully sometime in the future I can get the ground-based bugger to chase the helicopter around the office...that would be really entertaining...maybe more so for me than for my officemates.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2730-8818/IMG_2404.JPG"><IMG alt="IMG_2404.JPG" class="jive-image-thumbnail jive-image" height="491" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2404.JPG" width="620"></A></P><P>Back to the board for a second.&nbsp; What must-have features am I missing?&nbsp; What things do I need to do better (aka do I need a fancier uart to logic-level chip, or is the MAX-232 sufficient...or would it be helpful to have a chip to handle RS-485)?&nbsp; Would it make sense to have sections of the 5V bus be 3.3V for lower voltage peripherals or even jumpers so that you could select between the two for certain blocks of connectors? What would make this all integrate more seamlessly with your robotics project?</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I'm really interested in what the community has to say on this one.</P></DIV><!-- [DocumentBodyEnd:9f8c7eb8-cf13-4add-8810-b37061fc90b4] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/daughter-card--revisited-and-generalizedslight-side-topic#comments">0&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/daughter-card--revisited-and-generalizedslight-side-topic">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robot">robot</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/daughter">daughter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robotics">robotics</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/daughter_card">daughter_card</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/sbrio">sbrio</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/vex">vex</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/ultrasound">ultrasound</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/fpga">fpga</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2443"></A>
+         <DIV class="jive-blog-post jive-blog-post-alt" id="entry-2443">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/control-simulation-part-2-the-lqr-controller"> Control Simulation Part 2: the LQR controller</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-8gySic2tgIYd763N" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Dec 11, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:250d90a4-4ac3-43b7-8ecc-6af1adb708dc] --><DIV class="jive-rendered-content"><P>As I've been writing about the quadcopter, a couple of my colleagues and I have been working on cleaning up the code.&nbsp; One of the big goals has been to make sure that we're doing things the "right" way instead of the "just make it work so that we can show it off as a demo" way.&nbsp; We've also been providing a lot of feedback to R&amp;D about stability, edit-time performance, etc.&nbsp; The progress has been a bit slow due to the fact that I have a real day job as well, but regardless we're trying to be cautious to get everything fixed and reusable.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Alright, enough messing around.&nbsp; Let's get into the nitty-gritty controls stuff.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>LQR stands for "linear quadratic regulator." Wikipedia has a pretty good description of it <A class="jive-link-external-small" href="http://en.wikipedia.org/wiki/Linear-quadratic_regulator" target="_blank">here</A>, and there are some other good links <A class="jive-link-external-small" href="http://www.scholarpedia.org/article/Optimal_control" target="_blank">here</A> and <A class="jive-link-external-small" href="http://documents.wolfram.com/applications/control/OptimalControlSystemsDesign/10.1.html" target="_blank">here</A>.&nbsp; The control algorithm comes from a state space representation from the system, and is essentially some matrix math that "optimally" regulates the system about a setpoint.&nbsp; Like any linear controller, it places poles and zeros of the closed loop system in specific places..in other words, magic.&nbsp; Also like any other control system, an LQR controller has to be tuned, but there are some LabVIEW tools for that...and since this is a linear control system, we need to turn the nonlinear model into a linear one.&nbsp; Here again, we're lucky because LabVIEW has some built in tools for that.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>However, before we get to the linearization, we need to add a couple of elements to the model.&nbsp; As I've written about before (and as we've discussed in the comment sections of the posts), the model is entirely defined within the reference frame of the quadcopter.&nbsp; That means that the accelerations that result from the propeller thrusts are defined with respect to the body of the copter.&nbsp; Intuitively that should make sense because the sensors and actuators are also attached to the quadcopter.&nbsp; For "simple" PID control, this all works and is all you need.&nbsp; However, for the LQR algorithm, we want to control the quadcopter in the global reference frame.&nbsp; We want to control its position and orientation in the X-Y-Z reference frame.&nbsp; Therefore, we need to translate the body-fixed accelerations and rates into the global reference frame.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The following equations make that all happen (in the ME-like notation that I've developed). They rotate the body rates and represent that information in the global reference frame.&nbsp; These equations perform that translation for the angular rates (pqr in aerospace notation).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2443-8813/angle_transformation.JPG"><IMG alt="angle_transformation.JPG" class="jive-image" height="119" src="./decibel.ni.com_content_blogs_quadrotor_files/angle_transformation.JPG" width="407"></A></P><P>These equations perform the translation for the linear velocities (uvw in aerospace notation).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2443-8814/translation_transform.JPG"><IMG alt="translation_transform.JPG" class="jive-image-thumbnail jive-image" height="65" src="./decibel.ni.com_content_blogs_quadrotor_files/translation_transform.JPG" width="620"></A></P><P>The screen shot of the LabVIEW simulation shows these equations in the second block of text-based code to the right.&nbsp; The nonlinear model then has outputs in both the body-fixed and global reference frames.&nbsp; Please excuse the mixing of notations!</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2443-8807/coordinate+transform.JPG"><IMG alt="coordinate transform.JPG" class="jive-image-thumbnail jive-image" height="426" src="./decibel.ni.com_content_blogs_quadrotor_files/coordinate+transform.JPG" width="620"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Before the model can be plugged into any of the tools for developing the linear controller, it needs to be linearized.&nbsp; Luckily we have an <SPAN style="text-decoration: line-through;">app</SPAN> tool for that.&nbsp; From a LabVIEW window, select Tools&gt;&gt;Control Design and Simulation&gt;&gt;Linearize Subsystem... to launch the linearizer window (note that you can do this in a data-flow / block diagram way, but the wizard is frequently easier to use).&nbsp; You should get a window that looks a lot like this one...</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2443-8802/Linearize+Subsystem.JPG"><IMG alt="Linearize Subsystem.JPG" class="jive-image" height="624" src="./decibel.ni.com_content_blogs_quadrotor_files/Linearize+Subsystem.JPG" width="610"></A></P><P>Select "From Disk," find the subsystem that you want to linearize and hit the "Refresh" button.&nbsp; Switch to the "Initial Inputs," "Initial Outputs" and "Initial States" tabs and fill in the appropriate values.&nbsp; Once you get that how you want it, hit the "Trim" button.&nbsp; This trims the model to a stable equilibrium condition.&nbsp; That should also populate the list boxes of inputs, outputs and states.&nbsp; You might want to go back and update the initial inputs with a trimmed values, and then click the "Linearize" button.&nbsp; This will generate a linear state-space model of the system...without having to do it by hand!!!&nbsp; If you're ever had the amazing joy of doing this the old fashioned way, you'll understand why I'm so excited.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Now you'll have a .lti model and a linearized subsystem that you can save for later use.&nbsp; The next step is to design the gains for the LQR controller.&nbsp; Hey look, there's an <SPAN style="text-decoration: line-through;">app</SPAN> tool for that as well!&nbsp; The following chunk of code (taken from Quadcopter Dynamics CL Comp.vi) shows how to put that together.&nbsp; A typical way of picking the Q-matrix comes from the C-matrix of your linearized system (Q=rho*C*C^(-1)).&nbsp; There are other tricks and tools for tuning the LQR gains, but here the "make everything diagonal and tweak the magnitude" method works pretty well here.&nbsp; I'm also checking the eigenvalues of the closed-loop system to make sure that things are all stable (inside the unit circle for the discrete system).&nbsp; This generates a set of optimal gains for the LQR controller based on the model and the Q and R matrices that you pick.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2443-8803/LQR+gain+calculation.JPG"><IMG alt="LQR gain calculation.JPG" class="jive-image" height="235" src="./decibel.ni.com_content_blogs_quadrotor_files/LQR+gain+calculation.JPG" width="589"></A></P><P>Once that you have a model and some gains, it's always a good idea to make sure that the linear model matches the original non-linear model.&nbsp; In "I've closed the loop with an LQR block and I'm using it to drive a non-liear and linearized version of the model.&nbsp; You'll see that if you start from the initial conditions that the model will regulate to the state that we linearized the model about (in this case everything is zero except for Z which is 1m because that's the starting state of our robot...it's supposed to take off from a platform and fly from there).&nbsp; You'll also see that the linear and non-linear models perform pretty similarly.&nbsp; This is well and good except that it only regulates the model about a specific set of initial conditions.&nbsp; "What happens if you want to track a setpoint?" you might ask.&nbsp; Well, that's a great question!</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The following image shows a block diagram of a compensator that has been added to the LQR algorithm.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2443-8805/compensator+block.JPG"><IMG alt="compensator block.JPG" class="jive-image-thumbnail jive-image" height="292" src="./decibel.ni.com_content_blogs_quadrotor_files/compensator+block.JPG" width="620"></A></P><P>Picking the reference gain is a bit of a tricky bit, and requires a little intuition about how the inputs affect the outputs.&nbsp; In this case, I know how the inputs affect the state vector, so I've used that to fill in the values.&nbsp; I know this is a bit of a hand waving explanation, but there are actually formal methods for doing this.&nbsp; We just went with the heuristic approach.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Here's a screen shot of the model running closed-loop.&nbsp; You'll see that it starts from a (0,0,1) position in (X,Y,Z) and ends up at the reference of (0.5,0,2).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2443-8806/compensator+results.JPG"><IMG alt="compensator results.JPG" class="jive-image-thumbnail jive-image" height="441" src="./decibel.ni.com_content_blogs_quadrotor_files/compensator+results.JPG" width="620"></A></P><P>Phew!&nbsp; That took a long time for me to get this all cleaned up and posted, but this is where we're getting into some of the more meaty control algorithm stuff.&nbsp; Unlike the PID approach, the LQR algorithm works relatively well even when there's noise introduced to the system.&nbsp; Also, the LQR approach gives you the ability to individually control all of the states of the system in a coordinated manner.&nbsp; The downside of the LQR by itself is that the algorithm assumes perfect state feedback (or even full state feedback).&nbsp; To fix that, the next step will be to add a linear Kalman Filter (and eventually a non-linear KF or Extended Kalman Filter) to the control algorithm.&nbsp; That will use the model of the system as well as all of the sensor feedback to create a balanced picture of the state values, balancing between the model-based observer and the noisy / redundant sensor data.</P></DIV><!-- [DocumentBodyEnd:250d90a4-4ac3-43b7-8ecc-6af1adb708dc] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/control-simulation-part-2-the-lqr-controller#comments">1&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/control-simulation-part-2-the-lqr-controller">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/control">control</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor">quadrotor</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter">helicopter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/lqr">lqr</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/optimal_control">optimal_control</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robotics">robotics</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/linearized">linearized</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/linearize">linearize</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robot">robot</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2587"></A>
+         <DIV class="jive-blog-post " id="entry-2587">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/10/12/save-for-previous-version"> Save for Previous Version...</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-fkJP61X5f07sn9rR" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Oct 12, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:11aaedd2-66dc-40d3-b74c-89d9c8628c13] --><DIV class="jive-rendered-content"><P>I've had a couple of requests for the model and PID-based simulation to be saved in a previous version of LabVIEW.&nbsp; For the most part, the project uses a few key features that can only be had in LabVIEW 2009 (MathScript for RT, and the Extended Kalman Filter block to be specific).&nbsp; However, the model itself doesn't contain anything that's 2009 dependentnor does the simple PID-based simulation that I posted a few weeks ago.&nbsp; So here you go...a version of the simulation saved for LV 8.6.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Ok, so honestly no more teasing.&nbsp; The next post will show the process for generating a linear model from the non-linear system, tuning the LQR controller and closing the loop.&nbsp; It might take a couple of posts to get all of the way to the full LQG control system, but we're getting close to the end.</P></DIV><!-- [DocumentBodyEnd:11aaedd2-66dc-40d3-b74c-89d9c8628c13] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/10/12/save-for-previous-version#comments">0&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/10/12/save-for-previous-version">Permalink</A>
+                    </SPAN>
+
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2508"></A>
+         <DIV class="jive-blog-post jive-blog-post-alt" id="entry-2508">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/25/hardware-update"> Hardware update!</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-EeNgaLO7QvzdajJa" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Sep 25, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:5206d354-76b9-46ea-8c49-04beeb933d11] --><DIV class="jive-rendered-content"><P>So as I alluded to in the last post, we have a brand spanking new sbRIO at the heart of the quadcopter.&nbsp; The owner of the sbRIO-9642 that I had on it decided that he needed it back before I broke something again (watch out for the electrolytic capacitor and the inductor in the power supply...turns out that you can knock them off the board...oops).&nbsp; So here's the new board, installed on the robot!</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2508-7576/IMG_2281.JPG"><IMG alt="IMG_2281.JPG" class="jive-image-thumbnail jive-image" height="465" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2281.JPG" width="620"></A></P><P>If you look very closely, here's the diference...</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2508-7577/IMG_2275.JPG"><IMG alt="IMG_2275.JPG" class="jive-image-thumbnail jive-image" height="465" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2275.JPG" width="620"></A></P><P>As the sticker says, this is an sbRIO-9632 which means that I don't have the conformal coating that I had earlier nor do I have the high voltage DIO...neither of which were being used in this project.&nbsp; The pinout of the DIO and AIO are exactly the same, the processor is the same, and the FPGA is the same.&nbsp; That all makes for an easy switch.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I also had new boards made for my DC-DC voltage converter.&nbsp; After blowing up 3 of the other boards by shorting things to ground, I decided that it was probably time for an entire re-design.&nbsp; I went with a different boost converter chip from National Semiconductor, the <A class="jive-link-external-small" href="http://www.national.com/pf/LM/LM3478.html" target="_blank">LM3478</A>, which has an external FET.&nbsp; I also used their WebBench design tools to put the circuit together.&nbsp; It turns out that I didn't do a very good job though.&nbsp; The board works, but I apparently didn't look closely enough at the packaging of the LM3478 chip before I sent the design off to be manufactured.&nbsp; It came back just as I had laid it out with pads for an 8-pin SOIC boost converter.&nbsp; Sadly the chip only somes in a mini SOIC package...oops.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Luckily I had some breakout boards that take surface mount packages to DIP pinouts.&nbsp; I was able to use one of those and then solder wires into the foot pads on the DC-DC converter board...and here you have it, a working "frankenboard" in the foreground and the original converter in the background.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2508-7578/IMG_2279.JPG"><IMG alt="IMG_2279.JPG" class="jive-image-thumbnail jive-image" height="307" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2279.JPG" width="620"></A></P><P>Here's a screen shot of the layout itself.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2508-7580/boost+converter.JPG"><IMG alt="boost converter.JPG" class="jive-image-thumbnail jive-image" height="191" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/boost+converter.JPG" width="620"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The new design is much larger, but it can also easily handle the 2A that the sbRIO specs call for.&nbsp; I laid it out with footprints for screw terminals so that I could reuse it on various projects.&nbsp; In retrospect, I should have included a fuse of some sort. I've included the board layout and schematic if you're interested in making one yourself.&nbsp; I do most of my layout and circuit design in Eagle (because it's <A class="jive-link-external-small" href="http://www.cadsoftusa.com/" target="_blank">free</A>, has a great parts <A class="jive-link-external-small" href="http://www.cadsoftusa.com/cgi-bin/download.pl?page=/home/cadsoft/html_public/download.htm.en&dir=eagle/userfiles/libraries" target="_blank">library</A>, and has some really good tutorials for making <A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=108" target="_blank">schematics</A>, <A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=109" target="_blank">layouts</A>, and custom <A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=110" target="_blank">parts</A>).&nbsp; I think that I've mentioned it before, but I'm also a big fan of BatchPCB for making my boards (<A class="jive-link-external-small" href="http://www.batchpcb.com/" target="_blank">link</A>).&nbsp; I use them for stuff at wor as well as for home projects.&nbsp; They have good prices on small orders and produce good quality boards with heavy traces / solder masks.&nbsp; The downside is that their turnaround time is 2.5-4 weeks.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I also put the same boost converter into a general-use robotics daughter board.&nbsp; It has 3-pin headers for AIO, DIO, motor signals in the typical hobby connection (signal, power, ground).&nbsp; The motor headers are powered directly from the battery, and the AIO / DIO draw power from the 5V supply on the sbRIO.&nbsp; I put in a few other bells and whistles including a MAX232 chip for RS-232 to uart line level translation (resource <A class="jive-link-external-small" href="http://sodoityourself.com/max232-serial-level-converter/" target="_blank">link</A>), a 10-pin DIO connector that provides access to a full byte DIO port as well as power and ground, and a couple of dedicate I2C headers.&nbsp; I think that the final version will also include a connector for the VEX radio receiver so that the sbRIO could be used for a direct replacement for a VEX controller...or so that you could easily add a VEX remote to a sbRIO-based robot.&nbsp; This board had even more problems including a nasty signal integrity issue in the boost converter...but hopefully I'll get that all worked out shortly.&nbsp; Here's what it looks like on the sbRIO.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2508-7579/IMG_2280.JPG"><IMG alt="IMG_2280.JPG" class="jive-image-thumbnail jive-image" height="428" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2280.JPG" width="620"></A></P><P>I know it's relatively unrelated, but if you have any thoughts about other things that it would be nice to see on a general purpose robotics board, let me know.&nbsp; I'm basically taking my cues from stuff I've worked with in the past like the old <A class="jive-link-external-small" href="http://www.ifirobotics.com/frc-robot-control-system-overview.shtml" target="_blank">IFI</A> controller previously used for <A class="jive-link-external-small" href="http://www.usfirst.org/roboticsprograms/frc/default.aspx?=966" target="_blank">FIRST Robotics Challenge</A>, the <A class="jive-link-external-small" href="http://www.vexrobotics.com/vex-robot-kits.shtml" target="_blank">VEX kit</A>, the <A class="jive-link-external-small" href="http://www.arduino.cc/" target="_blank">arduino</A>, <A class="jive-link-external-small" href="http://www.oopic.com/" target="_blank">OOPIC</A>, <A class="jive-link-external-small" href="http://www.parallax.com/tabid/295/Default.aspx" target="_blank">BASIC Stamp</A>, home made PIC development boards, etc...</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I thought I'd take a quick interlude from the equations and reference frames to toss out some pictures.&nbsp; In the next post I'll get back into the control algorithm.</P></DIV><!-- [DocumentBodyEnd:5206d354-76b9-46ea-8c49-04beeb933d11] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/25/hardware-update#comments">0&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/25/hardware-update">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/sbrio">sbrio</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/dc-dc">dc-dc</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor">quadrotor</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/boost_converter">boost_converter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robotics">robotics</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robot">robot</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter">helicopter</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2458"></A>
+         <DIV class="jive-blog-post " id="entry-2458">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid"> Control Simulation Part I: closing the loop with PID</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-ppV2vXc5QLH1DhvP" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Sep 23, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:88942908-72fc-4fb8-a52f-be397f870856] --><DIV class="jive-rendered-content"><P>Ok...when I left off in the last posts, I had working hardware and a model in the moving reference frame of the quadrotor helicopter.&nbsp; Models are well and good (as is hardware), but the real entertainment comes when you close the loop and you get a stable working system.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The first step in having a working system is having a working simulation.&nbsp; The simulation gives you the ability to tune paramters without worrying about breaking hardware.&nbsp; That's not to say that the working stable closed loop simulation will download and run seamlessly on the hardware; however at that point in time you should have a better feel for how to tune the controller after toying with the simulation.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I'm starting the control discussion by looking at the "simple" control approach (as a brief aside, I got some grief last week from one of my non-technical friends who made it through the first paragraph of the modeling post...but got to the part about a blob in space being as simple as it gets...which apparently scared her off...she said that now she'll stick to the looking at the pictures).&nbsp; Since we have four control inputs (the speed of the four rotors), we can directly control four states of the system.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Technically you can pick nearly any four of the system states, but since we have good sensors for the body rates of the helicopter (thetax_dot, thetay_dot and thetaz_dot...or p, q, r depending on your inclination) and for the height of the helicopter (the ultrasound sensor pointed at the ground giving you a good value of height feedback) it makes sense to control these four states.&nbsp; In an autonomous system, this would make a somewhat crude hover algorithm.&nbsp; In a semi-autonomous system (one that the helicopter is getting some control input from a remote control but still doing low-level control on its own), this could make a pretty robust control algorithm.&nbsp; Feel free to insert a discussion here about the difference between control based on gyros and control based on accelerometers (link <A class="jive-link-external-small" href="http://www.rcgroups.com/forums/showpost.php?p=12801702&postcount=443" target="_blank">here</A> if you like).&nbsp; Regardless, since this isn't my actual target control algorithm but is just a stepping stone to what I really want to do, I'm not planning on going through all of the permutations of simple controllers.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I have 4 control outputs and I've picked 4 things to control.&nbsp; That just leaves us with 2 steps inputting the controller together...1) how to close the loop and 2) how to map the 4 control outputs to the 4 states.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>It pains me to admit it, but a solid 95% of all control applications can be solved with some form of PID.&nbsp; Frequently systems don't even need the full PID controller and can get by on P, PD or PI.&nbsp; There's a lot of background out there on PID...Wikipedia has a really good (but long) explanation (<A class="jive-link-external-small" href="http://en.wikipedia.org/wiki/PID_controller" target="_blank">link</A>), this <A class="jive-link-external-small" href="http://expertune.com/tutor.html" target="_blank">site</A> has a good explanation of how to tune a PID controller, and selfishly I'll plug some work I've posted on <A class="jive-link-external-small" href="http://zone.ni.com/devzone/cda/tut/p/id/9861">model-based PID tuning</A>.&nbsp; In general PID has some drawbacks and it's frequently not very efficient, but it's so widely used because it works most of the time.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Tuning PID by hand takes some practice, tuning it analytically takes some work as well...but my rough tuning rules are as follows.</P><OL><LI>Set P, I and D gains to 0</LI><LI>Increase P gain until the system starts to oscillate</LI><LI>Increase D gain to damp out oscillation</LI><LI>Increase I gain to fix steady-state error</LI></OL><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>This doesn't always work, but it usually gets you somewhere in the ballpark.&nbsp; I've also heard and seen some "tune by touch" methods...but I'm not really great at that.&nbsp; I know that our friend and designer of the <A class="jive-link-external-small" href="http://aeroquad.info/bin/view" target="_blank">Aeroquad</A> has some tuning tips (we chatted briefly at NI Week) that involve the feel of the quadrotor helicopter in your hands, but I'm a little nervous about holding mine and trying to tune it...once bitten and bloody, twice shy.&nbsp; Those blades pack a punch even at 1000rpm.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>So the PID control loops take two inputs, the setpoint (the value of thetax_dot, thetay_dot, thetaz_dot and Z...which for hovering are 0,0,0 and the hovering height) and the sensor readings...and they output control effort for each controlled variable.&nbsp; That control effort then needs to be mapped into motor commands.&nbsp; The following equation makes that translation.&nbsp; Omega1-4 correspond to the commanded speed for motors 1-4, and u_h, u_thetax, u_thetay, u_thetaz correspond to the control effort associated with the height each of those body role rates.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2458-7490/controller+mapping.JPG"><IMG alt="controller mapping.JPG" class="jive-image" height="233" src="./decibel.ni.com_content_blogs_quadrotor_files/controller+mapping.JPG" width="221"></A></P><P>The following screen shot shows the closed loop simulation.&nbsp; The model has some extra parts as compared to the model that I posted a couple posts ago, but this control algorithm doesn't use them, so I'll leave that out of the discussion until it has a context. </P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The setpoint is the entire state vector (all six positions and all all six velocities in the earth reference frame...and I'm splitting out the four important ones and reordering them to match the control algorithm).&nbsp; The PID loop takes the setpoint, sensor values and PID gains and computes four motor commands.&nbsp; I've added some non-linearity to saturate and quantize the motor values, and I've added a boolean that will inject noise into the motor commands.&nbsp; The non-linear motor commands are sent to the model which calculated the dynamics of the system.&nbsp; The body rates are then fed back, and the 4 controlled states are graphed.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2458-7491/PID+controller+block.JPG"><IMG alt="PID controller block.JPG" class="jive-image-thumbnail jive-image" height="268" src="./decibel.ni.com_content_blogs_quadrotor_files/PID+controller+block.JPG" width="620"></A></P><P>I've spent a little time playing with the controller gains.&nbsp; The following shows a pretty decent tuning of the system without any noise injected.&nbsp; It starts out at 0.25m and flies up to a hovering height of 1m .&nbsp; I could probably tune everything better, but I haven't had a whole lot of motivation to spend time on this control algorithm since I'm not using it in my final control design.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2458-7492/PID+controller+front.JPG"><IMG alt="PID controller front.JPG" class="jive-image-thumbnail jive-image" height="544" src="./decibel.ni.com_content_blogs_quadrotor_files/PID+controller+front.JPG" width="620"></A></P><P>I've attached the simulation code to this post, and I'll attach an executable of it so that you can play even if you don't have LabVIEW, LabVIEW PID Toolkit and LabVIEW Control Design and Simulation Toolkit (currently I'm having a problem building the executable...but I'll post it as soon that gets straightened out).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>So that works pretty well.&nbsp; However, the real issue with using 4 PID loops is that you only have the ability to control four state values.&nbsp; For this simulation, I chose to control the body rates and the height since I'm measuring them directly.&nbsp; Instead I could control the roll, pitch, yaw and the height...which might make a better control algorithm...however, either way, I'm stuck with drift in the X-Y plane.&nbsp; If you have someone watching over the system with a remote control, the human can close the loop and make sure that the system doesn't drift.&nbsp; However, with an autonomous system, you don't have that luxury.&nbsp; Well then you might say "Ben, that sucks...what can I do to actually control my quadrotor helicopter?&nbsp; I want it to be able to hover without drifting off..."</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>In the next post I'll start to tackle that question.&nbsp; The answer that I've picked for my solution revolves around the Linear Quadratic Gaussian (a linear quadratic regulator mixed with a kalman filter).&nbsp; The LQR will give us the ability to control all of the states of the system, and the kalman filter will help us turn the noisy sensor data into good state feedback.</P></DIV><!-- [DocumentBodyEnd:88942908-72fc-4fb8-a52f-be397f870856] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid#comments">5&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid">Permalink</A>
+                    </SPAN>
+
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2453"></A>
+         <DIV class="jive-blog-post jive-blog-post-alt" id="entry-2453">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/14/a-side-note-on-reference-frames"> A side note on reference frames...</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-DC34A7Qp65qSxvwF" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Sep 14, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:3bb6d454-7628-43d0-a95f-05da4a90c4b0] --><DIV class="jive-rendered-content"><P>Since my system of equations and notation have proven to be a bit confusing, I'd like to take a second to step back to try to clarify things, defining exactly what all of the variables in the dynamic equations mean and how they're related.&nbsp; Hopefully a picture will help as well.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The following image explicitly defines what I mean by each of my coordinate systems.&nbsp; Let's define capitalized X-Y-Z as a right-handed coordinate system attached to the earth, and let's assume that it's stationary.&nbsp; The angles euler angles (capitalized Psi, Theta, Fi) explicitly define the orientation of the aircraft with respect to the fixed reference frame, and they must be done in that specific order to rotate from earth-frame to body of the aircraft (as a side note, there are a lot of different conventions for euler angles...we picked this one because it matches up well with aerospace definitions...either way, the order of operations is very important and is dependent on which convention you pick).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2453-7360/plane+frames.png"><IMG alt="plane frames.png" class="jive-image" height="367" src="./decibel.ni.com_content_blogs_quadrotor_files/plane+frames.png" width="325"></A></P><P>Let's define the second reference frame (lower case x-y-z) as a right handed coordinate system attached to the aircraft and located at the plane's center of mass.&nbsp; Since the sensors in the quadrotor are attached to the plane (and assumed to be at or very close to the center of mass), the readings that we get from the accelerometer / gyro are in this coordinate system.&nbsp; We're directly reading a rotation about x, a rotation about y and a rotation about z from the x y and z gyros respectively.&nbsp; Similarly, we're directly reading accelerations in the x y and z directions.&nbsp; Furthermore, in the quadrotor, we're assuming that each motor produces thrust in the positive z-direction that's proportional to the square of it's speed.&nbsp; This gives us the dynamics and the sensor feedback in the reference body reference frame.&nbsp; The only difference from the typical aerospace notation is that I'm calling the body angle rates thetax_dot, thetay_dot and thetaz_dot instead of p, q, r respectively because I don't like to have to remember that p corresponds to a rotation about x (I like to be able to look at the subscript and know what axis in what reference frame we're talking about at any given time...it makes the notation more complicated, but I think it's easier for someone to look at and understand that a certain variable corresponds to a rotation about a given axis...and let's be honest, I'm defining the convention so I get to use what I'm comfortable with).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>If all of the discussion of reference frames is a bit confusing</STRONG>, let me take a step further back (and you might want to start with this wiki <A class="jive-link-external-small" href="http://en.wikipedia.org/wiki/Frame_of_reference#Examples_of_inertial_frames_of_reference" target="_blank">page</A>).&nbsp; It only makes sense to talk about the orientation or the position of an object if you give that "orientation and position" some reference.&nbsp; I can say that I see a church steeple that's 600 m away from me and to the left a little from the direction I'm facing.&nbsp; However, unless you know that I'm sitting on the 3rd floor of my building and facing toward the Northeast, you wouldn't be able to tell me what church that steeple belongs to (I think it's Covenant United Methodist Church in case you're curious).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Similarly, unless I have some fixed reference frame, I don't know anything about how my helicopter is behaving.&nbsp; By defining evertyhing in relationship to the ground, I can know that it's tilted as it's flying (it has some constant roll angle).&nbsp; The next problem is that the sensors on the helicopter don't know anything about the relationship between themselves and the ground.&nbsp; They're attached directly to the helicopter's body, so they're measuring the rate of spin and the acceleration of the body directly.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Imagine you're standing on my helicopter (imagine you're really small and that you don't weigh much...otherwise you'd crush it and I'd be pretty unhappy).&nbsp; Imagine that it goes into a tailspin (the dreaded deathspin of the single or dual rotor helicopters) which would mean that the helicopter rotates quickly about it's z axis.&nbsp; It will feel like you're a figure skater doing some sort of spin move.&nbsp; Very quickly you'll have no concept of which direction your facing, and you might not even be able to tell if you're still standing up straight or if you're leaning with respect to the ground...all you will feel is the spinning that your body is doing.&nbsp; You're essentially only able to sense your spin in the body-fixed frame of reference.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Example number two...when or if you fly in a commercial airplane, it's frequently very difficult to tell up from down as the plane banks around a turn.&nbsp; All of a sudden you'll look out the window and see either nothing but ground or nothing but sky, and you're totally lost your bearing of up and down with respect to the horizon.&nbsp; In this case, your internal inertial measurement unit is being tricked as the plane banks.&nbsp; You're feeling the centripetal force(or centrifugal depending on how you want to talk about it...and yes, I know...your physics teacher / dynamics teacher told you that centrifugal force was a myth...but that's just because we named one of the forces instead of the reaction force...semantics...and one of the best XKCD comics of all time <A class="jive-link-external-small" href="http://www.xkcd.com/123/" target="_blank">link</A>), and you're body interprets it as gravity...making you think that "down" is in the direction of this new fake gravity that you're feeling...which in turn gets your internal bearings off until you look out the window and realize that all you see is sky.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>If you want to replicate this control system, then what of this do you really need to know?&nbsp; </STRONG>That's a good question.&nbsp; You probably don't need to care about all of the background on inertial versus body-fixed reference frames.&nbsp; You definitely need to know that your IMU (gyro and accelerometer) measurements correspond to thetax_dot, thetay_dot, thetaz_dot, xdoubledot, ydoubledot and zdoubledot.&nbsp; You also need to know that you can't just integrate those values to get roll, pitch, yaw and position of the helicopter over time.&nbsp; The sensor data has to be translated into the right reference frame before it's integrated, a step that I'll write about in my next couple of posts.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2453-8816/dynamics_fixed.JPG"><IMG alt="dynamics_fixed.JPG" class="jive-image-thumbnail jive-image" height="169" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/dynamics_fixed.JPG" width="620"></A></P><P>The system of dynamics equations that I posted last week (and the m-script file that I also included) take the physical parameters of the system (inertias, mass, drag and thrust coefficients of the helicopter blades, etc) and give you accelerations in the frame of reference of the helicopter.&nbsp; In a simple control system, you might want to put a PID controller on the four parameters thetax_dot, thetay_dot, thetaz_dot and height (Z), and call it a finished control system.&nbsp; With the dynamic equations above and some simulation software you could test and tune that controller and you'd be good to go.&nbsp; Come to think of it, that might be a good intermediate topic for my next post...PID control of a quadrotor and why I moved away from it.&nbsp; I think I have some simulation code for that somewhere...but if I remember correctly, I couldn't get the PID loops tuned to make the model stable.&nbsp; I'll try to dig it up nonetheless.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Either way, the next steps will be control and simulation discussions.&nbsp; Hurray for controls!</P></DIV><!-- [DocumentBodyEnd:3bb6d454-7628-43d0-a95f-05da4a90c4b0] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/14/a-side-note-on-reference-frames#comments">1&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/14/a-side-note-on-reference-frames">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/labview">labview</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter">helicopter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor">quadrotor</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/dynamics">dynamics</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/model">model</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/reference_frame">reference_frame</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2394"></A>
+         <DIV class="jive-blog-post " id="entry-2394">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/09/the-model"> The Model</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-fv28HELucVA4FPn5" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Sep 9, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:fd52561e-359d-4cd8-b225-9f9224cdcdc8] --><DIV class="jive-rendered-content"><P>I occasionally like to tell people that "I do a little modeling on the side.&nbsp; It's mainly freelance, nothing too serious."&nbsp; I usually try to leave it at that, but invariably I have to admit that I wasn't born to be really, really, ridiculously good looking.&nbsp; Instead I was born to do multi-domain dynamic system modeling...well, maybe not <EM>born</EM> to do it, but I definitely dabble here and there.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>In a general sense, the model of the quadrotor helicopter is one of the simplest you might come across.&nbsp; It's just a blob moving freely in space with four forces and four torques acting on it.&nbsp; Each motor generates both a thrust and a torque (the torque is a little less intuitive, and is really the reaction of the blade pushing through the air).&nbsp; Imagine if you were spinning a boat propeller by hand...you'll get some thrust, but you'll also be applying a lot of torque which would get transmitted through you into the boat structure.&nbsp; Similarly, the propellers are generating thrust, but they're also transmitting the reaction torque to the frame of the aircraft.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>If you've ever had a dynamics class or over-zealous physics class, you'll likely remember the proverbial "blob".&nbsp; This blob represents some unknown shaped object in space, and it has some mass and some moments of inertia, all of which can be measured or approximated.&nbsp; Put it all together, and there you have it, a model.&nbsp; Alright, the actual derivation of the model is a little more complicated than that, but it's definitely a place to start.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I'm not sure whether it's a good sign or a bad sign, but there is a lot of active research on quadrotor helicopters not only in the hobbyist community but also in the academic community (and we can probably safely assume the national lab / military contractor community as well).&nbsp; We started the modeling process by doing a literature review and found some really nice papers covering both the modeling and control.&nbsp; A few are theses, a few are conference papers, but here are some of the links that I found useful (<A class="jive-link-external-small" href="http://asl.epfl.ch/aslInternalWeb/ASL/publications/uploadedFiles/330.pdf" target="_blank">link</A>, <A class="jive-link-external-small" href="http://www.control.lth.se/documents/2008/5823.pdf" target="_blank">link</A>, <A class="jive-link-external-small" href="http://www.araa.asn.au/acra/acra2006/papers/paper_5_26.pdf" target="_blank">link</A>, <A class="jive-link-external-small" href="http://me.columbia.edu/seniordesigns/2007/QUAVe/FinalReport.pdf" target="_blank">link</A>).&nbsp; Our modeling is based on a mix of these papers and others, which contributed to the problems that we faced during the implementation phase.&nbsp; Since many of the papers have different naming conventions, coordinate systems, etc, we had a few errors in making our math match the real system.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The following image represents the free body diagram of our model.&nbsp; There are four thrusts, four torques and gravity acting on the robot.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2394-7214/quaddy_fbd3.jpg"><IMG alt="quaddy_fbd3.jpg" class="jive-image-thumbnail jive-image" height="343" src="./decibel.ni.com_content_blogs_quadrotor_files/quaddy_fbd3.jpg" width="620"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>If you look closely, you'll notice that the torque vectors across from each other are in the same direction, and the motors that are closest to each other have torque vectors in opposite directions.&nbsp; This is in fact not an error, but a design requirement to keep the helicopter from spinning out of control (which is why helicopters must have at least two sets of rotors to be able to fly...if it just had a single rotor then the body would slowly start to spin in the opposite direction of the blades, picking up speed until it either crashed or until the body and the blades balanced out in their counter-rotation).&nbsp; Let's call the bottom right motor "A", bottom left is "B" top left is "C" and top right is "D".&nbsp; Motors B and D are wired to spin clockwise and motors A and&nbsp; C are wired to spin counter-clockwise (this just means a single pair of wires between the speed controller and the motor have been flipped).&nbsp; Each of the motors has a propeller that is designed to provide lift with its direction of spin.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Ok, bear with me as we get into the math.&nbsp; It will be a little bit of a mix of mechanical engineering and aerospace notation (my colleague working with me has an aerospace background...at least I convinced him that "up" pointed outward from the surface of the earth instead of into the surface of the earth like they have it...what kind of crazy coordinate system has "up" pointing down?).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Speaking of coordinate systems, there are two right-hand coordinate systems at work in the dynamics, one that's fixed to the earth called XYZ (note the capital...because it's earth-fixed) and one that's fixed to the body of the helicopter at the center of mass called xyz (lower case because it's body-fixed).&nbsp; The relationship between the two reference frames is shown in the picture I found below (just imagine that the notation is the same...XYZ should be fixed and xyz should be the moving frame).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="./decibel.ni.com_content_blogs_quadrotor_files/250px-Inertial_frames.PNG" target="_blank"><IMG alt="http://wpcontent.answers.com/wikipedia/commons/thumb/6/6a/Inertial_frames.PNG/250px-Inertial_frames.PNG" class="jive-image" src="./decibel.ni.com_content_blogs_quadrotor_files/250px-Inertial_frames.PNG"></A></P><P>The origin of xyz (x'y'z' in the picture) is located at a position of (X,Y,Z) and has an orientation of (Psi, Theta, Phi) with respect to the earth-fixed frame.&nbsp; This rotation corresponds to rotation about X, Y and Z respectively, commonly called roll, pitch and yaw.&nbsp; Since all of the sensors measure in the body-fixed frame, and the thrusts are in the xyz body-fixed frame then it makes sense to do all of the dynamics are in that frame.&nbsp; Gravity is the only input that stays in the earth-fixed frame.&nbsp; To complicate matters a bit more, most of the control will be done in the earth-fixed frame, but that will wait for another post.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I'll try to make the math look as pretty as possible and explain it as well as possible.&nbsp; Let's start from square 1 with the basic dynamic equations for translational and rotational motion:</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2394-7237/fma.JPG"><IMG alt="fma.JPG" class="jive-image" height="52" src="./decibel.ni.com_content_blogs_quadrotor_files/fma.JPG" width="81"></A></P><P>Force is proportional to acceleration and torque is proportional to angular acceleration.&nbsp; If you take this to a 3-D system, you get three forces, accelerations, torques and angular accelerations.&nbsp; If you simplify the motion to either rotation or translation, these two equations below represent the vector form:</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2394-7256/fma_vector.JPG"><IMG alt="fma_vector.JPG" class="jive-image" height="167" src="./decibel.ni.com_content_blogs_quadrotor_files/fma_vector.JPG" width="336"></A></P><P>If you combine the rotation and translation in a moving reference frame, you pick up coriolis terms (velocities crossed with angular velocities).&nbsp; Combine the two matrix equations for force and torque, you get the following equation that is the basic dynamic equations for the helicopter:</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2394-7257/basic_dynamics.JPG"><IMG alt="basic_dynamics.JPG" class="jive-image" height="76" src="./decibel.ni.com_content_blogs_quadrotor_files/basic_dynamics.JPG" width="425"></A></P><P>In this notation the superscript "B" means that it's in the xyz or body-fixed reference frame.&nbsp; The following equation expands the previous dynamic equation spells it out a little more explicitly:</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2394-8815/dynamics_fixed.JPG"><IMG alt="dynamics_fixed.JPG" class="jive-image-thumbnail jive-image" height="169" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/dynamics_fixed(1).JPG" width="620"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The single dots (x_dot, y_dot, z_dot, thetax_dot, etc) are first derivatives (x, y and z velocity and angular velocity about x, y and z) in the body-fixed frame, and the double dots are second derivatives (accelerations and angular accelerations) in the body-fixed frame.&nbsp; The inputs to the system are the thrust, and the three torques which are functions of the angular rate of each motor (omega1, omeaga2, omega 3 and omega4), the lift coefficient of the propeller (b), the length from the center of mass to the axis of the propeller (l_prop) and the drag of the propeller (d).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2394-7271/inputs2.JPG"><IMG alt="inputs2.JPG" class="jive-image" height="120" src="./decibel.ni.com_content_blogs_quadrotor_files/inputs2.JPG" width="288"></A></P><P>It's all well and good to have a set of matrix equations, but to do anything interesting with a simulation of the dynamic system you need to put in some real numbers and try to match it to the real system.&nbsp; So after getting out a ruler and a scale, we put values to the m, I, b and d constants.&nbsp; We dropped the equations into an m-script node since complex math is frequently easier to do in text-based math than in graphical LabVIEW code, and voila...a model of the system that takes 4 motor speeds as inputs and returns 3 translational accelerations and 3 angular accelerations.&nbsp; I've attached my .m file to this posting with the actual math that we're using in the system model.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>As a side note, I set up an experiment with a scale that I empirically found a value for b.&nbsp; I taped a long rod to one of the arms under one of the propellers (to get rid of ground effects for the propeller) and balanced the helicopter on a stand so that it would just be able to rotate in one axis.&nbsp; I then gave the motor different inputs and fit a curve to the data to find b.&nbsp; We then assumed that d is two orders of magnitude smaller than b, a relatively standard assumption.&nbsp; We also assumed that the command signal (PWM pulse width) sent to the motors corresponded to a velocity command, which seemed to be valid since the thrust looked like a parabolic function...and the thrust should be proportional to the square of the velocity.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Phew...</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>If you're lost, there's a lot of good background reading.&nbsp; You might want to start with a good discussion of reference frames like the one in Wikipedia (<A class="jive-link-external-small" href="http://en.wikipedia.org/wiki/Inertial_frame_of_reference" target="_blank">link</A>) or the discussion of inertia matrices (<A class="jive-link-external-small" href="http://en.wikipedia.org/wiki/Moment_of_inertia" target="_blank">link</A>).&nbsp; You might also want to grab any good dynamics text book (I really like McGill and King's <EM>An Introduction to Dynamics</EM>...I used it to study for qualifiers and also used it to teach in an undergrad dynamics class).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I think this pretty well covers the dynamic model of the system.&nbsp; The nonlinear model maps the 4 inputs to 3 accelerations and 3 angular accelerations.&nbsp; In the next posts I'll move into the discussion of the control algorithm, starting with the linearization of the model and implementation of an LQR controller.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>As always, if I've missed something, glossed over something or have been generally unclear, leave me a note.&nbsp; I'll be happy to fill in.</P></DIV><!-- [DocumentBodyEnd:fd52561e-359d-4cd8-b225-9f9224cdcdc8] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/09/the-model#comments">9&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/09/the-model">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/model">model</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter">helicopter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/dynamics">dynamics</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robotics">robotics</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor">quadrotor</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robot">robot</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2399"></A>
+         <DIV class="jive-blog-post jive-blog-post-alt" id="entry-2399">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/02/open-loop-flight-video"> Open Loop Flight Video</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-NVdVwVWDm1GF5QyD" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Sep 2, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:96e91ae1-da24-423b-a8c4-10ab520b0fb0] --><DIV class="jive-rendered-content"><P>Even though I promised modeling and controls discussion for my next post (fear not, that's still next...I've already started putting words into web browser), I thought I'd take a minute to post a video of the quadrotor helicopter flying completely open loop.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The robot is suspended in the middle of an empty cubicle using fishing line, and this constitutes our simple test rig.&nbsp; You'll notice that I'm powering the sbRIO from a power supply (black cable in the video), and I am connected directly to it using an ethernet cable (grey cable).&nbsp; The cables, fishing line, compliance of the cubicle walls, etc etc make this test rig less than ideal, but it has been helpful in the troubleshooting process nonetheless.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><OBJECT height="350" width="425"><PARAM name="movie" value="http://www.youtube.com/v/nTeqQQ0V1Ro"><PARAM name="wmode" value="transparent"><EMBED height="350" src="http://www.youtube.com/v/nTeqQQ0V1Ro" type="application/x-shockwave-flash" width="425" wmode="transparent"></OBJECT></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I'm controlling each of the motors independently from a computer in a nearby cubicle.&nbsp; They're each running at about 80%, and I'm trying to balance them so that it hovers.&nbsp; You can see that it's trying to hover, but open loop control is obviously not going to quite cut it.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Ok, next post...modeling...</P></DIV><!-- [DocumentBodyEnd:96e91ae1-da24-423b-a8c4-10ab520b0fb0] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/02/open-loop-flight-video#comments">2&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/02/open-loop-flight-video">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/labview">labview</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/fpga">fpga</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robotics">robotics</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor">quadrotor</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter">helicopter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robot">robot</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/sbrio">sbrio</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/video">video</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2388"></A>
+         <DIV class="jive-blog-post " id="entry-2388">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/27/software-structure"> Software Structure</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-MSi0TJV678113Yy8" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Aug 27, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:214c003d-9fc9-4b83-9550-e682d46fbf10] --><DIV class="jive-rendered-content"><P>Before I jump headlong into control algorithms, simulation and real-time implementation, come with me as we take a step back and look at the overall system.&nbsp; What do we have?</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>As I said in one of my previous posts, I'm a mechanical engineer by training.&nbsp; I've picked up the rest of the electrical and programming knowledge over time, but I'm just good enough at those other parts to be dangerous (smoking FETs, poorly routed traces on circuit boards and ugly code).&nbsp; That said, I'm about to put down my ideas for modular and abstracted code development...which will probably make computer science people cringe, but it works for me.&nbsp; I think I picked it up in a grad class that I took from Prof. Bonnie Heck Ferri in the ECE department at Georgia Tech (she's a fantastic professor who actually cares about education...at Tech...who would have thought), and since then I've used a version of it when I taught elementary and high school robotics and have refined it on nearly every project that I work on for myself.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Here's how I see it.&nbsp; The software for a robot system can be divided into four different levels, each of which can be written so that it is blind to what's above or below it.&nbsp; Here's a graphic of my structure.&nbsp; Now bear with me as I explain it.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>&nbsp; <A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2388-7015/control_levels.JPG"><IMG alt="control_levels.JPG" class="jive-image-thumbnail jive-image" height="338" src="./decibel.ni.com_content_blogs_quadrotor_files/control_levels.JPG" width="451"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The lowest level interfaces directly with sensors and actuators, let's call this the "driver layer." Code at this level takes simple commands from the level above it, returning simple sensor values or causing some sort of actuation.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The next level up I call the "platform level" for lack of a better term, and it provides a pass-through layer between the driver level and higher levels of control.&nbsp; For instance, it might take sensor information from 3 gyros, 3 accelerometers, a digital compass, and an ultrasound sensor and use a Kalman filter to turn that into a full 12-state estimation (just off the top of my head that seems like a good example).&nbsp; Going the other direction, this level might take a desired robot trajectory and translate that into four motor commands.&nbsp; This level is very platform dependent and would be very different for a 3 rotor helicopter, a 4 rotor helicopter, a 4-wheeled skid-steer robot, or a ground-based mecanum steer robot (<A class="jive-link-external-small" href="http://en.wikipedia.org/wiki/Mecanum_wheel" target="_blank">link</A>).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The third level up (which can occasionally be the top level) contains the decision making for the task of the robot, so I call this the "algorithm level."&nbsp; This is where you might put an obstacle avoidance algorithm or a path following routine.&nbsp; It uses the cleaned-up sensor information coming from the platform level and passes back down information about robot behavior.&nbsp; Frequently this will contain a hierarchy of different tasks, so there needs to also be a mediator in this level that balances the tasks that the robot performs.&nbsp; In a completely autonomous robot, this might be the top level.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>On top of all of the autonomy sits the interface to a human operator.&nbsp; Arguably, you could classify this in the platform level as another input that gets passed to the algorithm, but I'd like to think that we're in control of our robots instead having our robots decide whether or not they want to listen to us...so I'm going to call the top level the "user interface level."&nbsp; This could be as simple as a reset button and a few blinking LEDs (as it might be with an sbRIO in an autonomous application) or as complicated as a GUI streaming to a host computer somewhere on the interwebs.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Using this structure gives a robot programmer the ability to reuse lots of code.&nbsp; I might use the same FPGA or RT based driver to generate hobby servo PWM signals for a dozen things, and that code can move from robot to robot or might even be used in multiple spots in the same robot but for different things.&nbsp; It takes a velocity and a direction for the motor and turns that into the odd PWM signal to drive the motor.&nbsp; Similarly, I might use the same obstacle avoidance algorithm on 3 or 4 different platforms, and all I have to pass down from that layer is the robot trajectory.&nbsp; The algorithm doesn't care if it's deployed on a 2-wheel robot, a holonomic drive robot, a tank tread robot.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>To make this all even more complicated, the robot system technically has three computing nodes (the FPGA, the real-time processor on the sbRIO and the host computer).&nbsp; For the quadrotor heli in completely autonomous flight, the FPGA and the RT processor should be able to handle the sensors and make decisions about the flight.&nbsp; In an assisted mode, the host computer should be able to give the robot setpoints to fly to, see sensor information and hit the proverbial "kill switch."&nbsp; As a rule of thumb, the platform and driver levels should be able to run in real-time (so either on the FPGA or the RT processor), and the algorithm and user interface code can run either on the RT processor or on the host PC.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2388-7031/control_places.JPG"><IMG alt="control_places.JPG" class="jive-image-thumbnail jive-image" height="305" src="./decibel.ni.com_content_blogs_quadrotor_files/control_places.JPG" width="407"></A></P><P>I present this not as a set of hard-and-fast rules that should be recommended for all robotics applications without question.&nbsp; I present it as a mechanical engineer's take on building modular and reusable code for robotics applications.&nbsp; It works for me, but let it percolate a little and let me know if you think it would work for you.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>To sweeten the deal a little, I'll even prove that I've actually used this approach before.&nbsp; The following scanned page shows my notes about code design as I was working on a new robot with some colleagues.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2388-7033/niro_code_sketch.JPG"><IMG alt="niro_code_sketch.JPG" class="jive-image-thumbnail jive-image" height="352" onclick="" src="./decibel.ni.com_content_blogs_quadrotor_files/niro_code_sketch.JPG" width="468"></A></P><P>Now that I've established a structure for my code, I think it's about time to move on to the real software discussion.&nbsp; In the next post I'll start where we started with the actual control algorithm development, the modeling (and yes, I'll make sure th include sources etc).&nbsp; As always, if you have any thoughts or if there's something you'd like for me to go into more depth on, just leave me a comment and I'll see what I can do.</P></DIV><!-- [DocumentBodyEnd:214c003d-9fc9-4b83-9550-e682d46fbf10] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/27/software-structure#comments">3&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/27/software-structure">Permalink</A>
+                    </SPAN>
+
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2346"></A>
+         <DIV class="jive-blog-post jive-blog-post-alt" id="entry-2346">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/24/hardware-part-3-control-electronics-and-sensors"> Hardware Part 3: control electronics and sensors</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-7h49CzGmskMbpfGh" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Aug 24, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:26d5c73e-dd00-4b3a-9597-e00564f4fa98] --><DIV class="jive-rendered-content"><P>In my first two hardware posts, I covered the mechanical structure and the power distribution, essentially everything outside of the main control board of the robot.&nbsp; This post should finish up the hardware discussion by covering the controller, the sensors, the wireless communication hardware and the daughter board that I had built to tie everything together.&nbsp; So let's start with the brain of the beast...</P><P><STRONG><BR></STRONG></P><P><STRONG>The controller...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>For obvious reasons, we thought it would be a great idea to use a piece of National Instruments hardware as our control platform.&nbsp; Since single board RIO is going to be one of the featured embedded targets for robotics application, and since it comes in a clean non-packaged form factor, it made perfect sense for a flying robot.&nbsp; It's lightweight, powerful, has built in I/O, built in communication hardware, an FPGA, a real-time processor, etc.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>We started out with the sb-9631 for one main reason...NI Week was approaching, and I could track someone down who would let me borrow it for a while.&nbsp; I'm actually using the same sbRIO that comes as part of the evaluation kit (<A class="jive-link-external-small" href="http://sine.ni.com/nips/cds/view/p/lang/en/nid/205894">link</A>). We picked a flavor of the sbRIO that included analog I/O modules onboard so that we would have plenty of ability to interface with whatever sensors we thought we might possibly need.&nbsp; The main part of the board has 110 digital I/O pin, and this specific layout of board also has 32 analog input and four analog outputs...which is significantly more I/O than we need, but it's always better to have extra space if you want to add stuff later in the design.&nbsp; The control algorithms get split between the 266MHz PowerPC processor and the 1M gate Spartan FPGA.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Instead of using an expensive pre-packaged inertial measurement unit (IMU), our design revolves around a three-axis accelerometer, a dual axis gyroscope and a single axis gyroscope (more about that in a second).&nbsp; That gives us all of the raw data, but to get useful information from the IMU, it needs to be filtered, rotated to a fixed reference frame, and integrated at a relatively high rate. Great, that's something that FPGA is really good at...simple math calculations at high speed with high determinism.&nbsp; We needed to put some rotation matrix math into the FPGA in addition to a few filters and some scaling math...one thing leads to another and all of a sudden we're out of FPGA space. It's a week and a half before NI Week, and slight sense of panic has just set in.&nbsp; Calls went out, pleading began, emails got passed through the marketing foodchain, looking for an sbRIO with a larger FPGA.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The current design uses an sbRIO-9642 (<A class="jive-link-external-small" href="http://sine.ni.com/nips/cds/view/p/lang/en/nid/205900">link</A>).&nbsp; You might ask "Why, Ben?&nbsp; Is it the conformal coating?&nbsp; Is it the faster processor, or the 24V digital I/O?"&nbsp; It's because I found someone who would let me borrow it, and it has a 2M gate FPGA.&nbsp; It has the same hole pattern for mounting, and the I/O ports that we were using are the exact same...which means it's a drop-in replacement with a larger FPGA.&nbsp; Yay...more space.&nbsp; As a side note, the conformal coating has an odd blue tint to it under the lights at the convention center.&nbsp; It was slightly disturbing when we saw it for the first time.&nbsp; Apparently it has to do with some UV reflective stuff that they use in the coating so that they can check for coverage in the testing process.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6922/IMG_2268-1.JPG"><IMG alt="IMG_2268-1.JPG" class="jive-image-thumbnail jive-image" height="241" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2268-1.JPG" width="336"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The middle four sets of connectors give access to the digital I/O pins which are 3.3V logic but are tolerant of 5V input.&nbsp; Luckily the speed controllers and the digital sensors that we're driving were able handle the 3.3v logic as well. The long rectangular connector in the bottom right gives us access to the analog inputs and outputs.&nbsp; Power is top right, ethernet is top left, and serial is next to the ethernet.&nbsp; There you go, single board RIO as we're using it for the quadrotor helicopter.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>The sensors...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>As I said in previous posts and just above, most of our design decisions centered around cost.&nbsp; The overall budget for our project ended up being about $500 (that doesn't include our time or any of the NI hardware or software...which are free in my world currently...apparently not so for everyone), so it wouldn't have made any sense to use a $1200 inertial measurement unit (IMU) or a $7000 LIDAR unit (I don't remember what the acronym stands for, and I'm too lasy to look it up right now...but it uses a laser to scan a plane in less than 1 degree increments...and it builds up polar map of the obstacles around the sensor). Instead, we used simpler, more economical sensors for our robot.&nbsp; As before, this just happens to be where I got the sensors, and I'm in no way trying to say that National Instruments endorses SparkFun...I personally am a big fan, but that's neither here nor there.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The sensors we chose were:</P><UL><LI>5-axis IMU - <A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/product_info.php?products_id=9268" target="_blank">link</A> - we're actually using an older version of the same board, but it's a 3-axis accelerometer and a 2-axis gyro on one board</LI><LI>1-axis gyro - <A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/product_info.php?products_id=9059" target="_blank">link</A> - this third gyro gives us a full 6-axis IMU</LI><LI>digital compass - <A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/product_info.php?products_id=7915" target="_blank">link</A> - a very nice i2c-based compass</LI><LI>ultrasound module SRF05 - <A class="jive-link-external-small" href="http://www.acroname.com/robotics/parts/R271-SRF05.html" target="_blank">link</A> - this is a very nice inexpensive ultrasound module, and there's published FPGA driver code for it <A class="jive-link-wiki-small" href="http://decibel.ni.com/content/docs/DOC-3737">here</A></LI></UL><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>You might notice that I've listed more sensors that I have degrees of freedom in the system (I have an object moving in space, which is completely defined by three coordinates and three rotations...ta-da, a 6 degree of freedom system...with only 4 actuators...sounds like a controls problem...more on that in a later post).&nbsp; Without getting prematurely too far into the control theory, this whole system can definitely be stably controlled with fewer sensors.&nbsp; You can probably achieve hover using two accelerometers, a gyro and a few PID loops.&nbsp; However, we figured that we'd bring out the "big guns" and try to do some full state control.&nbsp; The 6 degree of freedom (DOF) IMU data gets filtered, rotated into the right coordinate frame and the acceleration data gets integrated to give us 3 degrees of velocity and 3 degrees of angular velocity.&nbsp; We combine that data with the other two sensor values using a Kalman filter (we're technically using an extended Kalman Filter because we have a non-linear model of the system...we actually have a linear version as well that's being used to tune the LQR controller, but the non-linear version is more accurate technically).&nbsp; Then we use the LQR controller for full state control.&nbsp; Crazy.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The short story that will have to do for now reads like this...we're using the Kalman filter to take noisy and redundent data and produce a full state estimation (an estimation of both the copter's linear and position in space and its linear and angular velocity in space) that's based partially on the sensor data and partially on a model of the system.&nbsp; There will be plenty more of this discussion in the next posts.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Back to the previous thought of doing this the "simple way."&nbsp; Using a couple of accelerometers, an ultrasound sensor for height, and a gyro, you can achieve stable hovering and height control using four PID loops.&nbsp; I had the opportunity to talk briefly with Mikro (from the RCGroups.com forum) about how he's controlling his quadrotor heli (<A class="jive-link-external-small" href="http://www.aeroquad.info/" target="_blank">link</A>).&nbsp; He went through his manual tuning method for the PID controllers, and I think I may implement that as a "mid" step in the not too distant future.&nbsp; Regardless, the ultimate goal will be to get everything rock solid with the advanced control method...I mean, why not swing for the fences?</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The following pictures show the compass and IMU sensors on the robot.&nbsp; The top one in the pictures is the 5-axis part, the one below it is the single-axis gyro and the small board on the bottom of the photo is the digital compass.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6935/IMG_2270.JPG"><IMG alt="IMG_2270.JPG" class="jive-image-thumbnail jive-image" height="302" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2270.JPG" width="239"></A><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6936/IMG_2274-1.JPG"><IMG alt="IMG_2274-1.JPG" class="jive-image" height="302" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2274-1.JPG" width="231"></A></P><P>I attached the ultrasound sensor to the bottom of the main base plate, pointing directly down at the ground.&nbsp; The range of the sensor goes from &lt; 3" to about 15', and it gives a direct measurement of the height of the hovering robot.&nbsp; The "beam" of this specific ultrasound sensor is roughly a 30 degree cone, which means that if the body rolls or pitches the sensor feedback changes very little if any.&nbsp; It still sees an object (the ground) in its field of view and at the right height even if it happens to be at an angle.&nbsp; If the beam were much smaller (for instance a 1 degree cone) and the robot were at a given height, the value read by the sensor would change as the robot tilted as a trig function of the angle.&nbsp; Frequently, the large conical workspace of this type of ultrasound sensor is a bad thing...here it works out well for us.&nbsp; The following pictures show a closeup of the ultrasound sensor as well as its position on the bottom of the robot.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6937/IMG_2271.JPG"><IMG alt="IMG_2271.JPG" class="jive-image-thumbnail jive-image" height="190" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2271.JPG" width="281"></A><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6938/IMG_2242.JPG"><IMG alt="IMG_2242.JPG" class="jive-image-thumbnail jive-image" height="192" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2242.JPG" width="301"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>The communication hardware...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>We went through a lot of thought about how we wanted to be able to communicate with the robot, and this is probably the only place that we really deviate from the typical hobbyist quadrotor design.&nbsp; We wanted to be able to drive the quadrotor from a computer, so the normal RC radio with joysticks etc wasn't really an option that we wanted to explore.&nbsp; As I see it, that left us with a few choices.&nbsp; We could...</P><UL><LI>...put a wireless access point on it.</LI><LI>...drop in some small, low-power wireless radio chip.</LI><LI>...use a bluetooth serial replacement.</LI></UL><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Some of the robots that I've put together for various people over the past few months have gone with the wireless router path.&nbsp; If you pull a wireless access point out of its housing, the board itself is pretty small.&nbsp; It's a really clean solution from an implementation standpoint.&nbsp; You plug the cRIO or sbRIO into the router, you can plug an ethernet camera into the router, and then everything talks all nice and shows up in the right places.&nbsp; LabVIEW handles the ethernet communication for you, if you just want to check in on what's happening...everything just works.&nbsp; The only real downside (other than the fact that the wireless router boards are about half the size of an sbRIO) is that they are a HUGE power hog.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>On the other end of the power spectrum, you'll find the Zigbee protocol chips (there are a lot of other wireless protocols out there with specific chips, but I think Zigbee is probably the most mature and definitely the most talked about).&nbsp; Xbee makes a full line of boards that cover various ranges and power levels (<A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/categories.php?c=111" target="_blank">link</A>), and they're small / lightweight / etc.&nbsp; However, it would have been more difficult to implement something.&nbsp; I would have needed to either use a serial bridge to the serial port on the sbRIO, or I could have written my own FPGA communication stuff for it...but that's not where I wanted to spend my time on this project.&nbsp; I'd rather leverage something that is small / low power and relatively transparent from an implementation standpoint.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I would like to introduce you to the bluetooth serial module from Roving Networks (<A class="jive-link-external-small" href="http://www.sparkfun.com/commerce/product_info.php?products_id=8495" target="_blank">link</A> who by the way are really nice guys...I originally purchased the SparkFun part that I linked, but it's the wrong gender...so I called Roving Network's support number, which I think might just ring to one of the engineer's desks, and I asked what I'd need to do to make it the right gender...I was about to desolder, rejumper, etc...which probably would have worked eventually...but instead he briefly chastised SparkFun for not carrying both genders and then suggested that he would replace it for me if I'd ship it back to him...awesome).&nbsp; I purchased one of those crazy tiny bluetooth modules that you can get from various electronics outfits in China / Hong Kong for $2, and I was in business with a bluetooth serial link.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6939/IMG_2233.JPG"><IMG alt="IMG_2233.JPG" class="jive-image-thumbnail jive-image" height="338" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2233.JPG" width="414"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>As you can see in the picture above, the module plugs directly into the serial port of the sbRIO and gets power from a 5V pin on the sbRIO's IO ports.&nbsp; It shows up on the real-time processor of the sbRIO like any other serial port that can be read from or written to.&nbsp; On the host side, it shows up again as a serial port.&nbsp; Literally, it's as if I have an actual serial cable between the sbRIO and my host computer.&nbsp; A little bit of coding to get the right information moving back and forth between my host and copter, and we're good to go.&nbsp; This hasn't been completely implemented yet, but it should be relatively simple.&nbsp; Here's a closeup of the module itself.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6940/IMG_2273.JPG"><IMG alt="IMG_2273.JPG" class="jive-image-thumbnail jive-image" height="168" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2273.JPG" width="347"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>This all brings us to the one last piece of hardware that ties everything together.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>The daughter card...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The 110 digital IO lines as well as the analog IO pins that we're using are all broken out in a black rectangular 25x2 0.1" pitch male connector that matches some old-school form of SCSI 1 or SCSI 2 ribbon cable.&nbsp; So for prototyping, I bought some old ribbon cables on eBay, cut them up, built my own little breakout board, and away I went.&nbsp; You can actually see this version of the mess in the picture below.&nbsp; The picture is actually more simplified than it was at the time since only the digital lines are hooked up.&nbsp; Double the mess below, and that's what it would have looked like with both the digital and analog IO.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6944/IMG_2220-1.JPG"><IMG alt="IMG_2220-1.JPG" class="jive-image-thumbnail jive-image" height="247" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2220-1.JPG" width="372"></A></P><P>It worked for prototyping, but it was definitely not robust, clean or even mountable.&nbsp; The only real choice was to make my own daughter board that would plug directly into the sbRIO.&nbsp; Doing that let us make the simplification that you see in the picture below.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6945/IMG_2235.JPG"><IMG alt="IMG_2235.JPG" class="jive-image-thumbnail jive-image" height="239" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2235.JPG" width="271"></A></P><P>I'll attach the Eagle files that I used to generate the board.&nbsp; Similar to the the dc-dc converter board, the daughter board was drawn up in Eagle and sent to BatchPCB.com to be turned into real life circuit boards.&nbsp; A quick order to Mouser for some headers to populate the board, and we were in business.&nbsp; If you've been paying close attention, you've probably seen this daughter board in earlier photos.&nbsp; I designed it so that the three SparkFun boards and the sonar module would plug in directly, would be wired to specific analog and digital pins, and would get power from the sbRIO.&nbsp; There's a voltage regulator on the daughter board to power the 3.3V components from the onboard 5V source, a power connection for the bluetooth module and headers for for the digital lines that drive the ESCs.&nbsp; I even broke out 4 extra analog input pins, 4 extra analog output pins and 2 extra PWM outputs, all of which are the standard hobby 3-pin connection (signal-power-ground) and are powered from the 5V sbRIO bus.&nbsp; I also broke out an entire 8-pin digital port along with a 5V / ground pin in case something else came along that I wanted to interface with.&nbsp; The planning ahead has already come in handy, because I forgot to dedicate a connector to watch the voltage of the LiPo battery.&nbsp; No fear, just wire it to an analog input port, and we're good to go.&nbsp; The version that's currently on the quadrotor copter hasn't been fully populated, theoretically an attempt to cut down on weight.&nbsp; I'm not sure that it matters, but it made me feel better.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>Let's wrap it up...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I think that might actually finish the hardware explanation.&nbsp; I went through physical construction, power issues, and this covers the non-power electronics.&nbsp; Yes?&nbsp; Yes...the blog has given me the opportunity to write like I think...which isn't always a linear progression.&nbsp; I've tried not to leave anything out that's important, and I've tried not to skip around too much...but iIf I've left something out or haven't covered something hardware related that you'd like to hear more about, please let me know.&nbsp; I'd be happy to go back to it.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I'm not going to say that we've created a shining example of the best possible design process, but I think that most of the design decisions that we made were at least somewhat thought through.&nbsp; Currently I'd only make a couple of small changes to the hardware, but I'm going to withhold judgement until we get to the end of the process to put down a "What I'd Change" list.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>As you can see from the blurred rotor blades in the following picture that things are hooked up and spinning.&nbsp; Maybe I'll get crazy this week and post a picture of it flying open loop (since we haven't talked about closing the loop yet).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2346-6946/IMG_2220.JPG"><IMG alt="IMG_2220.JPG" class="jive-image-thumbnail jive-image" height="270" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2220.JPG" width="404"></A></P><P>In the next posts I'll dive into the software that we've developed for this flying monstrosity.&nbsp; Maybe I need to organize my thoughts a little before I jump into the middle of the control discussion...somewhere along the line I'll talk about software achitecture, system simulation, PID versus more advanced control, LQR and Kalman filtering, low-level FPGA implementation, then taking it all to hardware...wow, there's a lot left to get out of my head.&nbsp; Stick with me, it should be interesting.</P></DIV><!-- [DocumentBodyEnd:26d5c73e-dd00-4b3a-9597-e00564f4fa98] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/24/hardware-part-3-control-electronics-and-sensors#comments">0&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/24/hardware-part-3-control-electronics-and-sensors">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/sbrio">sbrio</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/accelerometer">accelerometer</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor">quadrotor</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter">helicopter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/imu">imu</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/ultrasound">ultrasound</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robot">robot</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/labview">labview</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/fpga">fpga</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/groscope">groscope</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/gyro">gyro</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robotics">robotics</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2309"></A>
+         <DIV class="jive-blog-post " id="entry-2309">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/19/hardware-part-2-the-power"> Hardware Part 2: the power</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-W2162FFQlPko7Wy5" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Aug 19, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:6d325e79-f89f-4af4-86a0-ed7ea0b9bd89] --><DIV class="jive-rendered-content"><P>Power is a big issue for robotics in general.&nbsp; It's more important for robots that are designed to be self-contained and mobile, and is an even bigger issue for flying robotics.&nbsp; There's always a tradeoff between weight and stored energy.&nbsp; We dealt with two main concerns regarding the power of the quadrotor helicopter 1) what type of source should we use to power the robot and 2) how do we power the control electronics (sbRIO).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>Power source...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>After some research, I decided that cold fusion was in fact not a good power source for a flying robot for various reasons...so I went with the next best option, a LiPo battery.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="./decibel.ni.com_content_blogs_quadrotor_files/energy_density.gif" target="_blank"><IMG alt="http://www.mpoweruk.com/images/energy_density.gif" class="jive-image" src="./decibel.ni.com_content_blogs_quadrotor_files/energy_density.gif"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The plot (borrowed from Electropedia) shows Specific Energy on the y-axis and Energy Density on the x-axis.&nbsp; For flight, specific energy is probably the most important consideration about an energy source.&nbsp; You want to be able to store as much energy as you possibly with as little weight as possible.&nbsp; It's also important to make sure that that the power source can produce enough current to supply your motors...which I don't have a plot for, but LiPo batteries happen to be good at this...you can trust me, I'm a doctor.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The downside to LiPo batteries is that they're finicky.&nbsp; If you discharge them too much, they'll never recharge (I killed two batteries like this...yay).&nbsp; If you discharge them too quickly (through a short possibly), they can heat up and start a chain reaction that ends in flames.&nbsp; A quick youtube search using "lipo battery" gives some good results of battery fires <A class="jive-link-external-small" href="http://www.youtube.com/watch?v=-DcpANRFrI4" target="_blank">link</A> and <A class="jive-link-external-small" href="http://www.youtube.com/watch?v=z3o_2mwRPdw" target="_blank">link</A>.&nbsp; They require special chargers to ensure that the cells are charging and discharging evenly.&nbsp; They're touchy.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>On the upside, I was able to find a 2.2Ah battery that can source 20-30A at 7.4-ish volts, and it only weighs 118g.&nbsp; Theoretically that means I can run my quadrotor helicopter for about 10 minutes with the battery...not too bad.&nbsp; Which brings me to the second issue...</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>Powering the sbRIO...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Driving an sbRIO from a battery has proven to be a non-trivial task.&nbsp; The power requirements for the sbRIO spec out at 19-30V at 1.8A; however the current draw of the system is dependent on what you have attached to 5V pins of the DIO ports, what on-board modules you're using, how many external c-series modules you're using...etc etc.&nbsp; So here's the issue, I have a LiPo battery that reaches a full charge of 8.4V and a nominal voltage just below 8V but I need to step that up to 20-ish volts.&nbsp; I searched high and low, but I wasn't able to find a clean off-the-shelf solution for this dc-dc converter that could supply 800mA.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I had recently read an article on the MintyBoost, a pair of AA batteries in an altoids tin with a boost converter...take the 3-ish volts from the batteries and generate a regulated 5V source that you can use to charge an iPod / phone / whatever.&nbsp; The author also has a great writeup of how she went through the design process (<A class="jive-link-external-small" href="http://www.ladyada.net/make/mintyboost/process.html" target="_blank">link</A>), so with that I decided that I'd build my own boost converter...when you can't find exactly what you're looking for, might as well build it.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I started with an LM27131 boost converter chip from National Semiconductor (<A class="jive-link-external-small" href="http://www.national.com/pf/LM/LM27313.html" target="_blank">link</A>).&nbsp; Using the datasheet and the reference layout, I put together a bill of materials and a schematic / board design in Eagle (I'll attach the files below).&nbsp; I sent the gerber files to BatchPCB, a partner of SparkFun that does high quality small-batch PCB manufacturing for a very reasonable price.&nbsp; After about 3 weeks, I received my boards, and voila...20V source from a 2-cell LiPo battery.&nbsp; Well, it was almost that easy.&nbsp; My first board that I put together got fried because I forgot to heat sink it...and I fried a second board when I shorted power to ground somewhere else in the system, so maybe some protection circuitry would have been good to add to my design.&nbsp; Maybe that will make it into the second revision.&nbsp; I'm also thinking about a complete redesign that will use a different boost converter chip, the LM3478 which uses an external FET and is therefore a little safer for higher current draw...but that's down the priority list a ways...</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>Powering the motors...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The last power supply issue is getting energy to the motors.&nbsp; Since we were shooting for an inexpensive system, we stuck with hobby parts when possible.&nbsp; The motors we chose were cheap, but as electric hobby aircraft go brushless motors are the best bet for generating lift or thrust in a lightweight package.&nbsp; The last piece of the puzzle is how to connect the logic-level signals coming from the sbRIO to the motors...which is where the electronic speed controllers come into the picture.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I picked the TowerPro ESC25A controller because it was cheap, decently recommended, but mainly because there's a tutorial online about how to modify it for a faster update rate.&nbsp; Traditional hobby speed controllers (for brushless motors, regular brushed DC motors, servo motors, etc) get their speed setpoint from a very specific style of PWM signal.&nbsp; The following image shows what the digital signal looks like.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="./decibel.ni.com_content_blogs_quadrotor_files/servoPWM.png" target="_blank"><IMG alt="http://www.pitt.edu/~sorc/robotics/handbook/ServoControl_files/servoPWM.png" class="jive-image" src="./decibel.ni.com_content_blogs_quadrotor_files/servoPWM.png"></A></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The motor controller or servo takes a PWM signal with a period of 12-20ms.&nbsp; In the case of these speed controllers, a pulse width of 1.1ms corresponds to a "stop" command and a pulse width of 1.7ms means "full on."&nbsp; There's a pretty linear relationship between speed and pulse width between the two.&nbsp; For more information about hobby servo PWM signals, there's lots of good reading out there on the subject (try this <A class="jive-link-external-small" href="http://www.princeton.edu/~mae412/TEXT/NTRAK2002/292-302.pdf" target="_blank">link</A>).&nbsp; Any PWM signal that's faster than ~12ms or that has an on-time outside of the 1-2ms range will be ignored by the controller.&nbsp; This means that the max update rate of the speed controller is roughly 80Hz...which is pretty slow in the terms of control systems.&nbsp; This fact drove the decision to pick an ESC that could be upgraded.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>There's a REALLY long post on the rcgroups.com forum about converting these speed controllers to a faster digital protocol (either i2c or spi...for more info, check out this great mechatronics wiki post on <A class="jive-link-external-small" href="http://hades.mech.northwestern.edu/index.php/I2C_communication_between_PICs" target="_blank">i2c</A> and <A class="jive-link-external-small" href="http://hades.mech.northwestern.edu/index.php/SPI_communication_between_PICs" target="_blank">spi</A>) by opening up the ESC and re-flashing the firmware on the Atmel microcontroller being used to do the low-level control of the brushless motor drive circuitry (<A class="jive-link-external-small" href="http://www.rcgroups.com/forums/showthread.php?t=766589" target="_blank">link</A>).&nbsp; Well, it turns out that the controllers that I bought were the older version, and therefore the tutorial and updated firmware won't work on mine.&nbsp; I could probably hack something together, but that's pretty low on the priority list.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>Ok, so what's next?</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I think that combining this hardware post with the first one should cover evertything outside of the sbRIO and the sensors, which I'll dive into with my next post.&nbsp; After that I'll jump into the software side, starting with the simulation, moving to the control algorithm and finishing with the implementation of the controller and the tweaking of everything to make it fly...maybe I'll finish it off with some lessons learned&nbsp; If there's anything that I've missed or haven't explained in enough detail, leave a message and I'd be happy to expound upon any or all of it.</P></DIV><!-- [DocumentBodyEnd:6d325e79-f89f-4af4-86a0-ed7ea0b9bd89] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/19/hardware-part-2-the-power#comments">5&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/19/hardware-part-2-the-power">Permalink</A>
+                    </SPAN>
+
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2298"></A>
+         <DIV class="jive-blog-post jive-blog-post-alt" id="entry-2298">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/12/hardware-part-1-the-physical-structure"> Hardware Part 1: the physical structure</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-fs75MwNqLBYelqH9" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Aug 12, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:b1ddd3a4-de78-4f40-bba1-1891770c7884] --><DIV class="jive-rendered-content"><P>I'll start the hardware discussion by looking at the physical structure that I built.&nbsp; As I said before, I am basing my design pretty heavily off the design posted by "Old Man Mike" on the RCgroups.com forum (<A class="jive-link-external-small" href="http://www.rcgroups.com/forums/showthread.php?t=768115" target="_blank">link</A>). The design is by no means unique or innovative (no offense), and there are probably quite a few versions of it on the web in various places; however I did use the post pretty heavily to aid in my choice of propellers, motors and speed controllers.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>The physical layout...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I picked the 4-rotor, square design for two main reasons.&nbsp; The primary reason was that the X-shaped structure was easier to build than a Y (three-motor) shaped structure.&nbsp; One of the cross members is a solid piece and is therefore more structurally sound than two arms clamped to the base of the robot.&nbsp; That way I only have three pieces that make up the arms of the robot, one piece that's 1m long and two that are 1/2 m.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Aside from structural rigidity, there's another really good reason to have more motors.&nbsp; Technically, the larger number of non-redundant inputs you have in a system, the more control you have over that system.&nbsp; Imagine if I had four motors on my helicopter robot, but I could only control them with one signal.&nbsp; If I wanted it to actually fly, I would have to assume that it's perfectly balanced, that the motors have the exact same characteristics, that the motors are being controlled exactly in unison, that the four speed controllers are behaving the same way, etc etc.&nbsp; Turns out that's not possible in the real world, and subsequently that's why we have closed-loop control systems on things.&nbsp; Extending that to this hardware means that four independent motors gives me four independent controllable inputs to the system which I can then use to control 4 independent states, but that's getting a little ahead of myself.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><STRONG>My required hardware...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Here's a basic list of the physical hardware in the robot: (this is by no means an endorsement of any vendor in particular...just where I got my parts)</P><UL><LI>2m of 8mm square carbon fiber tube - available in 1m 5-packs at hobby lobby (<A class="jive-link-external-small" href="http://www.hobby-lobby.com/carbon_fiber_sqare_tube_8_x_7mm_5_pack_7187_prd1.htm" target="_blank">link</A>)</LI><LI>2m of 1/4" balsa - (<A class="jive-link-external-small" href="http://www.hobby-lobby.com/1_4_sq.x36_balsa_stick_2706_prd1.htm?pSearchQueryId=137012" target="_blank">link</A>)</LI><LI>4 x motor mounting plate - I made these myself out of thin aluminum sheet</LI><LI>4 x motor mounting rings - 70 duro BUNA gaskets...I'll explain later</LI><LI>4 x Bm2410-09 Brushless Outrunner - cheap brushless motor - go with the gold version if you can find it</LI><LI>4 x TowerPro ESC25A - 25 amp electronic speed controller (ESC) more on this decision in a later post (<A class="jive-link-external-small" href="http://hobbyking.com/hobbycity/store/uh_viewItem.asp?idProduct=4860&Product_Name=TowerPro_w25A_Brushless_Speed_Controller" target="_blank">link</A>)</LI><LI>2 counter rotating sets of 10x4.7 propellers - we tried a few different sizes and pitches, and these gave us the best lift with the motor / battery / ESC combo (<A class="jive-link-external-small" href="http://www.rctoys.com/rc-toys-and-parts/APC-10-047-SF-CR/RC-PARTS-APC-PROPELLERS.html" target="_blank">link</A>)</LI><LI>robot base - made out of sheet aluminum</LI><LI>various standoffs, screws, nuts etc - everything done in screw size 2-56</LI><LI>control board (sbRIO), sensors, wireless link, power distribution, battery, etc - I'll cover these in later posts</LI></UL><P><STRONG><BR></STRONG></P><P><STRONG>Construction...</STRONG></P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>I started with the base of the robot.&nbsp; The aluminum plate acts as a mounting point for the arms, the sbRIO, the ultrasound sensor, a dc-dc converter and the battery.&nbsp; Essentially, I took the plexiglass base that comes with the sbRIO evaluation kit (<A class="jive-link-external-small" href="http://sine.ni.com/nips/cds/view/p/lang/en/nid/205894">link</A>) and duplicated the hole and standoff placement on a piece of sheet aluminum.&nbsp; The picture below shows the plate with the standoffs installed.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6731/IMG_2259.JPG"><IMG alt="IMG_2259.JPG" class="jive-image-thumbnail jive-image" height="471" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2259.JPG" width="620"></A></P><P>The screw heads in the picture are for the brackets that I used to attach the carbon fiber arms.&nbsp; The following picture shows the same view with the sbRIO installed.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6733/IMG_2268-1.JPG"><IMG alt="IMG_2268-1.JPG" class="jive-image-thumbnail jive-image" height="444" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2268-1(1).JPG" width="620"></A></P><P>To give the arms a little extra stiffness without adding extra weight, the suggestion in the forums was to fill the center of the square tube with a piece of balsa that had been lightly coated in gorilla glue.&nbsp; As a quick aside, if you haven't used gorilla glue before, it's awesome stuff!&nbsp; For "proper" use, you're supposed to wet the surface lightly before you apply the glue.&nbsp; The moisture causes it to foam slightly before it hardens.&nbsp; It turns out that there's enough ambient moisture in our office that I didn't need to wet the balsa, but the foaming glue acts like a really good bond / filler, and really stiffens up the arms.&nbsp; It also means that I can tighten all of my mounts (both motor and body mounts) without worrying about crushing the carbon fiber tubes (carbon fiber is really strong along the grain but really fragile perpendicular to the grain).&nbsp; Here's what the carbon tubes looked like once I filled them with balsa and glue.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6734/IMG_2262.JPG"><IMG alt="IMG_2262.JPG" class="jive-image-thumbnail jive-image" height="456" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2262.JPG" width="497"></A></P><P>There are a lot of different tips out there for cutting the carbon tubes, but I went with a really cheap, high-speed cutoff saw from Harbor Freight.&nbsp; It cut the tubes really cleanly, and then to keep the ends from fraying, I painted them lightly with super glue.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6743/IMG_2248.JPG"><IMG alt="IMG_2248.JPG" class="jive-image-thumbnail jive-image" height="374" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2248.JPG" width="499"></A></P><P>Next, let's flip the robot over and take a look at how I mounted the carbon fiber tubes to the base plate.&nbsp; There's a square mounting bracket with four screws in the middle of the base plate, and a small rectangular bracket with two screws in the middle of each side of the rectangle.&nbsp; As I mentioned before, one of the pairs of arms runs the entire 1m length, and in this picture that arm is running from the top to the bottom of the image.&nbsp; The arms coming from the left and from the right are split in the middle and are clamped down by the bracket in the middle.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6735/IMG_2242.JPG"><IMG alt="IMG_2242.JPG" class="jive-image-thumbnail jive-image" height="398" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2242(1).JPG" width="620"></A></P><P>The next images are closeups of the brackets...</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6736/IMG_2239.JPG"><IMG alt="IMG_2239.JPG" class="jive-image" height="513" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2239.JPG" width="384"></A></P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6737/IMG_2266.JPG"><IMG alt="IMG_2266.JPG" class="jive-image-thumbnail jive-image" height="326" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2266.JPG" width="466"></A></P><P>In this last image, you can see that the arm coming in from the right doesn't connect all of the way through (you can see daylight just to the left of the screw in the middle of the image).</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>The remaining task is mounting the motors and speed controllers on the arms.&nbsp; Note that it's important to keep the speed controllers close to the motors.&nbsp; Apparently the controllers are designed to have a specific wire length between them the motors, and changing that wire length can impact the performance of the motors.&nbsp; That said, I just zip tied them to the arms...quick and easy.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6738/IMG_2246.JPG"><IMG alt="IMG_2246.JPG" class="jive-image-thumbnail jive-image" height="320" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2246.JPG" width="620"></A></P><P>The motors were a little trickier to mount.&nbsp; In the parts list, I suggested using the gold version of the motors instead of the silver version.&nbsp; These pictures should give you a little idea why...</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6739/IMG_2250.JPG"><IMG alt="IMG_2250.JPG" class="jive-image-thumbnail jive-image" height="293" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2250.JPG" width="375"></A><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6740/IMG_2253.JPG"><IMG alt="IMG_2253.JPG" class="jive-image-thumbnail jive-image" height="294" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2253.JPG" width="233"></A></P><P>First off, the gold motors have 4 mounting holes that are tapped...a nice touch that makes mounting easy.&nbsp; The silver motors have an odd 3-hole pattern of untapped holes (that you obviously can't see in this picture).&nbsp; However, the real issue is that the motor shaft of the silver motors sticks out slightly past the bottom of the motor!&nbsp; What the...!?! That makes it impossible to mount it flush to a surface or an arm or anything.&nbsp; To make things worse, the motors that I purchased came with mounting brackets that didn't actually fit...nor did the screws that they sent with the motor.&nbsp; It was a bit of a disappointment to say the least, but they were cheap...so whatever.&nbsp; I got around all of this by using a thick, rubber, square cross-sectioned gasket.&nbsp; I then had to drill out the 3 oddly spaced holes in the motor to the right size, and make a matching bracket out of the aluminum stock.&nbsp; Here's the result.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6741/IMG_2245.JPG"><IMG alt="IMG_2245.JPG" class="jive-image-thumbnail jive-image" height="539" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2245.JPG" width="454"></A></P><P>Here's the pile of parts that I used for the motor mounting (bracket plate, 3 2-56 screws,&nbsp; nuts and rubber gasket).</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6742/IMG_2256.JPG"><IMG alt="IMG_2256.JPG" class="jive-image-thumbnail jive-image" height="367" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2256.JPG" width="620"></A></P><P>Ok...I think that covers all of the hardware that I used.&nbsp; I added an eye-hook in the end of each of the arms so that I could hang the robot for testing, and voila...here's the robot in its current hardware state, hanging in our test rig...aka the empty cube next to me.</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2298-6744/IMG_2219.JPG"><IMG alt="IMG_2219.JPG" class="jive-image-thumbnail jive-image" height="288" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2219.JPG" width="585"></A></P><P>In the next post, I'll dive into the electronics (battery, power supply, power distribution, speed controllers etc).</P></DIV><!-- [DocumentBodyEnd:b1ddd3a4-de78-4f40-bba1-1891770c7884] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/12/hardware-part-1-the-physical-structure#comments">5&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/12/hardware-part-1-the-physical-structure">Permalink</A>
+                    </SPAN>
+
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2291"></A>
+         <DIV class="jive-blog-post " id="entry-2291">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/10/ni-week-presentation-on-quadrotor-uav-design"> NI Week presentation on quadrotor UAV design</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-jD2B9n0Va233qM7K" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Aug 10, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:9554b2e3-2475-4ea7-adfd-f16d84db574a] --><DIV class="jive-rendered-content"><P>Aside from coming up with clever names for things, marketing people are good at making presentations.&nbsp; I've embedded a presentation given at NI Week during the robotics summit.&nbsp; It talks about the design and building of the quadrotor helicopter as well as some of the problems we encountered in the design and simulation phases of the project.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A class="jive-link-external-small" href="http://www.slideshare.net/benablack/uav-development" target="_blank">UAV Development</A></P></DIV><!-- [DocumentBodyEnd:9554b2e3-2475-4ea7-adfd-f16d84db574a] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/10/ni-week-presentation-on-quadrotor-uav-design#comments">0&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/10/ni-week-presentation-on-quadrotor-uav-design">Permalink</A>
+                    </SPAN>
+
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+         <A id="a2288"></A>
+         <DIV class="jive-blog-post jive-blog-post-alt" id="entry-2288">
+
+            <!-- BEGIN blog post subject -->
+            <DIV class="jive-blog-post-subject">
+
+
+
+
+                <!-- BEGIN blog post subject header -->
+                <DIV class="jive-blog-post-subject-header">
+
+                    <DIV>
+                        <DIV style="display: block; float: left;">
+                        <H2><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/10/first-post"> First post!</A> </H2>
+                        <EM>Posted by
+<A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" id="jive-MgV5V8S3B7v4jn3c" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();" class="jiveTT-hover-user jive-username-link">Ben_B</A>                        <SPAN>Aug 10, 2009</SPAN>
+                        </EM>
+                        </DIV>
+                    </DIV>
+
+                </DIV>
+                <!-- END blog post subject header -->
+
+            </DIV>
+            <!-- END blog post subject -->
+
+
+            <!-- BEGIN blog post body -->
+            <DIV class="jive-blog-post-body">
+                <DIV class="jive-blog-post-message">
+                    <!-- [DocumentBodyStart:38069843-fa62-4891-933e-4becfebf0ba6] --><DIV class="jive-rendered-content"><P>As NI Week wraps up, we finally have some time to breathe and think again, so I thought it would be a good idea to post some of the work that one of my colleagues and I have done on the quadrotor helicopter.&nbsp; In the push to get something together for NI Week, we haven't documented much at all, but this blog should give me a chance to get some of the info "out there" in case people are interested.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>...so what are we doing...</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>About 9 months ago I stumbled across a post on RCgroups.com about a simple design of a quadrotor helicopter (<A class="jive-link-external-small" href="http://www.rcgroups.com/forums/showthread.php?t=768115" target="_blank">link</A>).&nbsp; For some reason I thought it would be a good idea to talk people into letting me build it as an example application for using LabVIEW in a robotics application.&nbsp; It seemed like a pretty foolproof plan.&nbsp; I pitched it to marketing people, found someone in my group who would work on it with me, and got someone to foot the bill.&nbsp; Awesome, right?&nbsp; I mean, hobyists can put one together...I have a background in controlls, my partner in the project has a background in aerospace engineering, how hard can it be?&nbsp; Well, the answer is that we probably should have started working on the control algorithm more than two weeks before we planned on having it flying.&nbsp; It turns out that people in academia have spent years working on stability and tuning of similar control algorithms.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P>Here's what we have now.&nbsp; Let me introduce you to our flying robot (well, almost flying...or at least almost stable, totally flying).&nbsp; It doesn't have a name yet, but maybe I can get someone in marketing to come up with something clever.&nbsp; Isn't that what they do?</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2288-6654/IMG_2229.JPG"><IMG alt="IMG_2229.JPG" class="jive-image-thumbnail jive-image" height="480" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2229.JPG" width="620"></A></P><P>This is the current hardware setup, and the quadcopter is sitting on a stand.&nbsp; The following picture is a slightly older version of the hardware, but the robot is suspended in an empty cube next to me.&nbsp; If you look closely, you can see that the blades are blurred a little...so yah, we were in the midst of a functional test with all of the blades spinning.</P><P style="min-height: 8pt; height: 8pt; padding: 0px;">&nbsp;</P><P><A href="http://decibel.ni.com/content/servlet/JiveServlet/showImage/38-2288-6745/IMG_2220.JPG"><IMG alt="IMG_2220.JPG" class="jive-image-thumbnail jive-image" height="415" src="./decibel.ni.com_content_blogs_quadrotor_files/IMG_2220(1).JPG" width="620"></A></P><P>In my next post I'll get into the hardware that we're using.</P></DIV><!-- [DocumentBodyEnd:38069843-fa62-4891-933e-4becfebf0ba6] -->
+                </DIV>
+
+                <DIV class="jive-blog-post-details">
+
+                        <SPAN class="jive-blog-post-comments">
+                            <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/10/first-post#comments">1&nbsp;Comments</A>
+                        </SPAN>
+
+
+                    <SPAN class="jive-blog-post-permalink">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/10/first-post">Permalink</A>
+                    </SPAN>
+
+                    <SPAN class="jive-blog-post-tags">Tags:
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter">helicopter</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor">quadrotor</A>,
+                         <A href="http://decibel.ni.com/content/blogs/quadrotor/tags/labview">labview</A>
+                    </SPAN>
+
+                </DIV>
+            </DIV>
+            <!-- END blog post body -->
+
+        </DIV>
+
+
+
+
+        </DIV>
+    </DIV>
+    <!-- END main body column -->
+
+
+ 
+
+
+<SCRIPT type="text/javascript">
+if (dwr == null) var dwr = {};
+if (dwr.engine == null) dwr.engine = {};
+if (DWREngine == null) var DWREngine = dwr.engine;
+
+dwr.engine._origScriptSessionId = "C5D59C8918F32025B95EAFFA4708B258";
+dwr.engine._sessionCookieName = "JSESSIONID"; // JSESSIONID
+dwr.engine._allowGetForSafariButMakeForgeryEasier = "true";
+dwr.engine._scriptTagProtection = "throw 'allowScriptTagRemoting is false.';";
+dwr.engine._defaultPath = "/content/dwr/interface";
+dwr.engine._pollWithXhr = "false";
+</SCRIPT>
+
+     <SCRIPT type="text/javascript">
+     var blogID = 2287;
+
+     function startBlogWatch() {
+         Watches.watchBlog(blogID, {
+             callback:function() {
+                 $('blog-link-startWatch').hide();
+                 $('blog-link-stopWatch').show();
+                 Jive.AlertMessage('blog.watch.notify', {
+                        beforeStart:function() {
+                            $('blog.watch.notify').innerHTML = "<div style='background: transparent url(/content/images/success-16x16.gif;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0) no-repeat 6px 6px;'>You are receiving email notifications for this blog. To unsubscribe,click \"Stop Watching Blog\" below.</div>";
+                        }
+                 });
+             },
+             errorHandler:function(msg, e) {
+                alert("An internal error ocurred while updating email notifications.");
+             }
+         });
+     }
+
+    function stopBlogWatch() {
+        Watches.removeBlogWatch(blogID, {
+             callback:function() {
+                 $('blog-link-startWatch').show();
+                 $('blog-link-stopWatch').hide();
+                 Jive.AlertMessage('blog.watch.notify', {
+                        beforeStart:function() {
+                            $('blog.watch.notify').innerHTML = "<div>You have stopped receiving email notifications for this blog. To subscribe to events in this blog via email,click \"Watch This Blog\" below.</div>";
+                        }
+                 });
+             },
+             errorHandler:function(msg, e) {
+                alert("An internal error ocurred while updating email notifications.");
+             }
+        });
+    }
+	</SCRIPT>
+
+
+
+ <!-- BEGIN sidebar column -->
+ <DIV id="jive-body-sidebarcol-container">
+     <DIV id="jive-body-sidebarcol">
+
+
+
+         <!-- BEGIN personal blog description sidebar -->
+             <DIV class="jive-sidebar" id="blog-nav-description">
+                 <DIV class="jive-sidebar-body jive-sidebar-body-about">
+
+                     <DIV class="jive-sidebar-hdr-blog-page">
+                     
+                         <SPAN class="jive-author-avatar">
+            <A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0" class="jiveTT-hover-user" onmouseover="quickuserprofile.getUserProfileTooltip(8409);" onmouseout="quickuserprofile.cancelTooltip();">
+                <IMG class="jive-avatar" src="./decibel.ni.com_content_blogs_quadrotor_files/avatar" border="0" height="32" width="32" alt="Ben_B"></A>
+                         </SPAN>
+
+                         <SPAN class="jive-sidebar-hdr-blogauthor-name">
+                             <A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0">
+                                 <H3>Ben_B</H3>
+                             </A>
+                             <EM>Member since:
+                             Oct 14, 2008</EM>
+                         </SPAN>
+                     </DIV>
+                     <P>
+                         We have been working on a quadrotor helicopter, building the hardware from scratch and controlling it with a single-board RIO.  I want to take the time to document our progress and lessons learned as we finish up the project.
+                     </P>
+                     <P>
+                         <A href="http://decibel.ni.com/content/people/Ben_B;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0">
+                         <STRONG>
+View Ben_B's profile                         </STRONG>
+                         </A>
+                     </P>
+                </DIV>
+             </DIV>
+         <!-- END personal blog description sidebar -->
+
+
+
+
+    <!-- BEGIN sidebar box 'ACTIONS' -->
+    <DIV id="jive-action-sidebar" class="jive-sidebar">
+		<DIV id="jive-action-sidebar-body" class="jive-sidebar-body jive-sidebar-body-actions">
+
+
+            <DIV id="jive-action-sidebar-tab-_blog-actions-tab" class="jive-action-sidebar-tab-first">
+				<H4 id="jive-action-sidebar-tab-header_blog-actions-tab">Actions</H4>
+
+
+                <UL id="jive-action-sidebar-tab-list_blog-actions-tab" class="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						<LI id="jive-link-feeds" style=""><A class="jive-link-rss" href="http://decibel.ni.com/content/blogs/quadrotor/feeds" onclick="" title="">
+							View feeds
+							</A></LI>
+
+
+						<LI id="jive-link-login-action" style=""><A class="jive-link-login" href="http://decibel.ni.com/content/create-account.jspa;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0?du=%2Fblogs%2Fquadrotor" onclick="" title="">
+							Login or Create Profile
+							</A></LI>
+
+
+
+
+
+
+
+				</UL>
+			</DIV>
+
+
+	
+		</DIV>
+    </DIV>
+    <!-- END sidebar box 'ACTIONS' -->
+
+<DIV class="jive-sidebar" id="blog-nav-recent-comments">
+    <DIV class="jive-sidebar-body">
+        <H4>Recent Comments</H4>
+
+        <UL>
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/control-simulation-part-2-the-lqr-controller#comment-8617">RoyLB</A>
+on                <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/control-simulation-part-2-the-lqr-controller">
+                     Control Simulation Part 2: the LQR controller
+                </A>
+                </LI>
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid#comment-8556">eatonpi</A>
+on                <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid">
+                     Control Simulation Part I: closing the loop with PID
+                </A>
+                </LI>
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid#comment-7238">Ben_B</A>
+on                <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid">
+                     Control Simulation Part I: closing the loop with PID
+                </A>
+                </LI>
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid#comment-7237">RoyLB</A>
+on                <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid">
+                     Control Simulation Part I: closing the loop with PID
+                </A>
+                </LI>
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid#comment-7208">Ben_B</A>
+on                <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid">
+                     Control Simulation Part I: closing the loop with PID
+                </A>
+                </LI>
+        </UL>
+
+    </DIV>
+</DIV>
+
+    <!-- BEGIN sidebar box 'Popular Blog Posts' -->
+    <DIV class="jive-sidebar">
+        <DIV class="jive-sidebar-body jive-sidebar-body-popular">
+            <H4>Popular Blog Posts</H4>
+            <UL>
+                    <LI class="jive-link-blog">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12/11/daughter-card--revisited-and-generalizedslight-side-topic">
+                             Daughter Card - revisited and generalized...slight side topic
+                        </A>
+                    </LI>
+                    <LI class="jive-link-blog">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/23/control-simulation-part-i-closing-the-loop-with-pid">
+                             Control Simulation Part I: closing the loop with PID
+                        </A>
+                    </LI>
+                    <LI class="jive-link-blog">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/09/the-model">
+                             The Model
+                        </A>
+                    </LI>
+                    <LI class="jive-link-blog">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09/14/a-side-note-on-reference-frames">
+                             A side note on reference frames...
+                        </A>
+                    </LI>
+                    <LI class="jive-link-blog">
+                        <A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08/24/hardware-part-3-control-electronics-and-sensors">
+                             Hardware Part 3: control electronics and sensors
+                        </A>
+                    </LI>
+            </UL>
+        </DIV>
+    </DIV>
+    <!-- END sidebar box 'Popular Blog Posts' -->
+
+         
+    <DIV id="blog-nav-filters" class="jive-sidebar">
+    <DIV class="jive-sidebar-body">
+        <H4>Filter Blog</H4>
+
+
+            <STRONG>By date:</STRONG>
+            
+
+            
+
+
+            <UL class="jive-sidebar-archives">
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/12">December 2009 </A></LI>
+                
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/11">November 2009 </A></LI>
+                
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/10">October 2009 </A></LI>
+                
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/09">September 2009 </A></LI>
+                
+                <LI><A href="http://decibel.ni.com/content/blogs/quadrotor/2009/08">August 2009 </A></LI>
+                
+            </UL>
+
+
+
+    <STRONG>By tag:</STRONG>
+    <UL class="jive-sidebar-populartags">
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/boost_converter" title="Used 1 times">boost_converter</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/control" title="Used 1 times">control</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/daughter" title="Used 1 times">daughter</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/dc-dc" title="Used 1 times">dc-dc</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/dynamics" title="Used 1 times">dynamics</A></LI>
+            <LI class="jive-tagset-popularity9"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/helicopter" title="Used 3 times">helicopter</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/linearize" title="Used 1 times">linearize</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/linearized" title="Used 1 times">linearized</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/model" title="Used 1 times">model</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/optimal_control" title="Used 1 times">optimal_control</A></LI>
+            <LI class="jive-tagset-popularity9"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/quadrotor" title="Used 3 times">quadrotor</A></LI>
+            <LI class="jive-tagset-popularity9"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robot" title="Used 3 times">robot</A></LI>
+            <LI class="jive-tagset-popularity9"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/robotics" title="Used 3 times">robotics</A></LI>
+            <LI class="jive-tagset-popularity4"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/sbrio" title="Used 2 times">sbrio</A></LI>
+            <LI class="jive-tagset-popularity0"><A href="http://decibel.ni.com/content/blogs/quadrotor/tags/vex" title="Used 1 times">vex</A></LI>
+    </UL>
+
+        
+    </DIV>
+    </DIV>
+
+
+     </DIV>
+
+         
+         
+ </DIV>
+ <!-- END sidebar column -->
+
+
+</DIV>
+<!-- END main body -->
+
+
+
+        </DIV>
+
+<!-- BEGIN footer -->
+    <!-- BEGIN footer -->
+<DIV id="ni_footer_wrapper" style="margin-left: 0px; margin-right: 10px;">
+	<DIV id="footer" class="noindex">
+	<A href="http://www.ni.com/profile/">My Profile</A> | <A href="http://www.ni.com/rss/">RSS</A> | <A href="http://www.ni.com/legal/privacy/unitedstates/us/">Privacy</A> | <A href="http://www.ni.com/legal/">Legal</A> | <A href="http://sine.ni.com/apps/utf8/nicc.call_me">Contact NI</A> <SPAN class="copyright">© 2010 National Instruments Corporation.  All rights reserved.</SPAN>    |   
+	<SCRIPT language="javascript" type="text/javascript">
+		var footerEmailSubject = "Link to National Instruments Web Site";
+		var footerEmailBodytext = window.location.href;
+		document.write('<a href=\"mailto:?subject=' + footerEmailSubject + '&body=' + footerEmailBodytext + '\">'); 
+		document.write('<img src="/images/global/us/email.gif" border="0" alt="E-Mail this Page"> E-Mail this Page</a>');
+	</SCRIPT><A href="mailto:?subject=Link%20to%20National%20Instruments%20Web%20Site&body=http://decibel.ni.com/content/blogs/quadrotor"><IMG src="./decibel.ni.com_content_blogs_quadrotor_files/email.gif" border="0" alt="E-Mail this Page"> E-Mail this Page</A>
+	<A class="jive-powered-by" target="_blank" href="http://www.jivesoftware.com/poweredby/?src=ni.com"><IMG src="./decibel.ni.com_content_blogs_quadrotor_files/jive_powered_by.gif" width="132" height="33" border="0"></A>
+	</DIV>
+</DIV>
+<!-- END footer -->
+<!-- END footer -->
+
+
+    </DIV>
+
+
+<DIV id="jiveTT-note-user" class="jive-tooltip2 notedefault snp-mouseoffset">
+	<DIV class="jive-tooltip2-top"></DIV>
+	<DIV class="jive-tooltip2-mid">
+		<DIV class="jive-tooltip2-mid-padding" id="jive-note-user-body"></DIV>
+	</DIV>
+	<DIV class="jive-tooltip2-btm"></DIV>
+</DIV>
+
+    <SCRIPT type="text/javascript" language="JavaScript" charset="utf-8" src="./decibel.ni.com_content_blogs_quadrotor_files/tag-footer.js"></SCRIPT><LAYER hidden="true"><IMG src="./decibel.ni.com_content_blogs_quadrotor_files/svrGP.asp" border="0" width="1" height="1"></LAYER>
+
+<SCRIPT type="text/javascript" language="JavaScript" src="./decibel.ni.com_content_blogs_quadrotor_files/92d433be2d67b4c4b84fa44d759923e6.js"></SCRIPT>
+<SCRIPT type="text/javascript" language="JavaScript">
+                    var jivespotlightsearch = new JiveSpotlightSearch("jive-query", "jive-spotlight-search-container", spotlightSearchUrl);
+
+
+</SCRIPT>
+
+<SCRIPT type="text/javascript">
+zoomImagesURI   = "/content/resources/scripts/fancyzoom/images/;jsessionid=82a40f1a30d67a78768e59704ddabf0cb80b11a2dfe7.e3mNbNaPb3iNe34TbxaPbhyRbN50n6jAmljGr0";
+setupZoom();
+</SCRIPT>    
+       <SCRIPT type="text/javascript" src="./decibel.ni.com_content_blogs_quadrotor_files/jquery.csxglobal.js"></SCRIPT>
+
+</BODY></HTML>
