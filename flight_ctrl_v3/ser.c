@@ -33,8 +33,8 @@ void ser1_init(unsigned short ubrr, unsigned char rxs, unsigned char txs)
 {
 	UBRR1 = ubrr;
 
-	ser_buff_init(&ser_tx_buff_0, txs);
-	ser_buff_init(&ser_rx_buff_0, rxs);
+	ser_buff_init(&ser_tx_buff_1, txs);
+	ser_buff_init(&ser_rx_buff_1, rxs);
 
 	UCSR1B = _BV(RXEN1) | _BV(TXEN1) | _BV(RXCIE1) | _BV(TXCIE1);
 }
@@ -56,13 +56,19 @@ void ser_buff_init(ser_buff_s * b, unsigned char s)
 void ser_tx(unsigned char p, unsigned char c)
 {
 	// select buffer based on port
-	ser_buff_s * ser_tx_buff = &ser_tx_buff_0;
+	volatile ser_buff_s * ser_tx_buff = &ser_tx_buff_0;
 	if (p == 1)
 	{
 		ser_tx_buff = &ser_tx_buff_1;
 	}
 	
-	while ((ser_tx_buff->t + 1) % ser_tx_buff->s == ser_tx_buff->h); // wait for space
+	volatile unsigned char b;
+	do // wait for space
+	{
+		b = (ser_tx_buff->s + ser_tx_buff->t - ser_tx_buff->h) % ser_tx_buff->s;
+		LED1_tog();
+	}
+	while (b > ser_tx_buff->s - 3);
 	
 	// set character and then expand buffer
 	ser_tx_buff->d[ser_tx_buff->t] = c;
@@ -96,7 +102,7 @@ void ser_tx_0(char c, FILE * stream)
 
 void ser_tx_1(char c, FILE * stream)
 {
-	ser_tx(0, c);
+	ser_tx(1, c);
 }
 
 unsigned char ser_rx(unsigned char p, unsigned char * r)
@@ -143,6 +149,8 @@ ISR(USART0_TX_vect)
 	else
 	{
 		// all done
+		ser_tx_buff_0.h = 0;
+		ser_tx_buff_0.t = 0;
 		ser_tx_buff_0.f = 0;
 	}
 }
@@ -169,6 +177,8 @@ ISR(USART1_TX_vect)
 	}
 	else
 	{
+		ser_tx_buff_1.h = 0;
+		ser_tx_buff_1.t = 0;
 		ser_tx_buff_1.f = 0;
 	}
 }

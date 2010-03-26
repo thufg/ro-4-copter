@@ -176,7 +176,7 @@ void test_ser(unsigned char port)
 	
 	user_io_init();
 	
-	ser_init(64, 32, 32);
+	ser_init(129, 32, 32);
 	
 	sei();
 	
@@ -204,7 +204,7 @@ void test_sensors()
 {
 	user_io_init();
 	
-	ser0_init(64, 128, 128);
+	ser1_init(129, 128, 128);
 	
 	sens_init();
 	
@@ -212,7 +212,7 @@ void test_sensors()
 	
 	sens_calibrate(10);
 	
-	fprintf_P(&ostream_0, PSTR("\r\ntest_sensors\r\n"));
+	fprintf_P(&ostream_1, PSTR("\r\ntest_sensors\r\n"));
 	
 	while (1)
 	{
@@ -223,7 +223,7 @@ void test_sensors()
 				// report center values
 				for (unsigned char i = 0; i < 8; i++)
 				{
-					fprintf_P(&ostream_0, PSTR("cal %d: %d\r\n"), i, sens_offset(i));
+					fprintf_P(&ostream_1, PSTR("cal %d: %d\r\n"), i, sens_offset(i));
 				}
 				
 				while (button_is_pressed());
@@ -233,13 +233,13 @@ void test_sensors()
 				// report ADC channel readings
 				for (unsigned char i = 0; i < 8; i++)
 				{
-					fprintf_P(&ostream_0, PSTR("adc %d: %d\r\n"), i, sens_read(i));
+					fprintf_P(&ostream_1, PSTR("adc %d: %d\r\n"), i, sens_read(i));
 				}
 				
 				_delay_ms(100);
 			}
 			
-			while (ser_tx_is_busy(0)); // wait for data to be sent
+			while (ser_tx_is_busy(1)); // wait for data to be sent
 			
 			adc_rounds_cnt(0);
 		}
@@ -251,7 +251,7 @@ void test_ppm()
 {
 	user_io_init();
 	
-	ser0_init(64, 128, 128);
+	ser1_init(129, 128, 128);
 	
 	ppm_init();
 	
@@ -373,7 +373,7 @@ void test_calc(unsigned char port)
 	
 	user_io_init();
 	
-	ser_init(64, 32, 32);
+	ser0_init(129, 32, 32);
 	
 	sei();
 	
