@@ -239,11 +239,15 @@ int main()
 			pitch_gyro_val = (signed long)sens_read(pitch_gyro_chan) - (signed long)sens_offset(pitch_gyro_chan);
 
 			// calculate time taken to take samples
-			#if (delta_time_const != 0)
-			signed long delta_time = delta_time_const * adc_rounds_cnt(0xFF);
-			#else
-			signed long delta_time = timer0_elapsed();
-			#endif
+			signed long delta_time;
+			if (cal_data.delta_time_const != 0)
+			{
+				cal_data.delta_time_const * adc_rounds_cnt(0xFF);
+			}
+			else
+			{
+				delta_time = timer0_elapsed();
+			}
 			
 			// calculate angle using trig
 			signed long roll_trig;

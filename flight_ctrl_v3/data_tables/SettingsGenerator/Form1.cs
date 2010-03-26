@@ -127,7 +127,7 @@ namespace SettingsGenerator
                 writer.WriteLine("\tswitch(addr)");
                 writer.WriteLine("\t{");
 
-                cnt = 0;
+                int cnt = 0;
                 foreach (Variable v in vars)
                 {
                     writer.WriteLine("\t\tcase {0}:", cnt);
@@ -149,7 +149,7 @@ namespace SettingsGenerator
                 writer.WriteLine("void debug_report_vars(Calibration * x)");
                 writer.WriteLine("{");
 
-                int cnt = 0;
+                cnt = 0;
                 foreach (Variable v in vars)
                 {
                     writer.WriteLine("\tfprintf_P(&serstream, PSTR(\"{0}, {1} (%d), {2}: %d\\r\\n\"), (unsigned char)sizeof({1}), x->{2});", cnt, v.Type, v.Name);

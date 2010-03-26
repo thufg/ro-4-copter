@@ -47,4 +47,5 @@
 "unsigned char","throttle_ppm_chan",1,
 "unsigned char","pitch_ppm_chan",2,
 "unsigned char","roll_ppm_chan",3,
+"signed long","delta_time_const","MATH_MULTI",
 "signed long","comp_filter_w","MATH_MULTI / 2",

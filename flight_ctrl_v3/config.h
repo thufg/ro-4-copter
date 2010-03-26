@@ -1,9 +1,6 @@
 #ifndef config_h
 #define config_h
 
-#define DEBUG_MSG
-#define BAUD 19200
-
 #define MATH_MULTIPLIER 1000
 #define MATH_MULTI MATH_MULTIPLIER
 
@@ -12,8 +9,6 @@
 #define use_comp_filter
 //#define use_kalman_filter
 #define use_ordered_sensors
-
-#define delta_time_const 10000
 
 #define ticks_500us ((F_CPU * 5) / 10000)
 #define ticks_10ms (ticks_500us * 20)
