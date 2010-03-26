@@ -31,7 +31,7 @@
   <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
   <BurnBaud>0</BurnBaud>
   <BurnAutoReset>false</BurnAutoReset>
-  <LastFile>calc.c</LastFile>
+  <LastFile>in_flight_debug.c</LastFile>
   <FileList>
     <File>
       <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c'-->
@@ -39,7 +39,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>8292</CursorPos>
+      <CursorPos>5130</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -110,8 +110,8 @@
       <RelPath>config.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>55</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>225</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -119,8 +119,8 @@
       <RelPath>timer.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>819</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -156,7 +156,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>1752</CursorPos>
+      <CursorPos>2406</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -191,8 +191,8 @@
       <RelPath>calibration.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>2104</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>5530</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -200,8 +200,8 @@
       <RelPath>calibration_struct.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>1569</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>13174</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -245,8 +245,8 @@
       <RelPath>in_flight_debug.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>42</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>8123</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -263,8 +263,8 @@
       <RelPath>data_tables\calibration_variables.csv</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>153</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>2005</CursorPos>
       <Bookmarks />
     </File>
   </FileList>

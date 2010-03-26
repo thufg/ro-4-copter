@@ -82,8 +82,10 @@ void calibration_default(Calibration * x)
 	x->throttle_ppm_chan = 1;
 	x->pitch_ppm_chan = 2;
 	x->roll_ppm_chan = 3;
+	x->delta_time_const = MATH_MULTI;
 	x->comp_filter_w = MATH_MULTI / 2;
 }
+
 
 void calibration_write(Calibration * x, signed long addr, signed long data)
 {
@@ -234,6 +236,9 @@ void calibration_write(Calibration * x, signed long addr, signed long data)
 			x->roll_ppm_chan = (unsigned char)data;
 			break;
 		case 48:
+			x->delta_time_const = (signed long)data;
+			break;
+		case 49:
 			x->comp_filter_w = (signed long)data;
 			break;
 		default:
