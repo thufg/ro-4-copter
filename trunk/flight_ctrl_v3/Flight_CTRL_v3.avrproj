@@ -25,13 +25,13 @@
   <LinkLibList />
   <MemorySegList />
   <BurnPart>atmega644p</BurnPart>
-  <BurnProgrammer>dragon_isp</BurnProgrammer>
+  <BurnProgrammer>usbtiny</BurnProgrammer>
   <BurnOptions />
-  <BurnPort>usb</BurnPort>
+  <BurnPort />
   <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
   <BurnBaud>0</BurnBaud>
   <BurnAutoReset>false</BurnAutoReset>
-  <LastFile>in_flight_debug.c</LastFile>
+  <LastFile>main.c</LastFile>
   <FileList>
     <File>
       <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c'-->
@@ -39,7 +39,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>5130</CursorPos>
+      <CursorPos>2400</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -48,7 +48,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>695</CursorPos>
+      <CursorPos>198</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -57,7 +57,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>143</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -65,7 +65,7 @@
       <RelPath>macros.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
+      <WasOpen>true</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
@@ -74,8 +74,8 @@
       <RelPath>test.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>5455</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>3327</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -93,7 +93,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>2253</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -102,7 +102,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>160</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -111,7 +111,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>225</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -120,7 +120,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>819</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -138,7 +138,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>2903</CursorPos>
+      <CursorPos>2410</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -147,7 +147,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>357</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -156,7 +156,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>2406</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -165,7 +165,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>1126</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -183,7 +183,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>241</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -192,7 +192,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>5530</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -201,7 +201,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>13174</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -209,8 +209,8 @@
       <RelPath>ser.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>2708</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>1536</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -219,7 +219,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>591</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -228,7 +228,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>123</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -246,7 +246,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>8123</CursorPos>
+      <CursorPos>456</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -255,7 +255,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>95</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -264,7 +264,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>2005</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
   </FileList>

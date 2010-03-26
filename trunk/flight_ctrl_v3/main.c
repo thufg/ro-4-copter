@@ -57,7 +57,7 @@ void hold_esc()
 {
 	esc_safe(1);
 	
-	int minimumcnt = 0;
+	unsigned long minimumcnt = 0;
 	int flashcnt = 0;
 	int presscnt = 0;
 	
@@ -66,11 +66,14 @@ void hold_esc()
 		esc_set_width(i, ticks_500us * 2);
 	}
 	
+	ppm_is_new_data(0);
+	while (ppm_is_new_data(0xFF) == 0);
+	
 	while (1)
 	{
 		debug_check_msg(&cal_data);
 		
-		if (flashcnt < 10)
+		if (flashcnt < 12)
 		{
 			LED2_on();
 			LED1_on();
@@ -80,14 +83,12 @@ void hold_esc()
 			LED2_off();
 			LED1_off();
 		}
-		
-		flashcnt = (flashcnt + 1) % 20;
 			
-		if (ppm_tx_is_good(0xFF) && minimumcnt == 500)
+		if (ppm_tx_is_good(0xFF))
 		{
 			if (ppm_is_new_data(0xFF) != 0)
 			{
-				if (ppm_chan_read(5) > ticks_500us * 3 + ticks_500us / 2) // channel 6 button is pressed
+				if (ppm_chan_read(5) > ticks_500us * 3 + ticks_500us / 2 || button_is_pressed()) // channel 6 button is pressed
 				{
 					presscnt++;
 				}
@@ -99,7 +100,7 @@ void hold_esc()
 				ppm_is_new_data(0);
 			}
 			
-			if (presscnt == 10) // if held down long enough
+			if (presscnt >= 500) // if held down long enough
 			{
 				break;
 			}
@@ -112,7 +113,8 @@ void hold_esc()
 			
 		if (esc_is_done())
 		{
-			minimumcnt = minimumcnt == 500 ? minimumcnt : minimumcnt + 1;
+			//minimumcnt = minimumcnt >= 10000 ? minimumcnt : minimumcnt + 1;
+			flashcnt = (flashcnt + 1) % 25;
 			esc_start_next();
 		}
 	}
@@ -126,9 +128,12 @@ int main()
 	//test_esc();
 	//test_calibration_eeprom();
 	//test_ser(0);
+	//test_ser(1);
 	//test_sensors();
 	//test_ppm();
 	//test_ppm_to_esc();
+	
+	//return 0;
 	
 	// actual initialization here
 	
@@ -143,13 +148,22 @@ int main()
 	debug_initialize();
 	
 	sens_init();
+	ppm_init();
 	esc_init();
 	timer0_init();
 	
-	sens_calibrate(10);
 	ppm_calibrate(10);
 	
+	fprintf_P(&serdebugstream, PSTR("waiting for unlock signal\r\n"));
+	
 	hold_esc();
+	
+	fprintf_P(&serdebugstream, PSTR("unlocked\r\n"));
+	
+	ppm_is_new_data(0);
+	while (ppm_is_new_data(0xFF) == 0);
+	
+	sens_calibrate(10);
 	
 	// variable initialization
 	
@@ -169,6 +183,8 @@ int main()
 	unsigned char is_flying = 1;
 	unsigned char off_cnt = 0;
 	
+	LED1_off();
+	
 	while (1)
 	{
 		// check for computer interface commands, set flag if debug info requested
@@ -177,44 +193,50 @@ int main()
 			report_requested = 1;
 		}
 		
-		// check controller status
-		if (ppm_tx_is_good(3) == 2)
-		{
-			if (ppm_is_new_data(0xFF) != 0)
-			{
-				// new controller cycle
-				if (ppm_chan_read(5) < ticks_500us * 3 - ticks_500us / 2) // channel 6 button is pressed
-				{
-					off_cnt++;
-				}
-				else
-				{
-					off_cnt = 0;
-				}
+		//// check controller status
+		//if (ppm_tx_is_good(3) == 2)
+		//{
+			//if (ppm_is_new_data(0xFF) != 0)
+			//{
+				//// new controller cycle
+				//if (ppm_chan_read(5) < ticks_500us * 3 - ticks_500us / 2) // channel 6 button is pressed
+				//{
+					//off_cnt++;
+				//}
+				//else
+				//{
+					//off_cnt = 0;
+				//}
 			
-				ppm_is_new_data(0);
-			}
+				//ppm_is_new_data(0);
+			//}
 			
-			// button held down for long enough, turn off
-			if (off_cnt > 10)
-			{
-				is_flying = 0;
-			}
+			//// button held down for long enough, turn off
+			//if (off_cnt > 50)
+			//{
+				//is_flying = 0;
+			//}
 			
-			LED1_off();
-		}
-		else
-		{
-			// no signal, turn off
-			is_flying = 0;
-			off_cnt = 0;
-		}
+			//LED1_off();
+		//}
+		//else
+		//{
+			//// no signal, turn off
+			//is_flying = 0;
+			//off_cnt = 0;
+		//}
 		
-		// turn off
-		if (is_flying == 0)
-		{
-			hold_esc();
-		}
+		//// turn off
+		//if (is_flying == 0)
+		//{
+			//fprintf_P(&serdebugstream, PSTR("locked\r\n"));
+			//hold_esc();
+			//fprintf_P(&serdebugstream, PSTR("unlocked\r\n"));
+			//is_flying = 1;
+			//off_cnt = 0;
+			//ppm_is_new_data(0);
+			//while (ppm_is_new_data(0xFF) == 0);
+		//}
 
 		signed long roll_gyro_val;
 		signed long pitch_gyro_val;
