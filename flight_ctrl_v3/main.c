@@ -87,7 +87,7 @@ void hold_esc()
 		{
 			if (ppm_is_new_data(0xFF) != 0)
 			{
-				if (ppm_chan_read(cal_data.unlock_ppm_chan) > ticks_500us / 2 || button_is_pressed()) // channel 6 button is pressed
+				if (ppm_chan_read(cal_data.unlock_ppm_chan) + ppm_center(cal_data.unlock_ppm_chan) > ticks_500us * 3 + ticks_500us / 2 || button_is_pressed()) // channel 6 button is pressed
 				{
 					presscnt++;
 				}
