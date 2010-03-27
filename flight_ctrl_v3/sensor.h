@@ -17,8 +17,8 @@ typedef struct sens_hist_
 void sens_init();
 void sens_calibrate(unsigned char);
 void adc_wait_stop();
-unsigned char adc_rounds_cnt(unsigned char);
-unsigned short sens_read(unsigned char);
-unsigned short sens_offset(unsigned char);
+volatile unsigned char adc_rounds_cnt(unsigned char);
+volatile unsigned short sens_read(unsigned char);
+volatile unsigned short sens_offset(unsigned char);
 
 #endif

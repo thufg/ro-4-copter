@@ -8,11 +8,11 @@
 
 #include <avr/io.h>
 
-#define roll_accel_chan 3
-#define pitch_accel_chan 4
+#define roll_accel_chan 1
+#define pitch_accel_chan 3
 #define vert_accel_chan 5
-#define roll_gyro_chan 0
-#define pitch_gyro_chan 1
+#define roll_gyro_chan 4
+#define pitch_gyro_chan 0
 #define yaw_gyro_chan 2
 
 #define esc_port PORTD

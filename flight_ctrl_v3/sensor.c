@@ -82,13 +82,13 @@ void sens_init()
 }
 
 // read the 10 bit ADC reading of a channel
-inline unsigned short sens_read(unsigned char i)
+volatile inline unsigned short sens_read(unsigned char i)
 {
 	return adc_res[i];
 }
 
 // read the calibration results of a channel
-inline unsigned short sens_offset(unsigned char i)
+volatile inline unsigned short sens_offset(unsigned char i)
 {
 	return adc_offset[i];
 }
@@ -117,7 +117,7 @@ void sens_calibrate(unsigned char t)
 }
 
 // returns the number of ADC samples that have been collected, clear the counter by setting c to 0, or else use 0xFF for c
-inline unsigned char adc_rounds_cnt(unsigned char c)
+volatile inline unsigned char adc_rounds_cnt(unsigned char c)
 {
 	adc_new_cycle &= c;
 	return adc_new_cycle;

@@ -99,27 +99,27 @@ void ppm_init()
 }
 
 // if new ppm cycle
-inline unsigned char ppm_is_new_data(unsigned char c)
+volatile inline unsigned char ppm_is_new_data(unsigned char c)
 {
 	ppm_new_data &= c;
 	return ppm_new_data;
 }
 
 // returns whether or not the TX is on
-inline unsigned char ppm_tx_is_good(unsigned char c)
+volatile inline unsigned char ppm_tx_is_good(unsigned char c)
 {
 	ppm_tx_good &= c;
 	return ppm_tx_good;
 }
 
 // report how many channels the TX is outputting
-inline unsigned char ppm_highest_chan_read()
+volatile inline unsigned char ppm_highest_chan_read()
 {
 	return ppm_highest_chan;
 }
 
 // read channel value in timer ticks
-inline signed short ppm_chan_read(unsigned char i)
+volatile inline signed short ppm_chan_read(unsigned char i)
 {
 	ppm_read_busy = i + 1;
 	signed int r = ppm_width[i] - ppm_offset[i];
@@ -127,7 +127,7 @@ inline signed short ppm_chan_read(unsigned char i)
 	return r;
 }
 
-inline unsigned short ppm_center(unsigned char i)
+volatile inline unsigned short ppm_center(unsigned char i)
 {
 	return ppm_offset[i];
 }
