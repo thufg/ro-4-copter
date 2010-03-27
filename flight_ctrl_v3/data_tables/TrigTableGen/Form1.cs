@@ -18,9 +18,9 @@ namespace TrigTableGen
 
         private void GenTable(object sender, EventArgs e)
         {
-            TableBox.Text = "#ifndef trig_tbl_inc\r\n#define trig_tbl_inc\r\n\r\n#include <avr/pgmspace.h>\r\n#include \"config.h\"\r\n\r\n";
+            TableBox.Text = "#ifndef trig_tbl_inc\r\n#define trig_tbl_inc\r\n\r\n#include <stdint.h>\r\n#include <avr/pgmspace.h>\r\n#include \"config.h\"\r\n\r\n";
             TableBox.Text += "#ifdef use_atan\r\n\r\n#define atan_multiplier " + NumOfAtanEntries.Value + "\r\n";
-            TableBox.Text += "const signed long atan_tbl [atan_multiplier + 1] PROGMEM = {";
+            TableBox.Text += "const int32_t atan_tbl [atan_multiplier + 1] PROGMEM = {";
             string str = "";
             for (int i = 0, j = 0; i <= Convert.ToInt32(NumOfAtanEntries.Value); i++, j++)
             {
@@ -40,7 +40,7 @@ namespace TrigTableGen
             str = "";
 
             TableBox.Text += "#ifdef use_asin\r\n\r\n#define asin_multiplier " + NumOfAsinEntries.Value + "\r\n";
-            TableBox.Text += "const signed long asin_tbl [asin_multiplier + 1] PROGMEM = {";
+            TableBox.Text += "const int32_t asin_tbl [asin_multiplier + 1] PROGMEM = {";
 
             for (int i = 0, j = 0; i <= Convert.ToInt32(NumOfAsinEntries.Value); i++, j++)
             {

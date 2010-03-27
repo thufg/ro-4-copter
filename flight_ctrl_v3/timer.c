@@ -9,8 +9,8 @@
 
 #include "calc.h"
 
-static volatile unsigned long last_tcnt1;
-static volatile unsigned long last_tcnt0;
+static volatile uint32_t last_tcnt1;
+static volatile uint32_t last_tcnt0;
 
 void timer0_init()
 {
@@ -24,21 +24,21 @@ void timer1_init()
 	sbi(TCCR1B, CS10);
 }
 
-volatile signed long timer1_elapsed()
+volatile int32_t timer1_elapsed()
 {
-	signed long temp_tcnt1 = TCNT1;
-	signed long diff = ((temp_tcnt1 | 0x10000) - last_tcnt1) & 0xFFFF;
+	int32_t temp_tcnt1 = TCNT1;
+	int32_t diff = ((temp_tcnt1 | 0x10000) - last_tcnt1) & 0xFFFF;
 	last_tcnt1 = temp_tcnt1;
-	signed long r = calc_multi(diff, MATH_MULTIPLIER, F_CPU);
+	int32_t r = calc_multi(diff, MATH_MULTIPLIER, F_CPU);
 	return r;
 }
 
-volatile signed long timer0_elapsed()
+volatile int32_t timer0_elapsed()
 {
-	signed long temp_tcnt0 = TCNT0;
-	signed long diff = ((temp_tcnt0 | 0x100) - last_tcnt0) & 0xFF;
+	int32_t temp_tcnt0 = TCNT0;
+	int32_t diff = ((temp_tcnt0 | 0x100) - last_tcnt0) & 0xFF;
 	last_tcnt0 = temp_tcnt0;
-	signed long r = calc_multi(diff, MATH_MULTIPLIER * 1024, F_CPU);
+	int32_t r = calc_multi(diff, MATH_MULTIPLIER * 1024, F_CPU);
 	return r;
 }
 

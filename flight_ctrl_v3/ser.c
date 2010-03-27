@@ -9,14 +9,14 @@
 
 #include "ser.h"
 
-void ser_buff_init(ser_buff_s *, unsigned char);
+void ser_buff_init(ser_buff_s *, uint8_t);
 
 static volatile ser_buff_s ser_tx_buff_0;
 static volatile ser_buff_s ser_tx_buff_1;
 static volatile ser_buff_s ser_rx_buff_0;
 static volatile ser_buff_s ser_rx_buff_1;
 
-void ser0_init(unsigned short ubrr, unsigned char rxs, unsigned char txs)
+void ser0_init(uint16_t ubrr, uint8_t rxs, uint8_t txs)
 {
 	UBRR0 = ubrr; // set baud
 
@@ -29,7 +29,7 @@ void ser0_init(unsigned short ubrr, unsigned char rxs, unsigned char txs)
 }
 
 #ifdef __AVR_ATmega644P__
-void ser1_init(unsigned short ubrr, unsigned char rxs, unsigned char txs)
+void ser1_init(uint16_t ubrr, uint8_t rxs, uint8_t txs)
 {
 	UBRR1 = ubrr;
 
@@ -40,7 +40,7 @@ void ser1_init(unsigned short ubrr, unsigned char rxs, unsigned char txs)
 }
 #endif
 
-void ser_buff_init(ser_buff_s * b, unsigned char s)
+void ser_buff_init(ser_buff_s * b, uint8_t s)
 {
 	// reset head and tail, flag
 	b->h = 0;
@@ -50,10 +50,10 @@ void ser_buff_init(ser_buff_s * b, unsigned char s)
 	// set size and allocate memory
 	b->s = s;
 	free(b->d);
-	b->d = calloc(sizeof(unsigned char), s);
+	b->d = calloc(sizeof(uint8_t), s);
 }
 
-void ser_tx(unsigned char p, unsigned char c)
+void ser_tx(uint8_t p, uint8_t c)
 {
 	// select buffer based on port
 	volatile ser_buff_s * ser_tx_buff = &ser_tx_buff_0;
@@ -62,7 +62,7 @@ void ser_tx(unsigned char p, unsigned char c)
 		ser_tx_buff = &ser_tx_buff_1;
 	}
 	
-	volatile unsigned char b;
+	volatile uint8_t b;
 	do // wait for space
 	{
 		b = (ser_tx_buff->s + ser_tx_buff->t - ser_tx_buff->h) % ser_tx_buff->s;
@@ -105,7 +105,7 @@ void ser_tx_1(char c, FILE * stream)
 	ser_tx(1, c);
 }
 
-unsigned char ser_rx(unsigned char p, unsigned char * r)
+uint8_t ser_rx(uint8_t p, uint8_t * r)
 {
 	ser_buff_s * ser_rx_buff = &ser_rx_buff_0;
 	
@@ -122,13 +122,13 @@ unsigned char ser_rx(unsigned char p, unsigned char * r)
 	else
 	{
 		*r = (ser_rx_buff->s + ser_rx_buff->h - ser_rx_buff->t) % ser_rx_buff->s;
-		unsigned char data = ser_rx_buff->d[ser_rx_buff->t]; // read from buffer
+		uint8_t data = ser_rx_buff->d[ser_rx_buff->t]; // read from buffer
 		ser_rx_buff->t = (ser_rx_buff->t + 1) % ser_rx_buff->s; // advance buffer read pointer
 		return data; // return
 	}
 }
 
-unsigned char ser_tx_is_busy(unsigned char p)
+uint8_t ser_tx_is_busy(uint8_t p)
 {
 	if (p == 1)
 	{
@@ -157,8 +157,8 @@ ISR(USART0_TX_vect)
 
 ISR(USART0_RX_vect)
 {	
-	unsigned char data = UDR0; // read
-	unsigned char temp = (ser_rx_buff_0.h + 1) % ser_rx_buff_0.s; // check buffer location first
+	uint8_t data = UDR0; // read
+	uint8_t temp = (ser_rx_buff_0.h + 1) % ser_rx_buff_0.s; // check buffer location first
 	if(temp != ser_rx_buff_0.t) // if not overflow
 	{
 		ser_rx_buff_0.d[ser_rx_buff_0.h] = data; // store in buffer
@@ -185,8 +185,8 @@ ISR(USART1_TX_vect)
 
 ISR(USART1_RX_vect)
 {
-	unsigned char data = UDR1; // read
-	unsigned char temp = (ser_rx_buff_1.h + 1) % ser_rx_buff_1.s; // check buffer location first
+	uint8_t data = UDR1; // read
+	uint8_t temp = (ser_rx_buff_1.h + 1) % ser_rx_buff_1.s; // check buffer location first
 	if(temp != ser_rx_buff_1.t) // if not overflow
 	{
 		ser_rx_buff_1.d[ser_rx_buff_1.h] = data; // store in buffer

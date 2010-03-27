@@ -107,7 +107,7 @@ void test_esc()
 		if(esc_is_done())
 		{
 			// set test width
-			unsigned int testWidth = ticks_500us * 3;
+			uint16_t testWidth = ticks_500us * 3;
 			
 			esc_set_width(f_mot_chan, testWidth + testWidth / 2);
 			esc_set_width(b_mot_chan, testWidth + testWidth / 4);
@@ -129,13 +129,13 @@ void test_calibration_eeprom()
 	Calibration data1;
 	Calibration data2;
 	
-	unsigned char * d1 = &data1;
-	unsigned char * d2 = &data2;
+	uint8_t * d1 = &data1;
+	uint8_t * d2 = &data2;
 	
 	calibration_default(&data1);
 	
 	// make sure data are different
-	for (unsigned long i = 0; i < sizeof(Calibration); i++)
+	for (uint32_t i = 0; i < sizeof(Calibration); i++)
 	{
 		d2[i] = ~d1[i];
 	}
@@ -161,9 +161,9 @@ void test_calibration_eeprom()
 	while (1);
 }
 
-void test_ser(unsigned char port)
+void test_ser(uint8_t port)
 {
-	void (* ser_init)(unsigned short, unsigned char, unsigned char) = ser0_init;
+	void (* ser_init)(uint16_t, uint8_t, uint8_t) = ser0_init;
 	FILE * ostream = &ostream_0;
 	
 	#ifdef __AVR_ATmega644P__
@@ -184,8 +184,8 @@ void test_ser(unsigned char port)
 	
 	while (1)
 	{
-		unsigned char r;
-		unsigned char d = ser_rx(port, &r);
+		uint8_t r;
+		uint8_t d = ser_rx(port, &r);
 		if (r != 0)
 		{
 			ser_tx(port, d);
@@ -221,7 +221,7 @@ void test_sensors()
 			if (button_is_pressed())
 			{
 				// report center values
-				for (unsigned char i = 0; i < 8; i++)
+				for (uint8_t i = 0; i < 8; i++)
 				{
 					fprintf_P(&ostream_1, PSTR("cal %d: %d\r\n"), i, sens_offset(i));
 				}
@@ -231,7 +231,7 @@ void test_sensors()
 			else
 			{
 				// report ADC channel readings
-				for (unsigned char i = 0; i < 8; i++)
+				for (uint8_t i = 0; i < 8; i++)
 				{
 					fprintf_P(&ostream_1, PSTR("adc %d: %d\r\n"), i, sens_read(i));
 				}
@@ -280,7 +280,7 @@ void test_ppm()
 			if (button_is_pressed())
 			{
 				// report center values
-				for (unsigned char i = 0; i < 6; i++)
+				for (uint8_t i = 0; i < 6; i++)
 				{
 					fprintf_P(&ostream_0, PSTR("cal %d: %d\r\n"), i, ppm_center(i));
 				}
@@ -290,7 +290,7 @@ void test_ppm()
 			else
 			{
 				// report channel values
-				for (unsigned char i = 0; i < 6; i++)
+				for (uint8_t i = 0; i < 6; i++)
 				{
 					fprintf_P(&ostream_0, PSTR("ppm %d: %d\r\n"), i, ppm_chan_read(i));
 				}
@@ -348,7 +348,7 @@ void test_ppm_to_esc()
 			
 		if(esc_is_done())
 		{			
-			for (unsigned char i = 0; i < 6; i++)
+			for (uint8_t i = 0; i < 6; i++)
 			{
 				esc_set_width(i, ppm_chan_read(i) + ppm_center(i));
 			}
@@ -358,9 +358,9 @@ void test_ppm_to_esc()
 	}
 }
 
-void test_calc(unsigned char port)
+void test_calc(uint8_t port)
 {
-	void (* ser_init)(unsigned short, unsigned char, unsigned char) = ser0_init;
+	void (* ser_init)(uint16_t, uint8_t, uint8_t) = ser0_init;
 	FILE * ostream = &ostream_0;
 	
 	#ifdef __AVR_ATmega644P__

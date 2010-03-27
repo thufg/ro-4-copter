@@ -4,7 +4,7 @@
 
 #include "config.h"
 
-void eeprom_write_byte_if_different(unsigned long addr, unsigned char data)
+void eeprom_write_byte_if_different(uint32_t addr, uint8_t data)
 {
 	if (eeprom_read_byte(addr) != data)
 	{
@@ -14,9 +14,9 @@ void eeprom_write_byte_if_different(unsigned long addr, unsigned char data)
 
 void calibration_save(Calibration * x)
 {
-	unsigned char * c = x;
+	uint8_t * c = x;
 	
-	for (unsigned long addr = 0; addr < sizeof(Calibration); addr++)
+	for (uint32_t addr = 0; addr < sizeof(Calibration); addr++)
 	{
 		eeprom_write_byte_if_different(addr, c[addr]);
 	}
@@ -24,9 +24,9 @@ void calibration_save(Calibration * x)
 
 void calibration_load(Calibration * x)
 {
-	unsigned char * c = x;
+	uint8_t * c = x;
 	
-	for (unsigned long addr = 0; addr < sizeof(Calibration); addr++)
+	for (uint32_t addr = 0; addr < sizeof(Calibration); addr++)
 	{
 		c[addr] = eeprom_read_byte(addr);
 	}

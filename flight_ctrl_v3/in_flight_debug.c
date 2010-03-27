@@ -15,12 +15,12 @@ void debug_initialize()
 	ser1_init(129, 128, 128); // 9600 baud
 }
 
-unsigned char debug_check_msg(Calibration * x)
+uint8_t debug_check_msg(Calibration * x)
 {
-	unsigned char rc = 0;
-	unsigned char d = ser_rx(1, &rc);
+	uint8_t rc = 0;
+	uint8_t d = ser_rx(1, &rc);
 	
-	if (d == 0 || (d != '@' && d != 's' && d != 'd' && d != 'l' && d != 'c' && d != 'r')) // nothing received or not sync-ed
+	if (d == 0 || (d != '@' && d != 's' && d != 'd' && d != 'l' && d != 'c' && d != 'r' && d != 'R')) // nothing received or not sync-ed
 	{
 		return 0;
 	}
@@ -49,12 +49,16 @@ unsigned char debug_check_msg(Calibration * x)
 	{
 		return 1;
 	}
+	else if (d == 'R')
+	{
+		return 3;
+	}
 	
-	unsigned char * str = calloc(sizeof(unsigned char), 32);
+	uint8_t * str = calloc(sizeof(uint8_t), 32);
 	int stage = 0;
-	signed long addr = 0;
+	int32_t addr = 0;
 	
-	for (unsigned char i = 0; ; i++)
+	for (uint8_t i = 0; ; i++)
 	{
 		rc = 0;
 		do
@@ -70,7 +74,7 @@ unsigned char debug_check_msg(Calibration * x)
 		else
 		{
 			str[i] = 0;
-			unsigned long res = strtol(str, 0, 10);
+			uint32_t res = strtol(str, 0, 10);
 			if (stage == 0)
 			{
 				stage = 1;

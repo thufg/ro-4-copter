@@ -1,6 +1,8 @@
 #ifndef config_h
 #define config_h
 
+#include <stdint.h>
+
 #define MATH_MULTIPLIER 1000
 #define MATH_MULTI MATH_MULTIPLIER
 

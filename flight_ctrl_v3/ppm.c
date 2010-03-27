@@ -11,24 +11,25 @@
 #include "timer.h"
 #include "ser.h"
 
-static volatile unsigned short ppm_width[8];
-static volatile unsigned short ppm_offset[8];
-static volatile unsigned char ppm_chan;
-static volatile unsigned char ppm_highest_chan;
-static volatile unsigned short ppm_last_capt;
-static volatile unsigned char ppm_ovf_cnt;
-static volatile unsigned char ppm_new_data;
-static volatile unsigned char ppm_tx_good;
-static volatile unsigned char ppm_read_busy;
+static volatile uint16_t ppm_width[8];
+static volatile uint16_t ppm_offset[8];
+static volatile uint8_t ppm_chan;
+static volatile uint8_t ppm_highest_chan;
+static volatile uint16_t ppm_last_capt;
+static volatile uint8_t ppm_ovf_cnt;
+static volatile uint8_t ppm_new_data;
+static volatile uint8_t ppm_tx_good;
+static volatile uint8_t ppm_read_busy;
+static volatile uint8_t ppm_has_cal;
 
 ISR(TIMER1_CAPT_vect)
 {
-	unsigned char ovf_cnt = ppm_ovf_cnt;
+	uint8_t ovf_cnt = ppm_ovf_cnt;
 	ppm_ovf_cnt = 0;
-	unsigned long t_icr = ICR1;
+	uint32_t t_icr = ICR1;
 
 	// calculate total time using overflows and time difference
-	signed long t = ((t_icr | 0x10000) - ppm_last_capt) & 0xFFFF;
+	int32_t t = ((t_icr | 0x10000) - ppm_last_capt) & 0xFFFF;
 	if(t_icr < ppm_last_capt)
 	{
 	        ovf_cnt--;
@@ -77,7 +78,7 @@ ISR(TIMER1_OVF_vect)
 
 void ppm_init()
 {
-	for(unsigned char i = 0; i < 8; i++)
+	for(uint8_t i = 0; i < 8; i++)
 	{
 		ppm_width[i] = ticks_500us * 3;
 	}
@@ -88,6 +89,7 @@ void ppm_init()
 	ppm_ovf_cnt = 0;
 	ppm_last_capt = 0;
 	ppm_highest_chan = ppm_highest_chan_default;
+	ppm_has_cal = 0;
 
 	cbi(ppm_port, ppm_pin);
 	cbi(ppm_ddr, ppm_pin);
@@ -99,63 +101,71 @@ void ppm_init()
 }
 
 // if new ppm cycle
-volatile inline unsigned char ppm_is_new_data(unsigned char c)
+volatile inline uint8_t ppm_is_new_data(uint8_t c)
 {
 	ppm_new_data &= c;
 	return ppm_new_data;
 }
 
 // returns whether or not the TX is on
-volatile inline unsigned char ppm_tx_is_good(unsigned char c)
+volatile inline uint8_t ppm_tx_is_good(uint8_t c)
 {
 	ppm_tx_good &= c;
 	return ppm_tx_good;
 }
 
 // report how many channels the TX is outputting
-volatile inline unsigned char ppm_highest_chan_read()
+volatile inline uint8_t ppm_highest_chan_read()
 {
 	return ppm_highest_chan;
 }
 
 // read channel value in timer ticks
-volatile inline signed short ppm_chan_read(unsigned char i)
+volatile inline int16_t ppm_chan_read(uint8_t i)
 {
+	if (ppm_tx_good == 0)
+	{
+		return 0;
+	}
+
 	ppm_read_busy = i + 1;
-	signed int r = ppm_width[i] - ppm_offset[i];
+	int16_t r = ppm_width[i] - ppm_offset[i];
 	ppm_read_busy = 0;
 	return r;
 }
 
-volatile inline unsigned short ppm_center(unsigned char i)
+volatile inline uint16_t ppm_center(uint8_t i)
 {
 	return ppm_offset[i];
 }
 
 // take the average center values of each channel to determin the value for stick center
-void ppm_calibrate(unsigned char t)
+void ppm_calibrate(uint8_t t)
 {
 	// reset data
-	for(unsigned char i = 0; i < 8; i++)
+	for(uint8_t i = 0; i < 8; i++)
 	{
 		ppm_offset[i] = 0;
 	}
 	
-	unsigned long sum[8] = {0,0,0,0,0,0,0,0};
-	for(unsigned char i = 0; i < t; i++)
+	uint32_t sum[8] = {0,0,0,0,0,0,0,0};
+	for(uint8_t i = 0; i < t; i++)
 	{
 		// sum and average for each channel using t samples
 		ppm_new_data = 0;
 		while(ppm_new_data == 0);
-		for(unsigned char j = 0; j < 8; j++)
+		for(uint8_t j = 0; j < 8; j++)
 		{
 			sum[j] += ppm_chan_read(j);
 		}
 	}
 	
 	// perform averaging
-	for(unsigned char j = 0; j < 8; j++)
+	for(uint8_t j = 0; j < 8; j++)
 	{
 		ppm_offset[j] = lround((double)sum[j] / (double)t);
 	}
+	
+	// set flag
+	ppm_has_cal = 1;
 }

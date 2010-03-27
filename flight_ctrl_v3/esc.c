@@ -9,12 +9,12 @@
 
 #include "timer.h"
 
-static volatile unsigned short esc_chan_width[8];
-static volatile unsigned char esc_chan;
-static volatile signed long esc_elapsed;
-static volatile unsigned char esc_done;
-static volatile unsigned char esc_safety;
-static volatile unsigned char esc_extra_servo;
+static volatile uint16_t esc_chan_width[8];
+static volatile uint8_t esc_chan;
+static volatile int32_t esc_elapsed;
+static volatile uint8_t esc_done;
+static volatile uint8_t esc_safety;
+static volatile uint8_t esc_extra_servo;
 
 ISR(TIMER1_COMPA_vect)
 {
@@ -41,7 +41,7 @@ ISR(TIMER1_COMPA_vect)
 void esc_init()
 {
 	// set default
-	for(unsigned char i = 0; i < 8; i++)
+	for(uint8_t i = 0; i < 8; i++)
 	{
 		esc_chan_width[i] = ticks_500us;
 	}
@@ -109,7 +109,7 @@ void esc_start_next()
 	esc_shift_rst();
 }
 
-volatile inline unsigned char esc_is_done()
+volatile inline uint8_t esc_is_done()
 {
 	return esc_done;
 }
@@ -119,12 +119,12 @@ inline void esc_is_done_clear()
 	esc_done = 0;
 }
 
-inline void esc_safe(unsigned char c)
+inline void esc_safe(uint8_t c)
 {
 	esc_safety = c;
 }
 
-void esc_set_speed(unsigned char c, unsigned short w)
+void esc_set_speed(uint8_t c, uint16_t w)
 {
 	if (w > ticks_500us * 2) // limit top range
 	{
@@ -134,9 +134,9 @@ void esc_set_speed(unsigned char c, unsigned short w)
 	esc_chan_width[c] = ticks_500us * 2 + w;
 }
 
-void esc_set_speed_with_mode(unsigned char c, unsigned short w, unsigned char m)
+void esc_set_speed_with_mode(uint8_t c, uint16_t w, uint8_t m)
 {
-	unsigned short r;
+	uint16_t r;
 	if (bit_is_set(m, c * 2)) // starting point at 1500 us
 	{
 		r = ticks_500us * 3 + w / 2;
@@ -155,7 +155,7 @@ void esc_set_speed_with_mode(unsigned char c, unsigned short w, unsigned char m)
 	esc_set_width(c, r);
 }
 
-void esc_set_width(unsigned char c, unsigned short w)
+void esc_set_width(uint8_t c, uint16_t w)
 {
 	// limit range from 1000 to 2000 us
 	if(w < ticks_500us * 2)
@@ -170,17 +170,17 @@ void esc_set_width(unsigned char c, unsigned short w)
 	esc_chan_width[c] = w;
 }
 
-volatile unsigned long esc_get_total()
+volatile uint32_t esc_get_total()
 {
-	unsigned long sum = 0;
-	for(unsigned char i = 0; i < 4 + esc_extra_servo; i++)
+	uint32_t sum = 0;
+	for(uint8_t i = 0; i < 4 + esc_extra_servo; i++)
 	{
 		sum += esc_chan_width[i];
 	}
 	return sum;
 }
 
-inline void esc_set_extra_chan(unsigned char n)
+inline void esc_set_extra_chan(uint8_t n)
 {
 	esc_extra_servo = n;
 }

@@ -1,13 +1,15 @@
 #ifndef sensor_h
 #define sensor_h
 
+#include <stdint.h>
+
 /*
 typedef struct sens_hist_
 {
-	unsigned int res[sens_hist_len_max];
-	unsigned char cnt;
-	unsigned char last_cnt;
-	unsigned int latest;
+	uint16_t res[sens_hist_len_max];
+	uint8_t cnt;
+	uint8_t last_cnt;
+	uint16_t latest;
 	double avg;
 	double offset;
 	double noise;
@@ -15,10 +17,10 @@ typedef struct sens_hist_
 //*/
 
 void sens_init();
-void sens_calibrate(unsigned char);
+void sens_calibrate(uint8_t);
 void adc_wait_stop();
-volatile unsigned char adc_rounds_cnt(unsigned char);
-volatile unsigned short sens_read(unsigned char);
-volatile unsigned short sens_offset(unsigned char);
+volatile uint8_t adc_rounds_cnt(uint8_t);
+volatile uint16_t sens_read(uint8_t);
+volatile uint16_t sens_offset(uint8_t);
 
 #endif
