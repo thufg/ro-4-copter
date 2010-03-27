@@ -109,7 +109,7 @@ void esc_start_next()
 	esc_shift_rst();
 }
 
-inline unsigned char esc_is_done()
+volatile inline unsigned char esc_is_done()
 {
 	return esc_done;
 }
@@ -170,7 +170,7 @@ void esc_set_width(unsigned char c, unsigned short w)
 	esc_chan_width[c] = w;
 }
 
-unsigned long esc_get_total()
+volatile unsigned long esc_get_total()
 {
 	unsigned long sum = 0;
 	for(unsigned char i = 0; i < 4 + esc_extra_servo; i++)

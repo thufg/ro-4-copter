@@ -53,6 +53,7 @@
             this.TableBox.Size = new System.Drawing.Size(609, 424);
             this.TableBox.TabIndex = 0;
             this.TableBox.WordWrap = false;
+            this.TableBox.DoubleClick += new System.EventHandler(this.TableBox_DoubleClick);
             // 
             // NumOfAtanEntries
             // 
@@ -77,7 +78,7 @@
             this.NumOfAtanEntries.Size = new System.Drawing.Size(62, 20);
             this.NumOfAtanEntries.TabIndex = 1;
             this.NumOfAtanEntries.Value = new decimal(new int[] {
-            1000,
+            360,
             0,
             0,
             0});
@@ -88,7 +89,7 @@
             this.GenBut.Location = new System.Drawing.Point(546, 442);
             this.GenBut.Name = "GenBut";
             this.GenBut.Size = new System.Drawing.Size(75, 23);
-            this.GenBut.TabIndex = 2;
+            this.GenBut.TabIndex = 4;
             this.GenBut.Text = "Generate";
             this.GenBut.UseVisualStyleBackColor = true;
             this.GenBut.Click += new System.EventHandler(this.GenTable);
@@ -123,9 +124,9 @@
             0});
             this.NumOfAsinEntries.Name = "NumOfAsinEntries";
             this.NumOfAsinEntries.Size = new System.Drawing.Size(62, 20);
-            this.NumOfAsinEntries.TabIndex = 1;
+            this.NumOfAsinEntries.TabIndex = 2;
             this.NumOfAsinEntries.Value = new decimal(new int[] {
-            1000,
+            720,
             0,
             0,
             0});
@@ -169,7 +170,7 @@
             0});
             this.MATH_MULTIPLIER.Name = "MATH_MULTIPLIER";
             this.MATH_MULTIPLIER.Size = new System.Drawing.Size(62, 20);
-            this.MATH_MULTIPLIER.TabIndex = 1;
+            this.MATH_MULTIPLIER.TabIndex = 3;
             this.MATH_MULTIPLIER.Value = new decimal(new int[] {
             10000,
             0,

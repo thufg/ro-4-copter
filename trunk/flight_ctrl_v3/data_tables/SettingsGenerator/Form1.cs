@@ -28,6 +28,7 @@ namespace SettingsGenerator
                     return;
 
                 SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Title = "Select Struct Header File";
                 sfd.InitialDirectory = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3";
 
                 if (sfd.ShowDialog() != DialogResult.OK)
@@ -85,13 +86,8 @@ namespace SettingsGenerator
                 writer.WriteLine("#define {0}_h", fname);
 
                 writer.WriteLine();
-
-                //foreach (Variable v in vars)
-                //{
-                //    writer.WriteLine("#define {0}_defval {1}", v.Name, v.DefaultValue);
-                //}
-
-                //writer.WriteLine();
+                writer.WriteLine("// Var count: {0}", vars.Count);
+                writer.WriteLine();
 
                 writer.WriteLine("typedef struct Calibration_{");
 
@@ -103,67 +99,86 @@ namespace SettingsGenerator
                 writer.WriteLine("} Calibration;");
 
                 writer.WriteLine();
-                writer.WriteLine("// Var count: {0}", vars.Count);
-                writer.WriteLine();
-
-                writer.WriteLine("/*");
-
-                writer.WriteLine("void calibration_default(Calibration * x)");
-                writer.WriteLine("{");
-
-                foreach (Variable v in vars)
-                {
-                    writer.WriteLine("\tx->{0} = {1};", v.Name, v.DefaultValue);
-                }
-
-                writer.WriteLine("}");
-
-                writer.WriteLine();
-                writer.WriteLine();
-
-                writer.WriteLine("void calibration_write(Calibration * x, signed long addr, signed long data)");
-                writer.WriteLine("{");
-
-                writer.WriteLine("\tswitch(addr)");
-                writer.WriteLine("\t{");
-
-                int cnt = 0;
-                foreach (Variable v in vars)
-                {
-                    writer.WriteLine("\t\tcase {0}:", cnt);
-                    writer.WriteLine("\t\t\tx->{0} = ({1})data;", v.Name, v.Type);
-                    writer.WriteLine("\t\t\tbreak;");
-                    cnt++;
-                }
-
-                writer.WriteLine("\t\tdefault:");
-                writer.WriteLine("\t\t\tbreak;");
-
-                writer.WriteLine("\t}");
-
-                writer.WriteLine("}");
-
-                writer.WriteLine();
-                writer.WriteLine();
-
-                writer.WriteLine("void debug_report_vars(Calibration * x)");
-                writer.WriteLine("{");
-
-                cnt = 0;
-                foreach (Variable v in vars)
-                {
-                    writer.WriteLine("\tfprintf_P(&serstream, PSTR(\"{0}, {1} (%d), {2}: %d\\r\\n\"), (unsigned char)sizeof({1}), x->{2});", cnt, v.Type, v.Name);
-                    cnt++;
-                }
-
-                writer.WriteLine("}");
-
-                writer.WriteLine("*/");
-                writer.WriteLine();
 
                 writer.WriteLine("#endif");
 
                 writer.Close();
+
+                sfd.Title = "Select Calibration Function Header File";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    writer = new StreamWriter(sfd.FileName);
+
+                    writer.WriteLine("#ifndef calibration_autogen_functs_h");
+                    writer.WriteLine("#define calibration_autogen_functs_h");
+
+                    writer.WriteLine("void calibration_default(Calibration * x)");
+                    writer.WriteLine("{");
+
+                    foreach (Variable v in vars)
+                    {
+                        writer.WriteLine("\tx->{0} = {1};", v.Name, v.DefaultValue);
+                    }
+
+                    writer.WriteLine("}");
+
+                    writer.WriteLine();
+                    writer.WriteLine();
+
+                    writer.WriteLine("void calibration_write(Calibration * x, signed long addr, signed long data)");
+                    writer.WriteLine("{");
+
+                    writer.WriteLine("\tswitch(addr)");
+                    writer.WriteLine("\t{");
+
+                    int cnt = 0;
+                    foreach (Variable v in vars)
+                    {
+                        writer.WriteLine("\t\tcase {0}:", cnt);
+                        writer.WriteLine("\t\t\tx->{0} = ({1})data;", v.Name, v.Type);
+                        writer.WriteLine("\t\t\tbreak;");
+                        cnt++;
+                    }
+
+                    writer.WriteLine("\t\tdefault:");
+                    writer.WriteLine("\t\t\tbreak;");
+
+                    writer.WriteLine("\t}");
+
+                    writer.WriteLine("}");
+
+                    writer.WriteLine();
+
+                    writer.WriteLine("#endif");
+
+                    writer.Close();
+                }
+
+                sfd.Title = "Select Debug Report Function Header File";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    writer = new StreamWriter(sfd.FileName);
+
+                    writer.WriteLine("#ifndef debug_autogen_functs_h");
+                    writer.WriteLine("#define debug_autogen_functs_h");
+
+                    writer.WriteLine("void debug_report_vars(Calibration * x)");
+                    writer.WriteLine("{");
+
+                    int cnt = 0;
+                    foreach (Variable v in vars)
+                    {
+                        writer.WriteLine("\tfprintf_P(&serstream, PSTR(\"{0}, {1} (%d), {2}: %d\\r\\n\"), (unsigned char)sizeof({1}), x->{2});", cnt, v.Type, v.Name);
+                        cnt++;
+                    }
+                
+                    writer.WriteLine("}");
+                    writer.WriteLine();
+
+                    writer.WriteLine("#endif");
+
+                    writer.Close();
+                }
 
                 MessageBox.Show("Done!");
             }

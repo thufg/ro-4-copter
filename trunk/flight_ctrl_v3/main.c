@@ -57,7 +57,6 @@ void hold_esc()
 {
 	esc_safe(1);
 	
-	unsigned long minimumcnt = 0;
 	int flashcnt = 0;
 	int presscnt = 0;
 	
@@ -88,7 +87,7 @@ void hold_esc()
 		{
 			if (ppm_is_new_data(0xFF) != 0)
 			{
-				if (ppm_chan_read(5) > ticks_500us * 3 + ticks_500us / 2 || button_is_pressed()) // channel 6 button is pressed
+				if (ppm_chan_read(cal_data.unlock_ppm_chan) + ppm_center(cal_data.unlock_ppm_chan) > ticks_500us * 3 + ticks_500us / 2 || button_is_pressed()) // channel 6 button is pressed
 				{
 					presscnt++;
 				}
@@ -100,7 +99,7 @@ void hold_esc()
 				ppm_is_new_data(0);
 			}
 			
-			if (presscnt >= 500) // if held down long enough
+			if (presscnt >= cal_data.button_hold_down) // if held down long enough
 			{
 				break;
 			}
@@ -113,7 +112,6 @@ void hold_esc()
 			
 		if (esc_is_done())
 		{
-			//minimumcnt = minimumcnt >= 10000 ? minimumcnt : minimumcnt + 1;
 			flashcnt = (flashcnt + 1) % 25;
 			esc_start_next();
 		}
@@ -129,11 +127,11 @@ int main()
 	//test_calibration_eeprom();
 	//test_ser(0);
 	//test_ser(1);
-	//test_sensors();
+	test_sensors();
 	//test_ppm();
 	//test_ppm_to_esc();
 	
-	//return 0;
+	return 0;
 	
 	// actual initialization here
 	
@@ -192,51 +190,6 @@ int main()
 		{
 			report_requested = 1;
 		}
-		
-		//// check controller status
-		//if (ppm_tx_is_good(3) == 2)
-		//{
-			//if (ppm_is_new_data(0xFF) != 0)
-			//{
-				//// new controller cycle
-				//if (ppm_chan_read(5) < ticks_500us * 3 - ticks_500us / 2) // channel 6 button is pressed
-				//{
-					//off_cnt++;
-				//}
-				//else
-				//{
-					//off_cnt = 0;
-				//}
-			
-				//ppm_is_new_data(0);
-			//}
-			
-			//// button held down for long enough, turn off
-			//if (off_cnt > 50)
-			//{
-				//is_flying = 0;
-			//}
-			
-			//LED1_off();
-		//}
-		//else
-		//{
-			//// no signal, turn off
-			//is_flying = 0;
-			//off_cnt = 0;
-		//}
-		
-		//// turn off
-		//if (is_flying == 0)
-		//{
-			//fprintf_P(&serdebugstream, PSTR("locked\r\n"));
-			//hold_esc();
-			//fprintf_P(&serdebugstream, PSTR("unlocked\r\n"));
-			//is_flying = 1;
-			//off_cnt = 0;
-			//ppm_is_new_data(0);
-			//while (ppm_is_new_data(0xFF) == 0);
-		//}
 
 		signed long roll_gyro_val;
 		signed long pitch_gyro_val;
@@ -264,7 +217,7 @@ int main()
 			signed long delta_time;
 			if (cal_data.delta_time_const != 0)
 			{
-				cal_data.delta_time_const * adc_rounds_cnt(0xFF);
+				delta_time = cal_data.delta_time_const * adc_rounds_cnt(0xFF);
 			}
 			else
 			{
@@ -357,17 +310,17 @@ int main()
 				fprintf_P(&serdebugstream, PSTR("yaw_ppm: %d - %d\r\n"), ppm_chan_read(cal_data.yaw_ppm_chan), ppm_center(cal_data.yaw_ppm_chan));
 				fprintf_P(&serdebugstream, PSTR("throttle_ppm: %d - %d\r\n"), ppm_chan_read(cal_data.throttle_ppm_chan), ppm_center(cal_data.throttle_ppm_chan));
 				
-				fprintf_P(&serdebugstream, PSTR("roll_level_pid: %d, %d\r\n"), roll_level_pid.err_sum, roll_level_pid.err_last);
-				fprintf_P(&serdebugstream, PSTR("roll_rate_pid: %d, %d\r\n"), roll_rate_pid.err_sum, roll_rate_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("roll_level_pid err: %d, %d\r\n"), roll_level_pid.err_sum, roll_level_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("roll_rate_pid err: %d, %d\r\n"), roll_rate_pid.err_sum, roll_rate_pid.err_last);
 				fprintf_P(&serdebugstream, PSTR("roll_tgt_rate: %d\r\n"), roll_tgt_rate);
 				fprintf_P(&serdebugstream, PSTR("roll_mot: %d\r\n"), roll_mot);
 				
-				fprintf_P(&serdebugstream, PSTR("pitch_level_pid: %d, %d\r\n"), pitch_level_pid.err_sum, pitch_level_pid.err_last);
-				fprintf_P(&serdebugstream, PSTR("pitch_rate_pid: %d, %d\r\n"), pitch_rate_pid.err_sum, pitch_rate_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("pitch_level_pid err: %d, %d\r\n"), pitch_level_pid.err_sum, pitch_level_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("pitch_rate_pid err: %d, %d\r\n"), pitch_rate_pid.err_sum, pitch_rate_pid.err_last);
 				fprintf_P(&serdebugstream, PSTR("pitch_tgt_rate: %d\r\n"), pitch_tgt_rate);
 				fprintf_P(&serdebugstream, PSTR("pitch_mot: %d\r\n"), pitch_mot);
 				
-				fprintf_P(&serdebugstream, PSTR("yaw_pid: %d, %d\r\n"), yaw_pid.err_sum, yaw_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("yaw_pid err: %d, %d\r\n"), yaw_pid.err_sum, yaw_pid.err_last);
 				fprintf_P(&serdebugstream, PSTR("yaw_gyro_val: %d - %d\r\n"), yaw_gyro_val, sens_offset(yaw_gyro_chan));
 				fprintf_P(&serdebugstream, PSTR("yaw_mot: %d\r\n"), yaw_mot);
 				

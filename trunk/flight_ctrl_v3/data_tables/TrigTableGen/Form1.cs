@@ -59,5 +59,10 @@ namespace TrigTableGen
             TableBox.Focus();
             TableBox.SelectAll();
         }
+
+        private void TableBox_DoubleClick(object sender, EventArgs e)
+        {
+            TableBox.SelectAll();
+        }
     }
 }

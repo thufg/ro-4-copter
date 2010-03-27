@@ -24,7 +24,7 @@ void timer1_init()
 	sbi(TCCR1B, CS10);
 }
 
-signed long timer1_elapsed()
+volatile signed long timer1_elapsed()
 {
 	signed long temp_tcnt1 = TCNT1;
 	signed long diff = ((temp_tcnt1 | 0x10000) - last_tcnt1) & 0xFFFF;
@@ -33,7 +33,7 @@ signed long timer1_elapsed()
 	return r;
 }
 
-signed long timer0_elapsed()
+volatile signed long timer0_elapsed()
 {
 	signed long temp_tcnt0 = TCNT0;
 	signed long diff = ((temp_tcnt0 | 0x100) - last_tcnt0) & 0xFF;
