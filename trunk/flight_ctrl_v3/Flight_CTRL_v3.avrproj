@@ -31,7 +31,7 @@
   <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
   <BurnBaud>0</BurnBaud>
   <BurnAutoReset>false</BurnAutoReset>
-  <LastFile>calibration_variables.csv</LastFile>
+  <LastFile>main.c</LastFile>
   <FileList>
     <File>
       <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c'-->
@@ -39,7 +39,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>2380</CursorPos>
+      <CursorPos>333</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -47,8 +47,8 @@
       <RelPath>pindef.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>116</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>143</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -57,7 +57,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>126</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -65,7 +65,7 @@
       <RelPath>macros.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
@@ -74,8 +74,8 @@
       <RelPath>test.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>4113</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -92,8 +92,8 @@
       <RelPath>esc.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>1917</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>361</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -102,7 +102,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>83</CursorPos>
+      <CursorPos>53</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -110,8 +110,8 @@
       <RelPath>config.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>57</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -119,7 +119,7 @@
       <RelPath>timer.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>431</CursorPos>
       <Bookmarks />
     </File>
@@ -128,8 +128,8 @@
       <RelPath>timer.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>135</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>65</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -137,8 +137,8 @@
       <RelPath>sensor.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>21</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -146,8 +146,8 @@
       <RelPath>sensor.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>444</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>38</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -156,7 +156,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>857</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -165,7 +165,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>993</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -174,7 +174,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>113</CursorPos>
+      <CursorPos>65</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -183,7 +183,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>69</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -191,8 +191,8 @@
       <RelPath>calibration.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>437</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -200,7 +200,7 @@
       <RelPath>calibration_struct.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
@@ -209,7 +209,7 @@
       <RelPath>ser.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
@@ -219,7 +219,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>454</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -228,7 +228,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>305</CursorPos>
+      <CursorPos>53</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -237,7 +237,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>2734</CursorPos>
+      <CursorPos>2093</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -245,8 +245,8 @@
       <RelPath>in_flight_debug.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>731</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>911</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -255,7 +255,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>77</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -264,7 +264,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>984</CursorPos>
+      <CursorPos>1982</CursorPos>
       <Bookmarks />
     </File>
     <File>

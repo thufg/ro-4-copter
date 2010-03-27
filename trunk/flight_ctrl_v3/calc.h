@@ -1,6 +1,8 @@
 #ifndef calc_h
 #define calc_h
 
+#include <stdint.h>
+
 #define rad_to_deg_const 57.2957795130823
 
 #define calc_abs(in) 				(in < 0 ? -1 * in : in)
@@ -14,25 +16,25 @@
 
 typedef struct PID_data_
 {
-	signed long err_sum;
-	signed long err_last;
+	int32_t err_sum;
+	int32_t err_last;
 } PID_data;
 
 typedef struct kalman_data_
 {
-	signed long x[2];
-	signed long P[4];
-	signed long Q[2];
-	signed long R;
+	int32_t x[2];
+	int32_t P[4];
+	int32_t Q[2];
+	int32_t R;
 } kalman_data;
 
-//signed long calc_multi(signed long, signed long, signed long);
-signed long PID_mv(PID_data *, signed long, signed long, signed long, signed long, signed long);
-PID_data PID_init();
-signed long complementary_filter(signed long *, signed long, signed long, signed long, signed long);
-double kalman_filter(kalman_data *, double, double, double);
-signed long calc_atan2(signed long, signed long);
-signed long calc_asin(signed long, signed long);
-void kalman_init(kalman_data *, double, double, double);
+//volatile int32_t calc_multi(int32_t, int32_t, int32_t);
+volatile int32_t PID_mv(PID_data *, int32_t, int32_t, int32_t, int32_t, int32_t);
+volatile PID_data PID_init();
+volatile int32_t complementary_filter(int32_t *, int32_t, int32_t, int32_t, int32_t);
+volatile double kalman_filter(kalman_data *, double, double, double);
+volatile int32_t calc_atan2(int32_t, int32_t);
+volatile int32_t calc_asin(int32_t, int32_t);
+volatile void kalman_init(kalman_data *, double, double, double);
 
 #endif

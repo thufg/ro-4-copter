@@ -23,13 +23,17 @@ namespace SettingsGenerator
             {
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.InitialDirectory = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\data_tables";
+                ofd.FileName = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\data_tables\calibration_variables.csv";
 
                 if (ofd.ShowDialog() != DialogResult.OK)
                     return;
 
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Title = "Select Struct Header File";
-                sfd.InitialDirectory = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3";
+                sfd.InitialDirectory = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\";
+                sfd.OverwritePrompt = false;
+
+                sfd.FileName = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration_struct.h";
 
                 if (sfd.ShowDialog() != DialogResult.OK)
                     return;
@@ -105,6 +109,7 @@ namespace SettingsGenerator
                 writer.Close();
 
                 sfd.Title = "Select Calibration Function Header File";
+                sfd.FileName = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\calibration_autogen_functs.h";
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     writer = new StreamWriter(sfd.FileName);
@@ -125,7 +130,7 @@ namespace SettingsGenerator
                     writer.WriteLine();
                     writer.WriteLine();
 
-                    writer.WriteLine("void calibration_write(Calibration * x, signed long addr, signed long data)");
+                    writer.WriteLine("void calibration_write(Calibration * x, int32_t addr, int32_t data)");
                     writer.WriteLine("{");
 
                     writer.WriteLine("\tswitch(addr)");
@@ -155,6 +160,7 @@ namespace SettingsGenerator
                 }
 
                 sfd.Title = "Select Debug Report Function Header File";
+                sfd.FileName = @"C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\debug_autogen_functs.h";
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     writer = new StreamWriter(sfd.FileName);
@@ -168,7 +174,7 @@ namespace SettingsGenerator
                     int cnt = 0;
                     foreach (Variable v in vars)
                     {
-                        writer.WriteLine("\tfprintf_P(&serstream, PSTR(\"{0}, {1} (%d), {2}: %d\\r\\n\"), (unsigned char)sizeof({1}), x->{2});", cnt, v.Type, v.Name);
+                        writer.WriteLine("\tfprintf_P(&serstream, PSTR(\"{0}, {1} (%d), {2}: %d\\r\\n\"), (uint8_t)sizeof({1}), x->{2});", cnt, v.Type, v.Name);
                         cnt++;
                     }
                 

@@ -12,12 +12,14 @@ void calibration_default(Calibration * x)
 	x->r_mot_scale = MATH_MULTI;
 	x->motor_mode = 0b00000000;
 	x->yaw_gyro_scale = MATH_MULTI;
-	x->roll_accel_bot = 0;
-	x->roll_accel_top = 1024;
-	x->pitch_accel_bot = 0;
-	x->pitch_accel_top = 1024;
-	x->vert_accel_bot = 0;
-	x->vert_accel_top = 1024;
+	x->roll_accel_bot = 294;
+	x->roll_accel_center = 544;
+	x->roll_accel_top = 796;
+	x->pitch_accel_bot = 303;
+	x->pitch_accel_center = 551;
+	x->pitch_accel_top = 812;
+	x->vert_accel_bot = 255;
+	x->vert_accel_top = 756;
 	x->pitch_angle_offset = 0;
 	x->roll_angle_offset = 0;
 	x->pitch_gyro_to_rate = MATH_MULTI;
@@ -57,165 +59,171 @@ void calibration_default(Calibration * x)
 }
 
 
-void calibration_write(Calibration * x, signed long addr, signed long data)
+void calibration_write(Calibration * x, int32_t addr, int32_t data)
 {
 	switch(addr)
 	{
 		case 0:
-			x->f_mot_bot = (signed long)data;
+			x->f_mot_bot = (int32_t)data;
 			break;
 		case 1:
-			x->b_mot_bot = (signed long)data;
+			x->b_mot_bot = (int32_t)data;
 			break;
 		case 2:
-			x->l_mot_bot = (signed long)data;
+			x->l_mot_bot = (int32_t)data;
 			break;
 		case 3:
-			x->r_mot_bot = (signed long)data;
+			x->r_mot_bot = (int32_t)data;
 			break;
 		case 4:
-			x->f_mot_scale = (signed long)data;
+			x->f_mot_scale = (int32_t)data;
 			break;
 		case 5:
-			x->b_mot_scale = (signed long)data;
+			x->b_mot_scale = (int32_t)data;
 			break;
 		case 6:
-			x->l_mot_scale = (signed long)data;
+			x->l_mot_scale = (int32_t)data;
 			break;
 		case 7:
-			x->r_mot_scale = (signed long)data;
+			x->r_mot_scale = (int32_t)data;
 			break;
 		case 8:
-			x->motor_mode = (unsigned char)data;
+			x->motor_mode = (uint8_t)data;
 			break;
 		case 9:
-			x->yaw_gyro_scale = (signed long)data;
+			x->yaw_gyro_scale = (int32_t)data;
 			break;
 		case 10:
-			x->roll_accel_bot = (signed long)data;
+			x->roll_accel_bot = (int32_t)data;
 			break;
 		case 11:
-			x->roll_accel_top = (signed long)data;
+			x->roll_accel_center = (int32_t)data;
 			break;
 		case 12:
-			x->pitch_accel_bot = (signed long)data;
+			x->roll_accel_top = (int32_t)data;
 			break;
 		case 13:
-			x->pitch_accel_top = (signed long)data;
+			x->pitch_accel_bot = (int32_t)data;
 			break;
 		case 14:
-			x->vert_accel_bot = (signed long)data;
+			x->pitch_accel_center = (int32_t)data;
 			break;
 		case 15:
-			x->vert_accel_top = (signed long)data;
+			x->pitch_accel_top = (int32_t)data;
 			break;
 		case 16:
-			x->pitch_angle_offset = (signed long)data;
+			x->vert_accel_bot = (int32_t)data;
 			break;
 		case 17:
-			x->roll_angle_offset = (signed long)data;
+			x->vert_accel_top = (int32_t)data;
 			break;
 		case 18:
-			x->pitch_gyro_to_rate = (signed long)data;
+			x->pitch_angle_offset = (int32_t)data;
 			break;
 		case 19:
-			x->roll_gyro_to_rate = (signed long)data;
+			x->roll_angle_offset = (int32_t)data;
 			break;
 		case 20:
-			x->roll_ppm_center = (signed long)data;
+			x->pitch_gyro_to_rate = (int32_t)data;
 			break;
 		case 21:
-			x->pitch_ppm_center = (signed long)data;
+			x->roll_gyro_to_rate = (int32_t)data;
 			break;
 		case 22:
-			x->yaw_ppm_center = (signed long)data;
+			x->roll_ppm_center = (int32_t)data;
 			break;
 		case 23:
-			x->throttle_ppm_center = (signed long)data;
+			x->pitch_ppm_center = (int32_t)data;
 			break;
 		case 24:
-			x->roll_ppm_scale = (signed long)data;
+			x->yaw_ppm_center = (int32_t)data;
 			break;
 		case 25:
-			x->pitch_ppm_scale = (signed long)data;
+			x->throttle_ppm_center = (int32_t)data;
 			break;
 		case 26:
-			x->yaw_ppm_scale = (signed long)data;
+			x->roll_ppm_scale = (int32_t)data;
 			break;
 		case 27:
-			x->throttle_ppm_scale = (signed long)data;
+			x->pitch_ppm_scale = (int32_t)data;
 			break;
 		case 28:
-			x->throttle_hover = (signed long)data;
+			x->yaw_ppm_scale = (int32_t)data;
 			break;
 		case 29:
-			x->roll_level_kp = (signed long)data;
+			x->throttle_ppm_scale = (int32_t)data;
 			break;
 		case 30:
-			x->roll_level_ki = (signed long)data;
+			x->throttle_hover = (int32_t)data;
 			break;
 		case 31:
-			x->roll_level_kd = (signed long)data;
+			x->roll_level_kp = (int32_t)data;
 			break;
 		case 32:
-			x->pitch_level_kp = (signed long)data;
+			x->roll_level_ki = (int32_t)data;
 			break;
 		case 33:
-			x->pitch_level_ki = (signed long)data;
+			x->roll_level_kd = (int32_t)data;
 			break;
 		case 34:
-			x->pitch_level_kd = (signed long)data;
+			x->pitch_level_kp = (int32_t)data;
 			break;
 		case 35:
-			x->roll_rate_kp = (signed long)data;
+			x->pitch_level_ki = (int32_t)data;
 			break;
 		case 36:
-			x->roll_rate_ki = (signed long)data;
+			x->pitch_level_kd = (int32_t)data;
 			break;
 		case 37:
-			x->roll_rate_kd = (signed long)data;
+			x->roll_rate_kp = (int32_t)data;
 			break;
 		case 38:
-			x->pitch_rate_kp = (signed long)data;
+			x->roll_rate_ki = (int32_t)data;
 			break;
 		case 39:
-			x->pitch_rate_ki = (signed long)data;
+			x->roll_rate_kd = (int32_t)data;
 			break;
 		case 40:
-			x->pitch_rate_kd = (signed long)data;
+			x->pitch_rate_kp = (int32_t)data;
 			break;
 		case 41:
-			x->yaw_kp = (signed long)data;
+			x->pitch_rate_ki = (int32_t)data;
 			break;
 		case 42:
-			x->yaw_ki = (signed long)data;
+			x->pitch_rate_kd = (int32_t)data;
 			break;
 		case 43:
-			x->yaw_kd = (signed long)data;
+			x->yaw_kp = (int32_t)data;
 			break;
 		case 44:
-			x->yaw_ppm_chan = (unsigned char)data;
+			x->yaw_ki = (int32_t)data;
 			break;
 		case 45:
-			x->throttle_ppm_chan = (unsigned char)data;
+			x->yaw_kd = (int32_t)data;
 			break;
 		case 46:
-			x->pitch_ppm_chan = (unsigned char)data;
+			x->yaw_ppm_chan = (uint8_t)data;
 			break;
 		case 47:
-			x->roll_ppm_chan = (unsigned char)data;
+			x->throttle_ppm_chan = (uint8_t)data;
 			break;
 		case 48:
-			x->unlock_ppm_chan = (unsigned char)data;
+			x->pitch_ppm_chan = (uint8_t)data;
 			break;
 		case 49:
-			x->delta_time_const = (signed long)data;
+			x->roll_ppm_chan = (uint8_t)data;
 			break;
 		case 50:
-			x->comp_filter_w = (signed long)data;
+			x->unlock_ppm_chan = (uint8_t)data;
 			break;
 		case 51:
-			x->button_hold_down = (unsigned long)data;
+			x->delta_time_const = (int32_t)data;
+			break;
+		case 52:
+			x->comp_filter_w = (int32_t)data;
+			break;
+		case 53:
+			x->button_hold_down = (uint32_t)data;
 			break;
 		default:
 			break;

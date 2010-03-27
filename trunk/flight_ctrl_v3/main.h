@@ -3,6 +3,8 @@
 #ifndef main_h
 #define main_h
 
+#include <stdint.h>
+
 void user_io_init();
 void hold_esc();
 void init();

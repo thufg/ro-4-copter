@@ -1,13 +1,14 @@
 #ifndef trig_tbl_inc
 #define trig_tbl_inc
 
+#include <stdint.h>
 #include <avr/pgmspace.h>
 #include "config.h"
 
 #ifdef use_atan
 
 #define atan_multiplier 360
-const signed long atan_tbl [atan_multiplier + 1] PROGMEM = {
+const int32_t atan_tbl [atan_multiplier + 1] PROGMEM = {
 	     0,   1592,   3183,   4775,   6366, 
 	  7957,   9548,  11139,  12730,  14321, 
 	 15911,  17502,  19092,  20681,  22270, 
@@ -88,7 +89,7 @@ const signed long atan_tbl [atan_multiplier + 1] PROGMEM = {
 #ifdef use_asin
 
 #define asin_multiplier 360
-const signed long asin_tbl [asin_multiplier + 1] PROGMEM = {
+const int32_t asin_tbl [asin_multiplier + 1] PROGMEM = {
 	     0,   1592,   3183,   4775,   6366, 
 	  7958,   9550,  11142,  12733,  14325, 
 	 15918,  17510,  19102,  20695,  22287, 

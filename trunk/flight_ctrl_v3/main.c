@@ -60,7 +60,7 @@ void hold_esc()
 	int flashcnt = 0;
 	int presscnt = 0;
 	
-	for (unsigned char i = 0; i < 6; i++)
+	for (uint8_t i = 0; i < 6; i++)
 	{
 		esc_set_width(i, ticks_500us * 2);
 	}
@@ -87,7 +87,7 @@ void hold_esc()
 		{
 			if (ppm_is_new_data(0xFF) != 0)
 			{
-				if (ppm_chan_read(cal_data.unlock_ppm_chan) + ppm_center(cal_data.unlock_ppm_chan) > ticks_500us * 3 + ticks_500us / 2 || button_is_pressed()) // channel 6 button is pressed
+				if (ppm_chan_read(cal_data.unlock_ppm_chan) > ticks_500us / 2 || button_is_pressed()) // channel 6 button is pressed
 				{
 					presscnt++;
 				}
@@ -127,11 +127,9 @@ int main()
 	//test_calibration_eeprom();
 	//test_ser(0);
 	//test_ser(1);
-	test_sensors();
+	//test_sensors();
 	//test_ppm();
 	//test_ppm_to_esc();
-	
-	return 0;
 	
 	// actual initialization here
 	
@@ -152,11 +150,7 @@ int main()
 	
 	ppm_calibrate(10);
 	
-	fprintf_P(&serdebugstream, PSTR("waiting for unlock signal\r\n"));
-	
 	hold_esc();
-	
-	fprintf_P(&serdebugstream, PSTR("unlocked\r\n"));
 	
 	ppm_is_new_data(0);
 	while (ppm_is_new_data(0xFF) == 0);
@@ -171,30 +165,65 @@ int main()
 	PID_data pitch_rate_pid = PID_init();
 	PID_data yaw_pid = PID_init();
 	
-	signed long zero_G_val;
-	signed long one_G_val;
+	int32_t zero_G_val;
+	int32_t one_G_val;
 
-	signed long roll_ang = 0; 
-	signed long pitch_ang = 0;
+	int32_t roll_ang = 0; 
+	int32_t pitch_ang = 0;
 	
-	unsigned char report_requested = 0;
-	unsigned char is_flying = 1;
-	unsigned char off_cnt = 0;
+	uint8_t off_cnt = 0; // used to keep the time duration the "off" button is held down
 	
 	LED1_off();
 	
 	while (1)
 	{
 		// check for computer interface commands, set flag if debug info requested
-		if (debug_check_msg(&cal_data) != 0)
+		uint8_t report_requested = debug_check_msg(&cal_data);
+		
+		// requested raw sensor readings
+		if (report_requested == 3)
 		{
-			report_requested = 1;
+			for (int i = 0; i < 8; i++)
+			{
+				fprintf_P(&serdebugstream, PSTR("sensor %d: %d - %d\r\n"), i, sens_read(i), sens_offset(i));
+			}
+			
+			for (int i = 0; i < 6; i++)
+			{
+				fprintf_P(&serdebugstream, PSTR("ppm %d: %d + %d\r\n"), i, ppm_chan_read(i), ppm_center(i));
+			}
+			
+			report_requested = 0;
+		}
+		
+		// check if user is trying to switch off the motors
+		if (ppm_tx_is_good(0xFF))
+		{
+			if (ppm_is_new_data(0xFF))
+			{
+				if (ppm_chan_read(cal_data.unlock_ppm_chan) < (-1) * ticks_500us / 2)
+				{
+					off_cnt++;
+				}
+				else
+				{
+					off_cnt = 0;
+				}
+				
+				ppm_is_new_data(0);
+				
+				if (off_cnt >= cal_data.button_hold_down)
+				{
+					hold_esc();
+					off_cnt = 0;
+				}
+			}
 		}
 
-		signed long roll_gyro_val;
-		signed long pitch_gyro_val;
-		signed long prev_roll_gyro_val;
-		signed long prev_pitch_gyro_val;
+		int32_t roll_gyro_val;
+		int32_t pitch_gyro_val;
+		int32_t prev_roll_gyro_val; // prev val kept for averaging
+		int32_t prev_pitch_gyro_val;
 
 		// new samples!
 		if (adc_rounds_cnt(0xFF) != 0)
@@ -205,16 +234,16 @@ int main()
 			zero_G_val = (cal_data.vert_accel_top + cal_data.vert_accel_bot + 1) / 2;
 			one_G_val = sens_offset(vert_accel_chan) - zero_G_val;
 			
-			signed long roll_accel_val = ((signed long)sens_read(roll_accel_chan) - ((cal_data.roll_accel_bot + cal_data.roll_accel_top + 1) / 2));
-			signed long pitch_accel_val = ((signed long)sens_read(pitch_accel_chan) - ((cal_data.pitch_accel_bot + cal_data.pitch_accel_top + 1) / 2));
-			signed long vert_accel_val = ((signed long)sens_read(vert_accel_chan) - ((cal_data.vert_accel_bot + cal_data.vert_accel_top + 1) / 2));
+			int32_t roll_accel_val = ((int32_t)sens_read(roll_accel_chan) - ((cal_data.roll_accel_bot + cal_data.roll_accel_top + 1) / 2));
+			int32_t pitch_accel_val = ((int32_t)sens_read(pitch_accel_chan) - ((cal_data.pitch_accel_bot + cal_data.pitch_accel_top + 1) / 2));
+			int32_t vert_accel_val = ((int32_t)sens_read(vert_accel_chan) - ((cal_data.vert_accel_bot + cal_data.vert_accel_top + 1) / 2));
 			
 			// read gyros
-			roll_gyro_val = (signed long)sens_read(roll_gyro_chan) - (signed long)sens_offset(roll_gyro_chan);
-			pitch_gyro_val = (signed long)sens_read(pitch_gyro_chan) - (signed long)sens_offset(pitch_gyro_chan);
+			roll_gyro_val = (int32_t)sens_read(roll_gyro_chan) - (int32_t)sens_offset(roll_gyro_chan);
+			pitch_gyro_val = (int32_t)sens_read(pitch_gyro_chan) - (int32_t)sens_offset(pitch_gyro_chan);
 
 			// calculate time taken to take samples
-			signed long delta_time;
+			int32_t delta_time;
 			if (cal_data.delta_time_const != 0)
 			{
 				delta_time = cal_data.delta_time_const * adc_rounds_cnt(0xFF);
@@ -225,8 +254,8 @@ int main()
 			}
 			
 			// calculate angle using trig
-			signed long roll_trig;
-			signed long pitch_trig;
+			int32_t roll_trig;
+			int32_t pitch_trig;
 
 			#ifdef use_atan
 			roll_trig = calc_atan2(roll_accel_val, vert_accel_val);
@@ -275,27 +304,27 @@ int main()
 		{
 			// level PID calculations for roll and pitch
 
-			signed long roll_tgt_rate = PID_mv(&roll_level_pid, cal_data.roll_level_kp, cal_data.roll_level_ki, cal_data.roll_level_kd, calc_multi(roll_ang, cal_data.roll_ppm_scale, MATH_MULTIPLIER), (signed long)ppm_chan_read((unsigned char)cal_data.roll_ppm_chan));
-			signed long pitch_tgt_rate = PID_mv(&pitch_level_pid, cal_data.pitch_level_kp, cal_data.pitch_level_ki, cal_data.pitch_level_kd, calc_multi(pitch_ang, cal_data.pitch_ppm_scale, MATH_MULTIPLIER), (signed long)ppm_chan_read((unsigned char)cal_data.pitch_ppm_chan));
+			int32_t roll_tgt_rate = PID_mv(&roll_level_pid, cal_data.roll_level_kp, cal_data.roll_level_ki, cal_data.roll_level_kd, calc_multi(roll_ang, cal_data.roll_ppm_scale, MATH_MULTIPLIER), (int32_t)ppm_chan_read((uint8_t)cal_data.roll_ppm_chan));
+			int32_t pitch_tgt_rate = PID_mv(&pitch_level_pid, cal_data.pitch_level_kp, cal_data.pitch_level_ki, cal_data.pitch_level_kd, calc_multi(pitch_ang, cal_data.pitch_ppm_scale, MATH_MULTIPLIER), (int32_t)ppm_chan_read((uint8_t)cal_data.pitch_ppm_chan));
 
 			// angular rate PID calculations for roll and pitch
 			
-			signed long roll_mot = PID_mv(&roll_rate_pid, cal_data.roll_rate_kp, cal_data.roll_rate_ki, cal_data.roll_rate_kd, roll_tgt_rate, roll_gyro_val);
-			signed long pitch_mot = PID_mv(&pitch_rate_pid, cal_data.pitch_rate_kp, cal_data.pitch_rate_ki, cal_data.pitch_rate_kd, pitch_tgt_rate, pitch_gyro_val);
+			int32_t roll_mot = PID_mv(&roll_rate_pid, cal_data.roll_rate_kp, cal_data.roll_rate_ki, cal_data.roll_rate_kd, roll_tgt_rate, roll_gyro_val);
+			int32_t pitch_mot = PID_mv(&pitch_rate_pid, cal_data.pitch_rate_kp, cal_data.pitch_rate_ki, cal_data.pitch_rate_kd, pitch_tgt_rate, pitch_gyro_val);
 
 			// attempt to adjust yaw
-			signed long yaw_gyro_val = (signed long)sens_read(yaw_gyro_chan) - (signed long)sens_offset(yaw_gyro_chan);
-			signed long yaw_mot = PID_mv(&yaw_pid, cal_data.yaw_kp, cal_data.yaw_ki, cal_data.yaw_kd, calc_multi(yaw_gyro_val, cal_data.yaw_ppm_scale, MATH_MULTIPLIER), ppm_chan_read(cal_data.yaw_ppm_chan));
+			int32_t yaw_gyro_val = (int32_t)sens_read(yaw_gyro_chan) - (int32_t)sens_offset(yaw_gyro_chan);
+			int32_t yaw_mot = PID_mv(&yaw_pid, cal_data.yaw_kp, cal_data.yaw_ki, cal_data.yaw_kd, calc_multi(yaw_gyro_val, cal_data.yaw_ppm_scale, MATH_MULTIPLIER), ppm_chan_read(cal_data.yaw_ppm_chan));
 
 			// calculate throttle
-			signed long throttle_cmd = calc_multi((signed long)ppm_chan_read(cal_data.throttle_ppm_chan) + ppm_center(cal_data.throttle_ppm_chan) - ticks_500us * 3, cal_data.throttle_ppm_scale, MATH_MULTIPLIER);
+			int32_t throttle_cmd = calc_multi((int32_t)ppm_chan_read(cal_data.throttle_ppm_chan) + ppm_center(cal_data.throttle_ppm_chan) - ticks_500us * 3, cal_data.throttle_ppm_scale, MATH_MULTIPLIER);
 			throttle_cmd += cal_data.throttle_hover;
 
 			// apply final throttle to all motors
-			signed long f_mot = cal_data.f_mot_bot + calc_multi((signed long)(throttle_cmd + yaw_mot + pitch_mot), cal_data.f_mot_scale, MATH_MULTIPLIER);
-			signed long b_mot = cal_data.b_mot_bot + calc_multi((signed long)(throttle_cmd + yaw_mot - pitch_mot), cal_data.b_mot_scale, MATH_MULTIPLIER);
-			signed long l_mot = cal_data.l_mot_bot + calc_multi((signed long)(throttle_cmd - yaw_mot + roll_mot), cal_data.l_mot_scale, MATH_MULTIPLIER);
-			signed long r_mot = cal_data.r_mot_bot + calc_multi((signed long)(throttle_cmd - yaw_mot - roll_mot), cal_data.r_mot_scale, MATH_MULTIPLIER);
+			int32_t f_mot = cal_data.f_mot_bot + calc_multi((int32_t)(throttle_cmd + yaw_mot + pitch_mot), cal_data.f_mot_scale, MATH_MULTIPLIER);
+			int32_t b_mot = cal_data.b_mot_bot + calc_multi((int32_t)(throttle_cmd + yaw_mot - pitch_mot), cal_data.b_mot_scale, MATH_MULTIPLIER);
+			int32_t l_mot = cal_data.l_mot_bot + calc_multi((int32_t)(throttle_cmd - yaw_mot + roll_mot), cal_data.l_mot_scale, MATH_MULTIPLIER);
+			int32_t r_mot = cal_data.r_mot_bot + calc_multi((int32_t)(throttle_cmd - yaw_mot - roll_mot), cal_data.r_mot_scale, MATH_MULTIPLIER);
 
 			esc_set_speed(f_mot_chan, f_mot);
 			esc_set_speed(b_mot_chan, b_mot);
