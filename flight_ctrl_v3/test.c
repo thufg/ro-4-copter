@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include <avr/pgmspace.h>
 
-#include "test.h"
-
 #include "macros.h"
 #include "pindef.h"
 #include "config.h"
+
+#include "test.h"
 
 #include "esc.h"
 #include "main.h"

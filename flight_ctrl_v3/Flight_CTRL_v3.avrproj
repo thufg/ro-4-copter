@@ -10,7 +10,7 @@
   <OtherOptionsForCPP>-std=c99</OtherOptionsForCPP>
   <OtherOptionsForS />
   <OutputDir>output</OutputDir>
-  <Optimization>-Os</Optimization>
+  <Optimization>-O3</Optimization>
   <UseInitStack>false</UseInitStack>
   <InitStackAddr>0xFFFF</InitStackAddr>
   <PackStructs>true</PackStructs>
@@ -39,7 +39,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>1724</CursorPos>
+      <CursorPos>11286</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -47,8 +47,8 @@
       <RelPath>pindef.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>143</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>483</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -57,7 +57,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>126</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -75,7 +75,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>4113</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -92,8 +92,8 @@
       <RelPath>esc.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>361</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>114</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -101,8 +101,8 @@
       <RelPath>esc.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>53</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -110,8 +110,8 @@
       <RelPath>config.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>57</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -120,7 +120,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>431</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -129,7 +129,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>65</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -137,8 +137,8 @@
       <RelPath>sensor.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>21</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>657</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -146,8 +146,8 @@
       <RelPath>sensor.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>38</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>383</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -155,8 +155,8 @@
       <RelPath>calc.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>857</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -164,8 +164,8 @@
       <RelPath>calc.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>926</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -174,7 +174,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>65</CursorPos>
+      <CursorPos>9659</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -183,7 +183,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>69</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -219,7 +219,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>454</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -228,7 +228,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>53</CursorPos>
+      <CursorPos>220</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -237,7 +237,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>2093</CursorPos>
+      <CursorPos>3462</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -246,7 +246,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>911</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -255,7 +255,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>77</CursorPos>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -263,8 +263,8 @@
       <RelPath>data_tables\calibration_variables.csv</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>1982</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -272,8 +272,8 @@
       <RelPath>calibration_autogen_functs.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>1167</CursorPos>
       <Bookmarks />
     </File>
     <File>

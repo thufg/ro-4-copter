@@ -22,8 +22,8 @@ void calibration_default(Calibration * x)
 	x->vert_accel_top = 756;
 	x->pitch_angle_offset = 0;
 	x->roll_angle_offset = 0;
-	x->pitch_gyro_to_rate = MATH_MULTI;
-	x->roll_gyro_to_rate = MATH_MULTI;
+	x->pitch_gyro_to_rate = 6;
+	x->roll_gyro_to_rate = 6;
 	x->roll_ppm_center = ticks_500us * 3;
 	x->pitch_ppm_center = ticks_500us * 3;
 	x->yaw_ppm_center = ticks_500us * 3;
@@ -33,21 +33,21 @@ void calibration_default(Calibration * x)
 	x->yaw_ppm_scale = MATH_MULTI;
 	x->throttle_ppm_scale = MATH_MULTI;
 	x->throttle_hover = ticks_500us * 3;
-	x->roll_level_kp = MATH_MULTI;
-	x->roll_level_ki = 0;
-	x->roll_level_kd = 0;
-	x->pitch_level_kp = MATH_MULTI;
-	x->pitch_level_ki = 0;
-	x->pitch_level_kd = 0;
-	x->roll_rate_kp = MATH_MULTI;
-	x->roll_rate_ki = 0;
-	x->roll_rate_kd = 0;
-	x->pitch_rate_kp = MATH_MULTI;
-	x->pitch_rate_ki = 0;
-	x->pitch_rate_kd = 0;
-	x->yaw_kp = MATH_MULTI;
-	x->yaw_ki = 0;
-	x->yaw_kd = 0;
+	x->roll_level_kp = default_level_kp;
+	x->roll_level_ki = default_level_ki;
+	x->roll_level_kd = default_level_kd;
+	x->pitch_level_kp = default_level_kp;
+	x->pitch_level_ki = default_level_ki;
+	x->pitch_level_kd = default_level_kd;
+	x->roll_rate_kp = default_rate_kp;
+	x->roll_rate_ki = default_rate_ki;
+	x->roll_rate_kd = default_rate_kd;
+	x->pitch_rate_kp = default_rate_kp;
+	x->pitch_rate_ki = default_rate_ki;
+	x->pitch_rate_kd = default_rate_kd;
+	x->yaw_kp = default_yaw_kp;
+	x->yaw_ki = default_yaw_ki;
+	x->yaw_kd = default_yaw_kd;
 	x->yaw_ppm_chan = 0;
 	x->throttle_ppm_chan = 1;
 	x->pitch_ppm_chan = 2;
@@ -55,7 +55,7 @@ void calibration_default(Calibration * x)
 	x->unlock_ppm_chan = 5;
 	x->delta_time_const = MATH_MULTI;
 	x->comp_filter_w = MATH_MULTI / 2;
-	x->button_hold_down = 500;
+	x->button_hold_down = 250;
 }
 
 

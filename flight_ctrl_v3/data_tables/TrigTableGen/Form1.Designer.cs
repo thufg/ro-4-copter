@@ -172,7 +172,7 @@
             this.MATH_MULTIPLIER.Size = new System.Drawing.Size(62, 20);
             this.MATH_MULTIPLIER.TabIndex = 3;
             this.MATH_MULTIPLIER.Value = new decimal(new int[] {
-            10000,
+            1000,
             0,
             0,
             0});

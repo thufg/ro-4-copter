@@ -2,36 +2,37 @@
 #include <avr/pgmspace.h>
 #include <math.h>
 
-#include "calc.h"
-
 #include "config.h"
 #include "pindef.h"
 #include "macros.h"
 
-/*
+#include "calc.h"
+
+#ifdef use_multiplication_funct
 // function which performs fixed point multiplication, has been replaced with a macro
-volatile inline int32_t calc_multi(int32_t in, int32_t numer, int32_t denom)
+volatile inline int32_t calc_multi(volatile int32_t input, volatile int32_t numer, volatile int32_t denom)
 {
-        if(denom == 0)
-        {
-                if(in * numer > 0)
-                {
-                        return INT32_MAX;
-                }
-                else if(in * numer < 0)
-                {
-                        return INT32_MIN;
-                }
-                else
-                {
-                        return 0;
-                }
-        }
-        
-        int32_t r = (in * numer) + (denom / 2);
-        return r / denom;
+	if(denom == 0)
+	{
+		if (input * numer > 0)
+		{
+			return INT32_MAX;
+		}
+		else if (input * numer < 0)
+		{
+			return INT32_MIN;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	volatile int32_t r = (input * numer) + (denom / 2);
+	return r / denom;
 }
-//*/
+
+#endif
 
 #include "trig_tbl.h"
 
@@ -51,7 +52,7 @@ volatile inline int32_t calc_asin(int32_t opp, int32_t hyp)
 
 #ifdef use_atan
 
-inline int32_t calc_atan2(int32_t y, int32_t x)
+volatile inline int32_t calc_atan2(int32_t y, int32_t x)
 {
         // calculate arctan angle using opposite length and adjacent length
         // using look up table with the division of opp/adj as the address
@@ -102,7 +103,7 @@ inline int32_t calc_atan2(int32_t y, int32_t x)
 
 #endif
 
-inline int32_t PID_mv(PID_data * pid, int32_t kp, int32_t ki, int32_t kd, int32_t current, int32_t target)
+volatile inline int32_t PID_mv(PID_data * pid, int32_t kp, int32_t ki, int32_t kd, int32_t current, int32_t target)
 {
         // proportional, integral, derivative
         // refer to external resources to learn more about this functioln
@@ -131,9 +132,9 @@ inline PID_data PID_init()
 
 #ifdef use_comp_filter
 
-inline int32_t complementary_filter(int32_t * ang, int32_t accel_ang, int32_t gyro_r, int32_t w, int32_t dt)
+volatile inline int32_t complementary_filter(int32_t * ang, int32_t accel_ang, int32_t gyro_r, int32_t w, int32_t dt)
 {
-        int32_t g = calc_multi(gyro_r, dt, MATH_MULTIPLIER);
+        volatile int32_t g = calc_multi(gyro_r, dt, MATH_MULTIPLIER);
         *ang = calc_multi
                         (
                                 (MATH_MULTIPLIER - w),
@@ -147,7 +148,7 @@ inline int32_t complementary_filter(int32_t * ang, int32_t accel_ang, int32_t gy
 
 #ifdef use_kalman_filter
 
-inline double kalman_filter(kalman_data * kd, double gyro_r, double ang, double dt)
+volatile inline double kalman_filter(kalman_data * kd, double gyro_r, double ang, double dt)
 {
         // using kalman filtering to calculate angle
         // all double precision calculation, very very slow

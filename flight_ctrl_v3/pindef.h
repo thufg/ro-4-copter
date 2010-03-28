@@ -8,12 +8,12 @@
 
 #include <avr/io.h>
 
-#define roll_accel_chan 1
-#define pitch_accel_chan 3
+#define roll_accel_chan 3
+#define pitch_accel_chan 4
 #define vert_accel_chan 5
-#define roll_gyro_chan 4
+#define roll_gyro_chan 2
 #define pitch_gyro_chan 0
-#define yaw_gyro_chan 2
+#define yaw_gyro_chan 1
 
 #define esc_port PORTD
 #define esc_ddr DDRD
@@ -22,9 +22,9 @@
 #define esc_dat_pin 7
 
 #define f_mot_chan 0
-#define b_mot_chan 1
+#define b_mot_chan 3
 #define l_mot_chan 2
-#define r_mot_chan 3
+#define r_mot_chan 1
 
 #define ppm_port PORTD
 #define ppm_ddr DDRD

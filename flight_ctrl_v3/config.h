@@ -11,6 +11,9 @@
 #define use_comp_filter
 //#define use_kalman_filter
 #define use_ordered_sensors
+//#define use_multiplication_funct
+//#define use_buffered_tx0
+//#define use_buffered_tx1
 
 #define ticks_500us ((F_CPU * 5) / 10000)
 #define ticks_10ms (ticks_500us * 20)
@@ -23,5 +26,17 @@
 
 #define sens_hist_len_max 8
 #define sens_hist_len_default 8
+
+#define default_rate_kp MATH_MULTI * 2
+#define default_rate_ki 0
+#define default_rate_kd 0
+
+#define default_level_kp MATH_MULTI * 2
+#define default_level_ki 0
+#define default_level_kd 0
+
+#define default_yaw_kp MATH_MULTI * 2
+#define default_yaw_ki 0
+#define default_yaw_kd 0
 
 #endif

@@ -2,17 +2,18 @@
 #include <math.h>
 #include <avr/interrupt.h>
 
-#include "ppm.h"
-
 #include "config.h"
 #include "pindef.h"
 #include "macros.h"
+
+#include "ppm.h"
+
 #include "calc.h"
 #include "timer.h"
 #include "ser.h"
 
-static volatile uint16_t ppm_width[8];
-static volatile uint16_t ppm_offset[8];
+static volatile int32_t ppm_width[8];
+static volatile int32_t ppm_offset[8];
 static volatile uint8_t ppm_chan;
 static volatile uint8_t ppm_highest_chan;
 static volatile uint16_t ppm_last_capt;
@@ -81,6 +82,7 @@ void ppm_init()
 	for(uint8_t i = 0; i < 8; i++)
 	{
 		ppm_width[i] = ticks_500us * 3;
+		ppm_offset[i] = ticks_500us * 3;
 	}
 
 	ppm_tx_good = 0;
@@ -121,7 +123,7 @@ volatile inline uint8_t ppm_highest_chan_read()
 }
 
 // read channel value in timer ticks
-volatile inline int16_t ppm_chan_read(uint8_t i)
+volatile inline int32_t ppm_chan_read(uint8_t i)
 {
 	if (ppm_tx_good == 0)
 	{
@@ -134,7 +136,12 @@ volatile inline int16_t ppm_chan_read(uint8_t i)
 	return r;
 }
 
-volatile inline uint16_t ppm_center(uint8_t i)
+volatile inline int32_t ppm_chan_read_raw(uint8_t i)
+{
+	return ppm_width[i];
+}
+
+volatile inline uint32_t ppm_center(uint8_t i)
 {
 	return ppm_offset[i];
 }
@@ -148,7 +155,7 @@ void ppm_calibrate(uint8_t t)
 		ppm_offset[i] = 0;
 	}
 	
-	uint32_t sum[8] = {0,0,0,0,0,0,0,0};
+	uint64_t sum[8] = {0,0,0,0,0,0,0,0};
 	for(uint8_t i = 0; i < t; i++)
 	{
 		// sum and average for each channel using t samples
