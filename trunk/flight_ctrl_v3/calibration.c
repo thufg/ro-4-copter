@@ -1,8 +1,8 @@
 #include <avr/eeprom.h>
 
-#include "calibration.h"
-
 #include "config.h"
+
+#include "calibration.h"
 
 void eeprom_write_byte_if_different(uint32_t addr, uint8_t data)
 {

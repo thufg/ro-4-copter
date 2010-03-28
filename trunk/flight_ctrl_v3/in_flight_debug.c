@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <avr/pgmspace.h>
 
 #include "config.h"
 #include "pindef.h"
 #include "macros.h"
+
+#include "in_flight_debug.h"
 
 #include "ser.h"
 #include "calibration.h"
@@ -15,10 +18,10 @@ void debug_initialize()
 	ser1_init(129, 128, 128); // 9600 baud
 }
 
-uint8_t debug_check_msg(Calibration * x)
+volatile uint8_t debug_check_msg(Calibration * x)
 {
-	uint8_t rc = 0;
-	uint8_t d = ser_rx(1, &rc);
+	volatile uint8_t rc = 0;
+	volatile uint8_t d = ser_rx(1, &rc);
 	
 	if (d == 0 || (d != '@' && d != 's' && d != 'd' && d != 'l' && d != 'c' && d != 'r' && d != 'R')) // nothing received or not sync-ed
 	{

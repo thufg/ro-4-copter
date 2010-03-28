@@ -1,11 +1,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include "esc.h"
-
 #include "config.h"
 #include "pindef.h"
 #include "macros.h"
+
+#include "esc.h"
 
 #include "timer.h"
 

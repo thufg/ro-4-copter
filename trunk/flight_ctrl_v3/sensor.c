@@ -1,6 +1,5 @@
-#include "sensor.h"
-
 #include <math.h>
+#include <stdio.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <string.h>
@@ -9,11 +8,17 @@
 #include "pindef.h"
 #include "macros.h"
 
+#include "sensor.h"
+
 #include "calc.h"
 
-static volatile uint16_t adc_res_t[8];
-static volatile uint16_t adc_res[8];
-static volatile uint16_t adc_offset[8];
+#include <avr/pgmspace.h>
+#include "ser.h"
+static FILE serdebugstream = FDEV_SETUP_STREAM(ser_tx_1, NULL, _FDEV_SETUP_WRITE);
+
+static volatile int32_t adc_res_t[8];
+static volatile int32_t adc_res[8];
+static volatile int32_t adc_offset[8];
 static volatile uint8_t adc_chan;
 static volatile uint8_t adc_new_cycle;
 
@@ -23,7 +28,12 @@ static uint8_t adc_chan_order[6];
 
 ISR(ADC_vect)
 {
+	#ifdef use_ordered_sensors
+	adc_res_t[adc_chan_order[adc_chan]] = ADC; // read
+	#else
 	adc_res_t[adc_chan] = ADC; // read
+	#endif
+	
 	adc_chan++; // next channel
 	adc_chan %= 6; // overflow channel count
 	
@@ -37,7 +47,7 @@ ISR(ADC_vect)
 	if(adc_chan == 0)
 	{
 		// copy to second array while interrupts are disabled
-		memcpy(adc_res, adc_res_t, sizeof(uint16_t) * 8);
+		memcpy(adc_res, adc_res_t, sizeof(int32_t) * 8);
 		adc_new_cycle++;
 	}
 }
@@ -82,13 +92,13 @@ void sens_init()
 }
 
 // read the 10 bit ADC reading of a channel
-volatile inline uint16_t sens_read(uint8_t i)
+volatile inline int32_t sens_read(uint8_t i)
 {
 	return adc_res[i];
 }
 
 // read the calibration results of a channel
-volatile inline uint16_t sens_offset(uint8_t i)
+volatile inline int32_t sens_offset(uint8_t i)
 {
 	return adc_offset[i];
 }
@@ -96,24 +106,24 @@ volatile inline uint16_t sens_offset(uint8_t i)
 // find the center values of all channels using t number of samples
 void sens_calibrate(uint8_t t)
 {
-	uint32_t sum[8] = {0,0,0,0,0,0,0,0};
-
-	adc_wait_stop();
+	volatile uint64_t sum[8] = {0,0,0,0,0,0,0,0};
+	
+	adc_rounds_cnt(0);
 	for(uint8_t i = 0; i < t; i++)
 	{
+		while (adc_rounds_cnt(0xFF) == 0);
 		for(uint8_t j = 0; j < 8; j++)
 		{
-			adc_start(j, 0);
-			while (bit_is_set(ADCSRA, ADSC));
-			sum[j] += ADC;
+			int32_t x = sens_read(j);
+			sum[j] += x;
 		}
-	}
-	for(uint8_t j = 0; j < 8; j++)
-	{
-		adc_offset[j] = calc_multi(sum[j], 1, t);
+		adc_rounds_cnt(0);
 	}
 	
-	adc_start(0, _BV(ADIE));
+	for(uint8_t j = 0; j < 8; j++)
+	{
+		adc_offset[j] = lround((double)sum[j] / (double)t);		
+	}
 }
 
 // returns the number of ADC samples that have been collected, clear the counter by setting c to 0, or else use 0xFF for c

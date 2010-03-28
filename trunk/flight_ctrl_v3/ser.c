@@ -21,11 +21,15 @@ void ser0_init(uint16_t ubrr, uint8_t rxs, uint8_t txs)
 	UBRR0 = ubrr; // set baud
 
 	// initialize circular buffer
-	ser_buff_init(&ser_tx_buff_0, txs);
 	ser_buff_init(&ser_rx_buff_0, rxs);
 
 	// initialize port and associated interrupts
-	UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0) | _BV(TXCIE0);
+	UCSR0B = _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0);
+	
+	#ifdef use_buffered_tx0
+	UCSR0B |= _BV(TXCIE0);
+	ser_buff_init(&ser_tx_buff_0, txs);
+	#endif
 }
 
 #ifdef __AVR_ATmega644P__
@@ -33,10 +37,14 @@ void ser1_init(uint16_t ubrr, uint8_t rxs, uint8_t txs)
 {
 	UBRR1 = ubrr;
 
-	ser_buff_init(&ser_tx_buff_1, txs);
 	ser_buff_init(&ser_rx_buff_1, rxs);
 
-	UCSR1B = _BV(RXEN1) | _BV(TXEN1) | _BV(RXCIE1) | _BV(TXCIE1);
+	UCSR1B = _BV(RXEN1) | _BV(TXEN1) | _BV(RXCIE1);
+	
+	#ifdef use_buffered_tx1
+	UCSR1B |= _BV(TXCIE1);
+	ser_buff_init(&ser_tx_buff_1, txs);
+	#endif
 }
 #endif
 
@@ -56,17 +64,33 @@ void ser_buff_init(ser_buff_s * b, uint8_t s)
 void ser_tx(uint8_t p, uint8_t c)
 {
 	// select buffer based on port
-	volatile ser_buff_s * ser_tx_buff = &ser_tx_buff_0;
+	volatile ser_buff_s * ser_tx_buff;
+	
 	if (p == 1)
 	{
+		#ifdef use_buffered_tx1
 		ser_tx_buff = &ser_tx_buff_1;
+		#else
+		loop_until_bit_is_set(UCSR1A, UDRE1);
+		UDR1 = c;
+		return;
+		#endif
+	}
+	else
+	{
+		#ifdef use_buffered_tx0
+		ser_tx_buff = &ser_tx_buff_0;
+		#else
+		loop_until_bit_is_set(UCSR0A, UDRE0);
+		UDR0 = c;
+		return;
+		#endif
 	}
 	
 	volatile uint8_t b;
 	do // wait for space
 	{
 		b = (ser_tx_buff->s + ser_tx_buff->t - ser_tx_buff->h) % ser_tx_buff->s;
-		LED1_tog();
 	}
 	while (b > ser_tx_buff->s - 3);
 	

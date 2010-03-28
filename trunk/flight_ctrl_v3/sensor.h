@@ -20,7 +20,7 @@ void sens_init();
 void sens_calibrate(uint8_t);
 void adc_wait_stop();
 volatile uint8_t adc_rounds_cnt(uint8_t);
-volatile uint16_t sens_read(uint8_t);
-volatile uint16_t sens_offset(uint8_t);
+volatile int32_t sens_read(uint8_t);
+volatile int32_t sens_offset(uint8_t);
 
 #endif
