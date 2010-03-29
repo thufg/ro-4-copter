@@ -23,7 +23,7 @@ volatile uint8_t debug_check_msg(Calibration * x)
 	volatile uint8_t rc = 0;
 	volatile uint8_t d = ser_rx(1, &rc);
 	
-	if (d == 0 || (d != '@' && d != 's' && d != 'd' && d != 'l' && d != 'c' && d != 'r' && d != 'R')) // nothing received or not sync-ed
+	if (d == 0 || (d != '@' && d != 's' && d != 'd' && d != 'l' && d != 'c' && d != 'r' && d != 'R' && d != 'g')) // nothing received or not sync-ed
 	{
 		return 0;
 	}
@@ -57,46 +57,54 @@ volatile uint8_t debug_check_msg(Calibration * x)
 		return 3;
 	}
 	
-	uint8_t * str = calloc(sizeof(uint8_t), 32);
+	uint8_t m = d;
+	uint8_t str[16];
 	int stage = 0;
 	int32_t addr = 0;
 	
-	for (uint8_t i = 0; ; i++)
+	if (d == '@')
 	{
-		rc = 0;
-		do
-		{
-			d = ser_rx(1, &rc);
-		}
-		while (rc == 0);
+		fprintf_P(&serstream, PSTR("setting\r\n"));
 		
-		if (d >= '0' || d <= '9')
+		for (uint8_t i = 0; ; i++)
 		{
-			str[i] = d;
-		}
-		else
-		{
-			str[i] = 0;
-			uint32_t res = strtol(str, 0, 10);
-			if (stage == 0)
+			rc = 0;
+			do
 			{
-				stage = 1;
-				addr = res;
-				i = 0;
+				d = ser_rx(1, &rc);
 			}
-			else if (stage == 1)
+			while (rc == 0);
+			
+			if ((d >= '0' && d <= '9') || d == '-')
 			{
-				calibration_write(x, addr, res);
-				i = 0;
-				stage = 2;
-				break;
+				str[i] = d;
+			}
+			else
+			{
+				str[i] = 0;
+				int32_t res = strtol(str, 0, 10);
+				if (stage == 0)
+				{
+					stage = 1;
+					addr = res;
+					fprintf_P(&serstream, PSTR("addr: "));
+					ser_num(1, addr);
+					i = -1;
+				}
+				else if (stage == 1)
+				{
+					calibration_write(x, addr, res);
+					fprintf_P(&serstream, PSTR(" = "));
+					ser_num(1, res);
+					fprintf_P(&serstream, PSTR("\r\ndone\r\n"));
+					return 0;
+				}
 			}
 		}
 	}
-	
-	free(str);
-	
-	return 0;
+	else if (d == 'g')
+	{
+	}
 }
 
 #include "debug_autogen_functs.h"

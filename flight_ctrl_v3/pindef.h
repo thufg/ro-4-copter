@@ -48,4 +48,11 @@
 #define switch_3_pin 1
 #define switch_4_pin 0
 
+#define kill_switch_port PORTC
+#define kill_switch_in PINC
+#define kill_switch_ddr DDRC
+#define kill_switch_gnd1_pin 2 // tck pin 1
+#define kill_switch_gnd2_pin 5 // tdi pin 5
+#define kill_switch_in_pin 3 // tms pin 3
+
 #endif

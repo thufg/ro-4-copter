@@ -28,5 +28,6 @@ void ser_tx_1(char, FILE *);
 #endif
 uint8_t ser_tx_is_busy(uint8_t);
 uint8_t ser_rx(uint8_t, uint8_t *);
+void ser_num(uint8_t, int32_t);
 
 #endif

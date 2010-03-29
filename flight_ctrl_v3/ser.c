@@ -2,6 +2,7 @@
 #include <avr/interrupt.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "config.h"
 #include "pindef.h"
@@ -219,3 +220,29 @@ ISR(USART1_RX_vect)
 }
 
 #endif
+
+void ser_num(uint8_t p, int32_t x)
+{
+	if (x < 0)
+	{
+		ser_tx(p, '-');
+		x = x * -1;
+	}
+	else if (x == 0)
+	{
+		ser_tx(p, '0');
+		return;
+	}
+	
+	int z = 0;
+	
+	for (int i = 15; i >= 0; i--)
+	{
+		int32_t m = x / pow(10, i);
+		if (m % 10 > 0 || z != 0)
+		{
+			z = 1;
+			ser_tx(p, '0' + (m % 10));
+		}
+	}
+}
