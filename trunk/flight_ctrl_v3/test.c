@@ -223,7 +223,11 @@ void test_sensors()
 				// report center values
 				for (uint8_t i = 0; i < 8; i++)
 				{
-					fprintf_P(&ostream_1, PSTR("cal %d: %d\r\n"), i, sens_offset(i));
+					fprintf_P(&ostream_1, PSTR("cal "));
+					ser_num(1, i);
+					fprintf_P(&ostream_1, PSTR(": "));
+					ser_num(1, sens_offset(i));
+					fprintf_P(&ostream_1, PSTR("\r\n"));
 				}
 				
 				while (button_is_pressed());
@@ -233,7 +237,11 @@ void test_sensors()
 				// report ADC channel readings
 				for (uint8_t i = 0; i < 8; i++)
 				{
-					fprintf_P(&ostream_1, PSTR("adc %d: %d\r\n"), i, sens_read(i));
+					fprintf_P(&ostream_1, PSTR("adc "));\
+					ser_num(1, i);
+					fprintf_P(&ostream_1, PSTR(": "));
+					ser_num(1, sens_read(i));
+					fprintf_P(&ostream_1, PSTR("\r\n"));
 				}
 				
 				_delay_ms(100);
@@ -259,7 +267,7 @@ void test_ppm()
 	
 	ppm_calibrate(10);
 	
-	fprintf_P(&ostream_0, PSTR("\r\ntest_ppm\r\n"));
+	fprintf_P(&ostream_1, PSTR("\r\ntest_ppm\r\n"));
 	
 	while (1)
 	{
@@ -282,7 +290,11 @@ void test_ppm()
 				// report center values
 				for (uint8_t i = 0; i < 6; i++)
 				{
-					fprintf_P(&ostream_0, PSTR("cal %d: %d\r\n"), i, ppm_center(i));
+					fprintf_P(&ostream_1, PSTR("cal "));
+					ser_num(1, i);
+					fprintf_P(&ostream_1, PSTR(": "));
+					ser_num(1, ppm_center(i));
+					fprintf_P(&ostream_1, PSTR("\r\n"));
 				}
 				
 				while (button_is_pressed());
@@ -292,7 +304,11 @@ void test_ppm()
 				// report channel values
 				for (uint8_t i = 0; i < 6; i++)
 				{
-					fprintf_P(&ostream_0, PSTR("ppm %d: %d\r\n"), i, ppm_chan_read(i));
+					fprintf_P(&ostream_1, PSTR("ppm "));
+					ser_num(1, i);
+					fprintf_P(&ostream_1, PSTR(": "));
+					ser_num(1, ppm_chan_read(i));
+					fprintf_P(&ostream_1, PSTR("\r\n"));
 				}
 				
 				_delay_ms(100);

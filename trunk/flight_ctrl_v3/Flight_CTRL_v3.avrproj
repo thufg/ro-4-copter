@@ -22,7 +22,9 @@
   <IncludeDirList />
   <LibraryDirList />
   <LinkObjList />
-  <LinkLibList />
+  <LinkLibList>
+    <Lib>libm.a</Lib>
+  </LinkLibList>
   <MemorySegList />
   <BurnPart>atmega644p</BurnPart>
   <BurnProgrammer>usbtiny</BurnProgrammer>
@@ -31,7 +33,7 @@
   <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
   <BurnBaud>0</BurnBaud>
   <BurnAutoReset>false</BurnAutoReset>
-  <LastFile>main.c</LastFile>
+  <LastFile>default_values.h</LastFile>
   <FileList>
     <File>
       <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c'-->
@@ -39,7 +41,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>11286</CursorPos>
+      <CursorPos>278</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -48,7 +50,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>483</CursorPos>
+      <CursorPos>1093</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -74,8 +76,8 @@
       <RelPath>test.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>4603</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -92,8 +94,8 @@
       <RelPath>esc.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>114</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -111,7 +113,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>283</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -137,8 +139,8 @@
       <RelPath>sensor.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>657</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -146,8 +148,8 @@
       <RelPath>sensor.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>383</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -164,8 +166,8 @@
       <RelPath>calc.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>789</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -173,8 +175,8 @@
       <RelPath>trig_tbl.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>9659</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -182,8 +184,8 @@
       <RelPath>calibration.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>104</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -191,8 +193,8 @@
       <RelPath>calibration.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>1142</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -201,7 +203,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <CursorPos>1514</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -227,8 +229,8 @@
       <RelPath>ppm.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
-      <CursorPos>220</CursorPos>
+      <WasOpen>false</WasOpen>
+      <CursorPos>0</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -237,7 +239,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>3462</CursorPos>
+      <CursorPos>151</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -245,8 +247,8 @@
       <RelPath>in_flight_debug.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>984</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -254,8 +256,8 @@
       <RelPath>in_flight_debug.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>219</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -263,8 +265,8 @@
       <RelPath>data_tables\calibration_variables.csv</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>2454</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -273,7 +275,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>1167</CursorPos>
+      <CursorPos>249</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -281,8 +283,26 @@
       <RelPath>debug_autogen_functs.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>5850</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\default_values.h'-->
+      <RelPath>default_values.h</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>216</CursorPos>
+      <Bookmarks />
+    </File>
+    <File>
+      <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\notes.txt'-->
+      <RelPath>notes.txt</RelPath>
+      <ToCompile>false</ToCompile>
+      <Options />
+      <WasOpen>true</WasOpen>
+      <CursorPos>364</CursorPos>
       <Bookmarks />
     </File>
   </FileList>

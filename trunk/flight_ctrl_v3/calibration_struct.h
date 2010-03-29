@@ -1,7 +1,7 @@
 #ifndef calibration_struct_h
 #define calibration_struct_h
 
-// Var count: 54
+// Var count: 57
 
 typedef struct Calibration_{
 	int32_t f_mot_bot;
@@ -22,6 +22,9 @@ typedef struct Calibration_{
 	int32_t pitch_accel_top;
 	int32_t vert_accel_bot;
 	int32_t vert_accel_top;
+	int32_t roll_gyro_center;
+	int32_t pitch_gyro_center;
+	int32_t yaw_gyro_center;
 	int32_t pitch_angle_offset;
 	int32_t roll_angle_offset;
 	int32_t pitch_gyro_to_rate;

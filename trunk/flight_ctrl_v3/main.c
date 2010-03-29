@@ -54,6 +54,26 @@ void user_io_init()
 	cbi(switch_ddr, switch_2_pin);
 	cbi(switch_ddr, switch_3_pin);
 	cbi(switch_ddr, switch_4_pin);
+	
+	// kill switch
+	sbi(kill_switch_port, kill_switch_in_pin);
+	cbi(kill_switch_ddr, kill_switch_in_pin);
+	cbi(kill_switch_port, kill_switch_gnd1_pin);
+	sbi(kill_switch_ddr, kill_switch_gnd1_pin);
+	cbi(kill_switch_port, kill_switch_gnd2_pin);
+	sbi(kill_switch_ddr, kill_switch_gnd2_pin);
+}
+
+uint8_t kill_switch_activated()
+{
+	if (switch_3_is_down() == 0)
+	{
+		return bit_is_set(kill_switch_in, kill_switch_in_pin);
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void hold_esc()
@@ -121,6 +141,27 @@ void hold_esc()
 	}
 }
 
+void freeze()
+{
+	LED1_on();
+	LED2_off();
+	
+	for (uint8_t i = 0; i < 6; i++)
+	{
+		esc_set_width(i, ticks_500us * 2);
+	}
+	
+	while(1)
+	{
+		debug_check_msg(&cal_data);
+		
+		if (esc_is_done())
+		{
+			esc_start_next();
+		}
+	}
+}
+
 int main()
 {
 	// test code goes here
@@ -141,6 +182,11 @@ int main()
 	user_io_init();
 	
 	calibration_default(&cal_data);
+	
+	if (switch_2_is_down())
+	{
+		calibration_load(&cal_data);
+	}
 	
 	sei();
 	
@@ -195,8 +241,10 @@ int main()
 	volatile PID_data pitch_rate_pid = PID_init();
 	volatile PID_data yaw_pid = PID_init();
 	
+	#ifdef use_asin
 	volatile static int32_t zero_G_val;
 	volatile static int32_t one_G_val;
+	#endif
 
 	volatile static int32_t roll_ang = 0; 
 	volatile static int32_t pitch_ang = 0;
@@ -215,16 +263,24 @@ int main()
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				fprintf_P(&serdebugstream, PSTR("sensor %d: "), i);
-				fprintf_P(&serdebugstream, PSTR("%d - "), sens_read(i));
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), sens_offset(i));
+				fprintf_P(&serdebugstream, PSTR("sensor "), i);
+				ser_num(1, i);
+				fprintf_P(&serdebugstream, PSTR(": "), sens_read(i));
+				ser_num(1, sens_read(i));
+				fprintf_P(&serdebugstream, PSTR(" - "));
+				ser_num(1, sens_offset(i));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 			}
 			
 			for (int i = 0; i < 6; i++)
 			{
-				fprintf_P(&serdebugstream, PSTR("ppm %d: "), i);
-				fprintf_P(&serdebugstream, PSTR("%d + "), ppm_chan_read(i));
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), ppm_center(i));
+				fprintf_P(&serdebugstream, PSTR("ppm "), i);
+				ser_num(1, i);
+				fprintf_P(&serdebugstream, PSTR(": "), sens_read(i));
+				ser_num(1, ppm_chan_read(i));
+				fprintf_P(&serdebugstream, PSTR(" + "));
+				ser_num(1, ppm_center(i));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 			}
 			
 			report_requested = 0;
@@ -248,15 +304,19 @@ int main()
 				
 				if (off_cnt >= cal_data.button_hold_down / 2)
 				{
-					hold_esc();
-					LED1_off();
-					off_cnt = 0;
+					freeze();
 				}
 			}
+			LED1_off();
 		}
 		else
 		{
 			LED1_on();
+		}
+		
+		if (kill_switch_activated())
+		{
+			freeze();
 		}
 
 		volatile static int32_t roll_gyro_val;
@@ -269,9 +329,11 @@ int main()
 		{
 			LED2_tog();
 			
+			#ifdef use_asin
 			// calculate center accelerometer values
 			zero_G_val = (cal_data.vert_accel_top + cal_data.vert_accel_bot + 1) / 2;
 			one_G_val = cal_data.vert_accel_top - zero_G_val;
+			#endif
 			
 			volatile static int32_t roll_accel_val;
 			volatile static int32_t pitch_accel_val;
@@ -329,27 +391,51 @@ int main()
 			
 			// computer requested debug data
 			if (report_requested == 1)
-			{
-				fprintf_P(&serdebugstream, PSTR("zero_G_val: %d, "), zero_G_val);
-				fprintf_P(&serdebugstream, PSTR("one_G_val: %d\r\n"), one_G_val);
+			{				
+				#ifdef use_asin
+				fprintf_P(&serdebugstream, PSTR("zero_G_val: "));
+				ser_num(1, zero_G_val);
+				fprintf_P(&serdebugstream, PSTR(", one_G_val: "));
+				ser_num(1, one_G_val);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
+				#endif
 				
-				fprintf_P(&serdebugstream, PSTR("roll_accel_val: %d, "), roll_accel_val);
-				fprintf_P(&serdebugstream, PSTR("pitch_accel_val: %d, "), pitch_accel_val);
-				fprintf_P(&serdebugstream, PSTR("vert_accel_val: %d\r\n"), vert_accel_val);
+				fprintf_P(&serdebugstream, PSTR("accel_val: roll: "));
+				ser_num(1, roll_accel_val);
+				fprintf_P(&serdebugstream, PSTR(", pitch: "));
+				ser_num(1, pitch_accel_val);
+				fprintf_P(&serdebugstream, PSTR(", vert: "));
+				ser_num(1, vert_accel_val);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("roll_gyro_val: %d - "), roll_gyro_val);
-				fprintf_P(&serdebugstream, PSTR("%d, "), sens_offset(roll_gyro_chan));
-				fprintf_P(&serdebugstream, PSTR("pitch_gyro_val: %d - "), pitch_gyro_val);
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), sens_offset(pitch_gyro_chan));
+				fprintf_P(&serdebugstream, PSTR("gyro_val: roll: "));
+				ser_num(1, roll_gyro_val);
+				fprintf_P(&serdebugstream, PSTR(", pitch: "));
+				ser_num(1, pitch_gyro_val);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("delta_time: %d\r\n"), delta_time);
+				fprintf_P(&serdebugstream, PSTR("gyro_cal: roll: "));
+				ser_num(1, sens_offset(roll_gyro_chan));
+				fprintf_P(&serdebugstream, PSTR(", pitch: "));
+				ser_num(1, sens_offset(pitch_gyro_chan));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("roll_trig: %d, "), roll_trig);
-				fprintf_P(&serdebugstream, PSTR("pitch_trig: %d\r\n"), pitch_trig);
+				fprintf_P(&serdebugstream, PSTR("delta_time: "));
+				ser_num(1, delta_time);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("roll_ang: %d, "), roll_ang);
-				fprintf_P(&serdebugstream, PSTR("pitch_ang: %d\r\n"), pitch_ang);
+				fprintf_P(&serdebugstream, PSTR("trig: roll: "));
+				ser_num(1, roll_trig);
+				fprintf_P(&serdebugstream, PSTR(", pitch: "));
+				ser_num(1, pitch_trig);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
+				fprintf_P(&serdebugstream, PSTR("ang: roll: "));
+				ser_num(1, roll_ang);
+				fprintf_P(&serdebugstream, PSTR(", pitch: "));
+				ser_num(1, pitch_ang);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
+
 				report_requested = 2;
 			}
 			
@@ -374,14 +460,14 @@ int main()
 			volatile int32_t yaw_mot = PID_mv(&yaw_pid, cal_data.yaw_kp, cal_data.yaw_ki, cal_data.yaw_kd, calc_multi(yaw_gyro_val, cal_data.yaw_ppm_scale, MATH_MULTIPLIER), ppm_chan_read(cal_data.yaw_ppm_chan));
 
 			// calculate throttle
-			volatile int32_t throttle_cmd = calc_multi(ppm_chan_read(cal_data.throttle_ppm_chan), cal_data.throttle_ppm_scale, MATH_MULTIPLIER);
+			volatile int32_t throttle_cmd = calc_multi((ppm_chan_read_raw(cal_data.throttle_ppm_chan) - (ticks_500us * 3)), cal_data.throttle_ppm_scale, MATH_MULTIPLIER);
 			throttle_cmd += cal_data.throttle_hover;
 
 			// apply final throttle to all motors
-			volatile int32_t f_mot = cal_data.f_mot_bot + calc_multi((throttle_cmd + yaw_mot + pitch_mot), cal_data.f_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t b_mot = cal_data.b_mot_bot + calc_multi((throttle_cmd + yaw_mot - pitch_mot), cal_data.b_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t l_mot = cal_data.l_mot_bot + calc_multi((throttle_cmd - yaw_mot + roll_mot), cal_data.l_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t r_mot = cal_data.r_mot_bot + calc_multi((throttle_cmd - yaw_mot - roll_mot), cal_data.r_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t f_mot = cal_data.f_mot_bot + calc_multi((throttle_cmd + yaw_mot - pitch_mot), cal_data.f_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t b_mot = cal_data.b_mot_bot + calc_multi((throttle_cmd + yaw_mot + pitch_mot), cal_data.b_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t l_mot = cal_data.l_mot_bot + calc_multi((throttle_cmd - yaw_mot - roll_mot), cal_data.l_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t r_mot = cal_data.r_mot_bot + calc_multi((throttle_cmd - yaw_mot + roll_mot), cal_data.r_mot_scale, MATH_MULTIPLIER);
 
 			esc_set_width(f_mot_chan, f_mot);
 			esc_set_width(b_mot_chan, b_mot);
@@ -391,50 +477,67 @@ int main()
 			// computer requested debug data
 			if (report_requested == 2)
 			{
-				fprintf_P(&serdebugstream, PSTR("roll_ppm: %d - "), ppm_chan_read(cal_data.roll_ppm_chan));
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), ppm_center(cal_data.roll_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("roll_ppm: "));
+				ser_num(1, ppm_chan_read(cal_data.roll_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR(" - "));
+				ser_num(1, ppm_center(cal_data.roll_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("pitch_ppm: %d - "), ppm_chan_read(cal_data.pitch_ppm_chan));
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), ppm_center(cal_data.pitch_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("pitch_ppm: "));
+				ser_num(1, ppm_chan_read(cal_data.pitch_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR(" - "));
+				ser_num(1, ppm_center(cal_data.pitch_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("yaw_ppm: %d - "), ppm_chan_read(cal_data.yaw_ppm_chan));
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), ppm_center(cal_data.yaw_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("yaw_ppm: "));
+				ser_num(1, ppm_chan_read(cal_data.yaw_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR(" - "));
+				ser_num(1, ppm_center(cal_data.yaw_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("throttle_ppm: %d - "), ppm_chan_read(cal_data.throttle_ppm_chan));
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), ppm_center(cal_data.throttle_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("throttle_ppm: "));
+				ser_num(1, ppm_chan_read(cal_data.throttle_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR(" - "));
+				ser_num(1, ppm_center(cal_data.throttle_ppm_chan));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				//fprintf_P(&serdebugstream, PSTR("roll_level_pid err: %d, "), roll_level_pid.err_sum);
-				//fprintf_P(&serdebugstream, PSTR("%d\r\n"), roll_level_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("roll_tgt_rate: "));
+				ser_num(1, roll_tgt_rate);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
+				fprintf_P(&serdebugstream, PSTR("roll_mot: "));
+				ser_num(1, roll_mot);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				//fprintf_P(&serdebugstream, PSTR("roll_rate_pid err: %d, "), roll_rate_pid.err_sum);
-				//fprintf_P(&serdebugstream, PSTR("%d\r\n"), roll_rate_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("pitch_tgt_rate: "));
+				ser_num(1, pitch_tgt_rate);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
+				fprintf_P(&serdebugstream, PSTR("pitch_mot: "));
+				ser_num(1, pitch_mot);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("roll_tgt_rate: %d\r\n"), roll_tgt_rate);
-				fprintf_P(&serdebugstream, PSTR("roll_mot: %d\r\n"), roll_mot);
+				fprintf_P(&serdebugstream, PSTR("yaw_gyro_val: "));
+				ser_num(1, yaw_gyro_val);
+				fprintf_P(&serdebugstream, PSTR(" + "));
+				ser_num(1, sens_offset(yaw_gyro_chan));
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				//fprintf_P(&serdebugstream, PSTR("pitch_level_pid err: %d, "), pitch_level_pid.err_sum);
-				//fprintf_P(&serdebugstream, PSTR("%d\r\n"), pitch_level_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("yaw_mot: "));
+				ser_num(1, yaw_mot);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				//fprintf_P(&serdebugstream, PSTR("pitch_rate_pid err: %d, "), pitch_rate_pid.err_sum);
-				//fprintf_P(&serdebugstream, PSTR("%d\r\n"), pitch_rate_pid.err_last);
+				fprintf_P(&serdebugstream, PSTR("throttle_cmd: "));
+				ser_num(1, throttle_cmd);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
-				fprintf_P(&serdebugstream, PSTR("pitch_tgt_rate: %d\r\n"), pitch_tgt_rate);
-				fprintf_P(&serdebugstream, PSTR("pitch_mot: %d\r\n"), pitch_mot);
-				
-				//fprintf_P(&serdebugstream, PSTR("yaw_pid err: %d, "), yaw_pid.err_sum);
-				//fprintf_P(&serdebugstream, PSTR("%d\r\n"), yaw_pid.err_last);
-				
-				fprintf_P(&serdebugstream, PSTR("yaw_gyro_val: %d - "), yaw_gyro_val);
-				fprintf_P(&serdebugstream, PSTR("%d\r\n"), sens_offset(yaw_gyro_chan));
-				
-				fprintf_P(&serdebugstream, PSTR("yaw_mot: %d\r\n"), yaw_mot);
-				
-				fprintf_P(&serdebugstream, PSTR("throttle_cmd: %d\r\n"), throttle_cmd);
-				
-				fprintf_P(&serdebugstream, PSTR("motor speed: f= %d, "), f_mot);
-				fprintf_P(&serdebugstream, PSTR("b= %d, "), b_mot);
-				fprintf_P(&serdebugstream, PSTR("l= %d, "), l_mot);
-				fprintf_P(&serdebugstream, PSTR("r= %d\r\n"), r_mot);
+				fprintf_P(&serdebugstream, PSTR("motor speed: f= "));
+				ser_num(1, f_mot);
+				fprintf_P(&serdebugstream, PSTR(", b= "));
+				ser_num(1, b_mot);
+				fprintf_P(&serdebugstream, PSTR(", l= "));
+				ser_num(1, l_mot);
+				fprintf_P(&serdebugstream, PSTR(", r= "));
+				ser_num(1, r_mot);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 				
 				report_requested = 0;
 			}

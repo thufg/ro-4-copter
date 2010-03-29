@@ -7,7 +7,7 @@
 
 void calibration_default(Calibration *);
 void calibration_save(Calibration *);
-void calibration_load(Calibration *);
+uint8_t calibration_load(Calibration *);
 void calibration_write(Calibration *, int32_t, int32_t);
 
 #endif
