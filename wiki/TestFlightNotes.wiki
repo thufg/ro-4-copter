@@ -4,4 +4,4 @@
 
  * Make sure the level of the circuit board on which the IMU is on can be finely adjusted for to compensate for any slight tilt, use spring washers for this.
 
- * A kill switch wire is added and plugged into the unused JTAG port, the operator has to pull a wire out to kill the motors, this is to prevent personal injury, the helicopter will likely crash but people won't be cut.
+ * A kill switch wire is added and plugged into the unused JTAG port, the operator has to pull a wire out to kill the motors, this is to prevent personal injury, the helicopter will likely crash but people won't be cut. The software has a function to go into an infinite loop that throttles down to zero when the radio operator presses a button.
