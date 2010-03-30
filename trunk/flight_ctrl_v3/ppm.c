@@ -133,7 +133,7 @@ volatile inline int32_t ppm_chan_read(uint8_t i)
 	ppm_read_busy = i + 1;
 	int16_t r = ppm_width[i] - ppm_offset[i];
 	ppm_read_busy = 0;
-	return r;
+	return r < ppm_threshold && r > -1 * ppm_threshold ? 0 : r;
 }
 
 volatile inline int32_t ppm_chan_read_raw(uint8_t i)

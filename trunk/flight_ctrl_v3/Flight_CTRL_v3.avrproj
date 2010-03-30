@@ -33,7 +33,7 @@
   <BurnFuseBox>-U lfuse:w:0xFF:m -U hfuse:w:0xDD:m -U efuse:w:0xFF:m -U lock:w:0xFF:m</BurnFuseBox>
   <BurnBaud>0</BurnBaud>
   <BurnAutoReset>false</BurnAutoReset>
-  <LastFile>default_values.h</LastFile>
+  <LastFile>main.c</LastFile>
   <FileList>
     <File>
       <!--AbsPath: 'C:\Users\Frank\Documents\Projects\quadrotor_helicopter\flight_ctrl_v3\main.c'-->
@@ -41,7 +41,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>278</CursorPos>
+      <CursorPos>10936</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -49,7 +49,7 @@
       <RelPath>pindef.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>1093</CursorPos>
       <Bookmarks />
     </File>
@@ -76,7 +76,7 @@
       <RelPath>test.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>4603</CursorPos>
       <Bookmarks />
     </File>
@@ -113,7 +113,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>283</CursorPos>
+      <CursorPos>402</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -121,8 +121,8 @@
       <RelPath>timer.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>846</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -130,8 +130,8 @@
       <RelPath>timer.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>144</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -157,8 +157,8 @@
       <RelPath>calc.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>2862</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -167,7 +167,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>789</CursorPos>
+      <CursorPos>1191</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -175,8 +175,8 @@
       <RelPath>trig_tbl.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>0</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>9677</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -184,7 +184,7 @@
       <RelPath>calibration.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>104</CursorPos>
       <Bookmarks />
     </File>
@@ -193,7 +193,7 @@
       <RelPath>calibration.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>1142</CursorPos>
       <Bookmarks />
     </File>
@@ -202,8 +202,8 @@
       <RelPath>calibration_struct.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>false</WasOpen>
-      <CursorPos>1514</CursorPos>
+      <WasOpen>true</WasOpen>
+      <CursorPos>918</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -239,7 +239,7 @@
       <ToCompile>true</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>151</CursorPos>
+      <CursorPos>2722</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -247,7 +247,7 @@
       <RelPath>in_flight_debug.c</RelPath>
       <ToCompile>true</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>984</CursorPos>
       <Bookmarks />
     </File>
@@ -256,7 +256,7 @@
       <RelPath>in_flight_debug.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>219</CursorPos>
       <Bookmarks />
     </File>
@@ -266,7 +266,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>2454</CursorPos>
+      <CursorPos>1286</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -274,7 +274,7 @@
       <RelPath>calibration_autogen_functs.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>249</CursorPos>
       <Bookmarks />
     </File>
@@ -283,7 +283,7 @@
       <RelPath>debug_autogen_functs.h</RelPath>
       <ToCompile>false</ToCompile>
       <Options />
-      <WasOpen>true</WasOpen>
+      <WasOpen>false</WasOpen>
       <CursorPos>5850</CursorPos>
       <Bookmarks />
     </File>
@@ -293,7 +293,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>216</CursorPos>
+      <CursorPos>587</CursorPos>
       <Bookmarks />
     </File>
     <File>
@@ -302,7 +302,7 @@
       <ToCompile>false</ToCompile>
       <Options />
       <WasOpen>true</WasOpen>
-      <CursorPos>364</CursorPos>
+      <CursorPos>2111</CursorPos>
       <Bookmarks />
     </File>
   </FileList>

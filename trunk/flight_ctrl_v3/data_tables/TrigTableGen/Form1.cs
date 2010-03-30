@@ -11,6 +11,7 @@ namespace TrigTableGen
 {
     public partial class Form1 : Form
     {
+        const double MCONST = (20000000.0 / 1024.0) / (3.3 / 1024.0 / 0.00067 * 1000.0);
         public Form1()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace TrigTableGen
                 double val = Math.Atan((double)i / (double)NumOfAtanEntries.Value);
                 val *= 57.2957795130823;
                 val *= (double)MATH_MULTIPLIER.Value;
+                //val *= MCONST;
                 str += string.Format("{0,6}, ", Math.Round(val));
 
             }
@@ -52,6 +54,7 @@ namespace TrigTableGen
                 double val = Math.Asin((double)i / (double)NumOfAsinEntries.Value);
                 val *= 57.2957795130823;
                 val *= (double)MATH_MULTIPLIER.Value;
+                //val *= MCONST;
                 str += string.Format("{0,6}, ", Math.Round(val));
             }
             TableBox.Text += str + "\r\n};\r\n\r\n#endif\r\n\r\n#endif\r\n";
