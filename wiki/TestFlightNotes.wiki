@@ -1,6 +1,6 @@
 #summary Notes taken from the first few test flight
 
- * Make sure all the propellers spin level, the yaw introduced by misdirected air can't be counteracted easily.
+ * Make sure all the propellers spin level, the yaw introduced by misdirected air can't be counteracted easily by adjusting the difference in spin between the pitch and roll motor pairs.
 
  * Make sure the level of the circuit board on which the IMU is on can be finely adjusted for to compensate for any slight tilt, use spring washers for this.
 
