@@ -15,7 +15,7 @@ static volatile uint32_t last_tcnt0;
 void timer0_init()
 {
 	//TIMSK0 |= _BV(OCIE0B) | _BV(OCIE0A);
-	TCCR0B |= _BV(CS00) | _BV(CS02);
+	TCCR0B |= _BV(CS00) | _BV(CS02); // 1024 prescaler
 }
 
 void timer1_init()
@@ -33,7 +33,7 @@ volatile int32_t timer1_elapsed()
 	return r;
 }
 
-volatile int32_t timer0_elapsed()
+volatile int32_t timer0_elapsed_sec()
 {
 	int32_t temp_tcnt0 = TCNT0;
 	int32_t diff = ((temp_tcnt0 | 0x100) - last_tcnt0) & 0xFF;
@@ -42,6 +42,13 @@ volatile int32_t timer0_elapsed()
 	return r;
 }
 
+volatile int32_t timer0_elapsed_raw()
+{
+	int32_t temp_tcnt0 = TCNT0;
+	int32_t diff = ((temp_tcnt0 | 0x100) - last_tcnt0) & 0xFF;
+	last_tcnt0 = temp_tcnt0;
+	return diff;
+}
 
 ISR(TIMER0_COMPB_vect)
 {

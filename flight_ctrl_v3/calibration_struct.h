@@ -1,7 +1,7 @@
 #ifndef calibration_struct_h
 #define calibration_struct_h
 
-// Var count: 57
+// Var count: 59
 
 typedef struct Calibration_{
 	int32_t f_mot_bot;
@@ -13,7 +13,6 @@ typedef struct Calibration_{
 	int32_t l_mot_scale;
 	int32_t r_mot_scale;
 	uint8_t motor_mode;
-	int32_t yaw_gyro_scale;
 	int32_t roll_accel_bot;
 	int32_t roll_accel_center;
 	int32_t roll_accel_top;
@@ -35,7 +34,9 @@ typedef struct Calibration_{
 	int32_t throttle_ppm_center;
 	int32_t roll_ppm_scale;
 	int32_t pitch_ppm_scale;
-	int32_t yaw_ppm_scale;
+	int32_t roll_gyro_scale;
+	int32_t pitch_gyro_scale;
+	int32_t yaw_gyro_scale;
 	int32_t throttle_ppm_scale;
 	int32_t throttle_hover;
 	int32_t roll_level_kp;
@@ -59,6 +60,7 @@ typedef struct Calibration_{
 	uint8_t roll_ppm_chan;
 	uint8_t unlock_ppm_chan;
 	int32_t delta_time_const;
+	int32_t trig_multi_const;
 	int32_t comp_filter_w;
 	uint32_t button_hold_down;
 } Calibration;

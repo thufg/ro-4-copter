@@ -11,7 +11,6 @@ void calibration_default(Calibration * x)
 	x->l_mot_scale = default_mot_scale;
 	x->r_mot_scale = default_mot_scale;
 	x->motor_mode = 0b00000000;
-	x->yaw_gyro_scale = default_yaw_gyro_scale;
 	x->roll_accel_bot = 294;
 	x->roll_accel_center = 544;
 	x->roll_accel_top = 796;
@@ -33,7 +32,9 @@ void calibration_default(Calibration * x)
 	x->throttle_ppm_center = ticks_500us * 3;
 	x->roll_ppm_scale = default_roll_pitch_ppm_scale;
 	x->pitch_ppm_scale = default_roll_pitch_ppm_scale;
-	x->yaw_ppm_scale = default_yaw_ppm_scale;
+	x->roll_gyro_scale = default_roll_pitch_gyro_scale;
+	x->pitch_gyro_scale = default_roll_pitch_gyro_scale;
+	x->yaw_gyro_scale = default_yaw_gyro_scale;
 	x->throttle_ppm_scale = default_throttle_ppm_scale;
 	x->throttle_hover = default_throttle_hover;
 	x->roll_level_kp = default_level_kp;
@@ -57,6 +58,7 @@ void calibration_default(Calibration * x)
 	x->roll_ppm_chan = 3;
 	x->unlock_ppm_chan = 5;
 	x->delta_time_const = default_delta_time_const;
+	x->trig_multi_const = default_trig_multi_const;
 	x->comp_filter_w = default_comp_filter_w;
 	x->button_hold_down = 125;
 }
@@ -94,147 +96,153 @@ void calibration_write(Calibration * x, int32_t addr, int32_t data)
 			x->motor_mode = (uint8_t)data;
 			break;
 		case 9:
-			x->yaw_gyro_scale = (int32_t)data;
-			break;
-		case 10:
 			x->roll_accel_bot = (int32_t)data;
 			break;
-		case 11:
+		case 10:
 			x->roll_accel_center = (int32_t)data;
 			break;
-		case 12:
+		case 11:
 			x->roll_accel_top = (int32_t)data;
 			break;
-		case 13:
+		case 12:
 			x->pitch_accel_bot = (int32_t)data;
 			break;
-		case 14:
+		case 13:
 			x->pitch_accel_center = (int32_t)data;
 			break;
-		case 15:
+		case 14:
 			x->pitch_accel_top = (int32_t)data;
 			break;
-		case 16:
+		case 15:
 			x->vert_accel_bot = (int32_t)data;
 			break;
-		case 17:
+		case 16:
 			x->vert_accel_top = (int32_t)data;
 			break;
-		case 18:
+		case 17:
 			x->roll_gyro_center = (int32_t)data;
 			break;
-		case 19:
+		case 18:
 			x->pitch_gyro_center = (int32_t)data;
 			break;
-		case 20:
+		case 19:
 			x->yaw_gyro_center = (int32_t)data;
 			break;
-		case 21:
+		case 20:
 			x->pitch_angle_offset = (int32_t)data;
 			break;
-		case 22:
+		case 21:
 			x->roll_angle_offset = (int32_t)data;
 			break;
-		case 23:
+		case 22:
 			x->pitch_gyro_to_rate = (int32_t)data;
 			break;
-		case 24:
+		case 23:
 			x->roll_gyro_to_rate = (int32_t)data;
 			break;
-		case 25:
+		case 24:
 			x->roll_ppm_center = (int32_t)data;
 			break;
-		case 26:
+		case 25:
 			x->pitch_ppm_center = (int32_t)data;
 			break;
-		case 27:
+		case 26:
 			x->yaw_ppm_center = (int32_t)data;
 			break;
-		case 28:
+		case 27:
 			x->throttle_ppm_center = (int32_t)data;
 			break;
-		case 29:
+		case 28:
 			x->roll_ppm_scale = (int32_t)data;
 			break;
-		case 30:
+		case 29:
 			x->pitch_ppm_scale = (int32_t)data;
 			break;
+		case 30:
+			x->roll_gyro_scale = (int32_t)data;
+			break;
 		case 31:
-			x->yaw_ppm_scale = (int32_t)data;
+			x->pitch_gyro_scale = (int32_t)data;
 			break;
 		case 32:
-			x->throttle_ppm_scale = (int32_t)data;
+			x->yaw_gyro_scale = (int32_t)data;
 			break;
 		case 33:
-			x->throttle_hover = (int32_t)data;
+			x->throttle_ppm_scale = (int32_t)data;
 			break;
 		case 34:
-			x->roll_level_kp = (int32_t)data;
+			x->throttle_hover = (int32_t)data;
 			break;
 		case 35:
-			x->roll_level_ki = (int32_t)data;
+			x->roll_level_kp = (int32_t)data;
 			break;
 		case 36:
-			x->roll_level_kd = (int32_t)data;
+			x->roll_level_ki = (int32_t)data;
 			break;
 		case 37:
-			x->pitch_level_kp = (int32_t)data;
+			x->roll_level_kd = (int32_t)data;
 			break;
 		case 38:
-			x->pitch_level_ki = (int32_t)data;
+			x->pitch_level_kp = (int32_t)data;
 			break;
 		case 39:
-			x->pitch_level_kd = (int32_t)data;
+			x->pitch_level_ki = (int32_t)data;
 			break;
 		case 40:
-			x->roll_rate_kp = (int32_t)data;
+			x->pitch_level_kd = (int32_t)data;
 			break;
 		case 41:
-			x->roll_rate_ki = (int32_t)data;
+			x->roll_rate_kp = (int32_t)data;
 			break;
 		case 42:
-			x->roll_rate_kd = (int32_t)data;
+			x->roll_rate_ki = (int32_t)data;
 			break;
 		case 43:
-			x->pitch_rate_kp = (int32_t)data;
+			x->roll_rate_kd = (int32_t)data;
 			break;
 		case 44:
-			x->pitch_rate_ki = (int32_t)data;
+			x->pitch_rate_kp = (int32_t)data;
 			break;
 		case 45:
-			x->pitch_rate_kd = (int32_t)data;
+			x->pitch_rate_ki = (int32_t)data;
 			break;
 		case 46:
-			x->yaw_kp = (int32_t)data;
+			x->pitch_rate_kd = (int32_t)data;
 			break;
 		case 47:
-			x->yaw_ki = (int32_t)data;
+			x->yaw_kp = (int32_t)data;
 			break;
 		case 48:
-			x->yaw_kd = (int32_t)data;
+			x->yaw_ki = (int32_t)data;
 			break;
 		case 49:
-			x->yaw_ppm_chan = (uint8_t)data;
+			x->yaw_kd = (int32_t)data;
 			break;
 		case 50:
-			x->throttle_ppm_chan = (uint8_t)data;
+			x->yaw_ppm_chan = (uint8_t)data;
 			break;
 		case 51:
-			x->pitch_ppm_chan = (uint8_t)data;
+			x->throttle_ppm_chan = (uint8_t)data;
 			break;
 		case 52:
-			x->roll_ppm_chan = (uint8_t)data;
+			x->pitch_ppm_chan = (uint8_t)data;
 			break;
 		case 53:
-			x->unlock_ppm_chan = (uint8_t)data;
+			x->roll_ppm_chan = (uint8_t)data;
 			break;
 		case 54:
-			x->delta_time_const = (int32_t)data;
+			x->unlock_ppm_chan = (uint8_t)data;
 			break;
 		case 55:
-			x->comp_filter_w = (int32_t)data;
+			x->delta_time_const = (int32_t)data;
 			break;
 		case 56:
+			x->trig_multi_const = (int32_t)data;
+			break;
+		case 57:
+			x->comp_filter_w = (int32_t)data;
+			break;
+		case 58:
 			x->button_hold_down = (uint32_t)data;
 			break;
 		default:

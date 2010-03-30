@@ -34,6 +34,7 @@ typedef struct kalman_data_
 #ifdef use_multiplication_funct
 volatile int32_t calc_multi(volatile int32_t, volatile int32_t, volatile int32_t);
 #endif
+volatile int32_t calc_multi_funct(volatile int32_t, volatile int32_t, volatile int32_t);
 volatile int32_t PID_mv(PID_data *, int32_t, int32_t, int32_t, int32_t, int32_t);
 PID_data PID_init();
 volatile int32_t complementary_filter(int32_t *, int32_t, int32_t, int32_t, int32_t);

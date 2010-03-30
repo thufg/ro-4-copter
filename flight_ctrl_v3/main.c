@@ -199,6 +199,9 @@ int main()
 	esc_init();
 	timer0_init();
 	
+	LED1_on();
+	LED2_on();
+	
 	ppm_tx_is_good(0);
 	while (ppm_tx_is_good(0xFF) == 0);
 	_delay_ms(1000);
@@ -231,7 +234,7 @@ int main()
 	ppm_is_new_data(0);
 	while (ppm_is_new_data(0xFF) == 0);
 	
-	sens_calibrate(20);
+	sens_calibrate(40);
 	
 	// variable initialization
 	
@@ -355,7 +358,7 @@ int main()
 			}
 			else
 			{
-				delta_time = timer0_elapsed();
+				delta_time = timer0_elapsed_raw();
 			}
 			
 			// calculate angle using trig
@@ -376,16 +379,10 @@ int main()
 			roll_trig += cal_data.roll_angle_offset;
 			pitch_trig += cal_data.pitch_angle_offset;
 
-			//roll_trig = calc_ang_range(roll_trig);
-			//pitch_trig = calc_ang_range(pitch_trig);
-			
 			// mix accel and gyro readings using complementary filter
-			roll_ang  = complementary_filter(&roll_ang,  roll_trig,  calc_multi(((roll_gyro_val  + prev_roll_gyro_val  + 1) / 2), cal_data.roll_gyro_to_rate,  MATH_MULTIPLIER), cal_data.comp_filter_w, delta_time);
-			pitch_ang = complementary_filter(&pitch_ang, pitch_trig, calc_multi(((pitch_gyro_val + prev_pitch_gyro_val + 1) / 2), cal_data.pitch_gyro_to_rate, MATH_MULTIPLIER), cal_data.comp_filter_w, delta_time);
+			roll_ang  = complementary_filter(&roll_ang,  roll_trig * trig_factor_constant,  ((roll_gyro_val  + prev_roll_gyro_val  + 1) / 2), cal_data.comp_filter_w, delta_time);
+			pitch_ang = complementary_filter(&pitch_ang, pitch_trig * trig_factor_constant, ((pitch_gyro_val + prev_pitch_gyro_val + 1) / 2), cal_data.comp_filter_w, delta_time);
 
-			//roll_ang = calc_ang_range(roll_ang);
-			//pitch_ang = calc_ang_range(pitch_ang);
-			
 			prev_pitch_gyro_val = pitch_gyro_val;
 			prev_roll_gyro_val = roll_gyro_val;
 			
@@ -435,6 +432,12 @@ int main()
 				fprintf_P(&serdebugstream, PSTR(", pitch: "));
 				ser_num(1, pitch_ang);
 				fprintf_P(&serdebugstream, PSTR("\r\n"));
+				
+				fprintf_P(&serdebugstream, PSTR("ang / k: roll: "));
+				ser_num(1, roll_ang / trig_factor_constant);
+				fprintf_P(&serdebugstream, PSTR(", pitch: "));
+				ser_num(1, pitch_ang / trig_factor_constant);
+				fprintf_P(&serdebugstream, PSTR("\r\n"));
 
 				report_requested = 2;
 			}
@@ -447,27 +450,27 @@ int main()
 		{
 			// level PID calculations for roll and pitch
 
-			volatile int32_t roll_tgt_rate = PID_mv(&roll_level_pid, cal_data.roll_level_kp, cal_data.roll_level_ki, cal_data.roll_level_kd, calc_multi(roll_ang, cal_data.roll_ppm_scale, MATH_MULTIPLIER), (int32_t)ppm_chan_read((uint8_t)cal_data.roll_ppm_chan));
-			volatile int32_t pitch_tgt_rate = PID_mv(&pitch_level_pid, cal_data.pitch_level_kp, cal_data.pitch_level_ki, cal_data.pitch_level_kd, calc_multi(pitch_ang, cal_data.pitch_ppm_scale, MATH_MULTIPLIER), (int32_t)ppm_chan_read((uint8_t)cal_data.pitch_ppm_chan));
+			volatile int32_t roll_tgt_rate  = PID_mv(&roll_level_pid,  cal_data.roll_level_kp,  cal_data.roll_level_ki,  cal_data.roll_level_kd,  roll_ang,  ppm_chan_read(cal_data.roll_ppm_chan) *  cal_data.roll_ppm_scale);
+			volatile int32_t pitch_tgt_rate = PID_mv(&pitch_level_pid, cal_data.pitch_level_kp, cal_data.pitch_level_ki, cal_data.pitch_level_kd, pitch_ang, ppm_chan_read(cal_data.pitch_ppm_chan) * cal_data.pitch_ppm_scale);
 
 			// angular rate PID calculations for roll and pitch
 			
-			volatile int32_t roll_mot = PID_mv(&roll_rate_pid, cal_data.roll_rate_kp, cal_data.roll_rate_ki, cal_data.roll_rate_kd, roll_tgt_rate, roll_gyro_val);
-			volatile int32_t pitch_mot = PID_mv(&pitch_rate_pid, cal_data.pitch_rate_kp, cal_data.pitch_rate_ki, cal_data.pitch_rate_kd, pitch_tgt_rate, pitch_gyro_val);
-
+			volatile int32_t roll_mot  = PID_mv(&roll_rate_pid,  cal_data.roll_rate_kp,  cal_data.roll_rate_ki,  cal_data.roll_rate_kd,  roll_tgt_rate,  roll_gyro_val *  cal_data.roll_gyro_scale);
+			volatile int32_t pitch_mot = PID_mv(&pitch_rate_pid, cal_data.pitch_rate_kp, cal_data.pitch_rate_ki, cal_data.pitch_rate_kd, pitch_tgt_rate, pitch_gyro_val * cal_data.pitch_gyro_scale);
+			
 			// attempt to adjust yaw
 			volatile int32_t yaw_gyro_val = sens_read(yaw_gyro_chan) - sens_offset(yaw_gyro_chan);
-			volatile int32_t yaw_mot = PID_mv(&yaw_pid, cal_data.yaw_kp, cal_data.yaw_ki, cal_data.yaw_kd, calc_multi(yaw_gyro_val, cal_data.yaw_ppm_scale, MATH_MULTIPLIER), ppm_chan_read(cal_data.yaw_ppm_chan));
+			volatile int32_t yaw_mot = PID_mv(&yaw_pid, cal_data.yaw_kp, cal_data.yaw_ki, cal_data.yaw_kd, yaw_gyro_val * cal_data.yaw_gyro_scale, ppm_chan_read(cal_data.yaw_ppm_chan));
 
 			// calculate throttle
-			volatile int32_t throttle_cmd = calc_multi((ppm_chan_read_raw(cal_data.throttle_ppm_chan) - (ticks_500us * 3)), cal_data.throttle_ppm_scale, MATH_MULTIPLIER);
+			volatile int32_t throttle_cmd = calc_multi_funct((ppm_chan_read_raw(cal_data.throttle_ppm_chan) - (ticks_500us * 3)), cal_data.throttle_ppm_scale, MATH_MULTIPLIER);
 			throttle_cmd += cal_data.throttle_hover;
 
 			// apply final throttle to all motors
-			volatile int32_t f_mot = cal_data.f_mot_bot + calc_multi((throttle_cmd + yaw_mot - pitch_mot), cal_data.f_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t b_mot = cal_data.b_mot_bot + calc_multi((throttle_cmd + yaw_mot + pitch_mot), cal_data.b_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t l_mot = cal_data.l_mot_bot + calc_multi((throttle_cmd - yaw_mot - roll_mot), cal_data.l_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t r_mot = cal_data.r_mot_bot + calc_multi((throttle_cmd - yaw_mot + roll_mot), cal_data.r_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t f_mot = cal_data.f_mot_bot + calc_multi_funct((throttle_cmd + yaw_mot - pitch_mot), cal_data.f_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t b_mot = cal_data.b_mot_bot + calc_multi_funct((throttle_cmd + yaw_mot + pitch_mot), cal_data.b_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t l_mot = cal_data.l_mot_bot + calc_multi_funct((throttle_cmd - yaw_mot - roll_mot), cal_data.l_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t r_mot = cal_data.r_mot_bot + calc_multi_funct((throttle_cmd - yaw_mot + roll_mot), cal_data.r_mot_scale, MATH_MULTIPLIER);
 
 			esc_set_width(f_mot_chan, f_mot);
 			esc_set_width(b_mot_chan, b_mot);

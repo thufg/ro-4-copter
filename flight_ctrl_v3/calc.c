@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <math.h>
@@ -9,30 +10,21 @@
 #include "calc.h"
 
 #ifdef use_multiplication_funct
-// function which performs fixed point multiplication, has been replaced with a macro
+
 volatile inline int32_t calc_multi(volatile int32_t input, volatile int32_t numer, volatile int32_t denom)
 {
-	if(denom == 0)
-	{
-		if (input * numer > 0)
-		{
-			return INT32_MAX;
-		}
-		else if (input * numer < 0)
-		{
-			return INT32_MIN;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	volatile int32_t r = (input * numer) + (denom / 2);
-	return r / denom;
+	return calc_multi_funct(input, numer, denom);
 }
 
 #endif
+
+// function which performs fixed point multiplication, has been replaced with a macro
+volatile inline int32_t calc_multi_funct(volatile int32_t input, volatile int32_t numer, volatile int32_t denom)
+{	
+	volatile int32_t r = (input * numer);
+	r += (denom / 2);
+	return r / denom;
+}
 
 #include "trig_tbl.h"
 
@@ -108,17 +100,28 @@ volatile inline int32_t PID_mv(PID_data * pid, int32_t kp, int32_t ki, int32_t k
         // proportional, integral, derivative
         // refer to external resources to learn more about this functioln
         
+		volatile int32_t mm = MATH_MULTIPLIER;
+		
         int32_t err = target - current;
 
-        pid->err_sum = calc_constrain(pid->err_sum + err, -1000000, 1000000);
+		int32_t mv = err * kp;
+		
+		if (ki != 0)
+		{
+			pid->err_sum = calc_constrain(pid->err_sum + err, INT32_MIN / 2, INT32_MAX / 2);
+			mv += pid->err_sum * ki;
+		}
 
-        int32_t delta_err = err - pid->err_last;
-
-        int32_t mv = err * kp + pid->err_sum * ki + delta_err * kd;
-
-        pid->err_last = err;
-
-        return calc_multi(mv, 1, MATH_MULTIPLIER);
+		if (kd != 0)
+		{
+			int32_t delta_err = err - pid->err_last;
+			mv += delta_err * kd;
+			pid->err_last = err;
+		}
+		
+		mv += mm / 2;
+		mv /= mm;
+		return mv;
 }
 
 inline PID_data PID_init()
@@ -134,13 +137,14 @@ inline PID_data PID_init()
 
 volatile inline int32_t complementary_filter(int32_t * ang, int32_t accel_ang, int32_t gyro_r, int32_t w, int32_t dt)
 {
-        volatile int32_t g = calc_multi(gyro_r, dt, MATH_MULTIPLIER);
-        *ang = calc_multi
-                        (
-                                (MATH_MULTIPLIER - w),
-                                (*ang + g),
-                                MATH_MULTIPLIER
-                        ) + calc_multi(w, accel_ang, MATH_MULTIPLIER);
+		volatile int32_t mm = MATH_MULTIPLIER;
+        volatile int32_t g = gyro_r * dt;
+		volatile int32_t integral = (mm - w) * (*ang + g) + (mm / 2);
+		
+		volatile int32_t trig = w * accel_ang + (mm / 2);
+		
+		*ang = (integral / mm) + (trig / mm);
+		
         return *ang;
 }
 
