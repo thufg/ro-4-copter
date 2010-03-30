@@ -22,6 +22,10 @@ The gyro sensors are calibrated by taking their average readings during the star
 
 Timer 1 is the only 16 bit timer available on the ATmega644P. It is kept running without a prescaler, and TCNT1 is never modified. This ensures precise timing to within +/- 50 nanoseconds.
 
+== Timer 0 ==
+
+Timer 0 is kept always running, with a frequency that is the system clock divided by 1024. It is used to keep count of loop times, which is gives a value for delta time used in the complementary filter.
+
 == PPM Radio Input ==
 
 PPM signals are measured using timer 1's input capture module. The input capture interrupt is used to store each PPM channel's pulse width into an array. The measurement is accurate even if the interrupt occurs slightly late since the ICP register is the one keeping the measurement, not TCNT1.
