@@ -1,13 +1,9 @@
-#summary One-sentence summary of this page.
+#summary How to calibrate the sensors
 
-= Introduction =
+ * sens_calibrate function will take t number of samples and average the samples to get a center value for the gyro sensors. It is crucial that the helicopter is motionless during this step (although it does not have to be level). This function is called right after the operator arms the helicopter.
 
-Add your content here.
+ * the calibration for the accelerometers are set by the user, using the configuration console or loaded from EEPROM (or by editing the default values and then recompiling the source code)
 
+ * to get the values to calibrate the accelerometers, you need to run a test function to output the sensor readings, and take the maximum and minimum readings at +/- 1 G of gravity, the top and bottom value are then put into the configuration
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * an angle offset can be specified in the configuration to compensate for a accelerometer that is not completely level (due to solder problems, bad circuit board mounting, etc), but it is probably better if the circuit board is mounted in such a way that the 4 corners of the board can be adjusted to adjust its tilt manually. I used spring washers for this, and adjust the height of each corner by adjusting the tension on each nut.
