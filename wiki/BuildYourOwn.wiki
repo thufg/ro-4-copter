@@ -4,4 +4,8 @@
 
 The frame consists of two 5" by 5" aluminum plates, and four arms made of 3/4" wide aluminum angle beams. These pieces are bolted together to form a X shape.
 
+Another 5" by 5" sheet of aluminum is hung under the bottom of the main body using extra long bolts, this sheet supports the battery and RC radio receiver.
+
+The motor base pieces are bolted to the end of each aluminum arm.
+
 The flight controller is mounted on top of the aluminum plates with a sheet of polycarbonate in between to prevent any electrical shorts. Use spring washers to mount the circuit board so that you can adjust it's tilt by adjusting the tension of the nuts.
