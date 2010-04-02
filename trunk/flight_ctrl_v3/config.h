@@ -21,7 +21,7 @@
 #define trig_factor_constant 4 // (F_CPU / timer_prescaler) / (adc_ref_voltage / (2 ^ adc_resolution) / volts_per_degree_per_sec * math_multi)
 
 #define ppm_highest_chan_default 6
-#define ppm_threshold 100
+#define ppm_threshold 50
 
 #include "default_values.h"
 

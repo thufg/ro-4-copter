@@ -57,10 +57,11 @@ void debug_report_vars(Calibration * x)
 	fprintf_P(&serstream, PSTR("52, uint8_t (%d), pitch_ppm_chan: %d\r\n"), (uint8_t)sizeof(uint8_t), x->pitch_ppm_chan);
 	fprintf_P(&serstream, PSTR("53, uint8_t (%d), roll_ppm_chan: %d\r\n"), (uint8_t)sizeof(uint8_t), x->roll_ppm_chan);
 	fprintf_P(&serstream, PSTR("54, uint8_t (%d), unlock_ppm_chan: %d\r\n"), (uint8_t)sizeof(uint8_t), x->unlock_ppm_chan);
-	fprintf_P(&serstream, PSTR("55, int32_t (%d), delta_time_const: %d\r\n"), (uint8_t)sizeof(int32_t), x->delta_time_const);
-	fprintf_P(&serstream, PSTR("56, int32_t (%d), trig_multi_const: %d\r\n"), (uint8_t)sizeof(int32_t), x->trig_multi_const);
-	fprintf_P(&serstream, PSTR("57, int32_t (%d), comp_filter_w: %d\r\n"), (uint8_t)sizeof(int32_t), x->comp_filter_w);
-	fprintf_P(&serstream, PSTR("58, uint32_t (%d), button_hold_down: %d\r\n"), (uint8_t)sizeof(uint32_t), x->button_hold_down);
+	fprintf_P(&serstream, PSTR("55, uint8_t (%d), gyro_miscalibrate_threshold: %d\r\n"), (uint8_t)sizeof(uint8_t), x->gyro_miscalibrate_threshold);
+	fprintf_P(&serstream, PSTR("56, int32_t (%d), delta_time_const: %d\r\n"), (uint8_t)sizeof(int32_t), x->delta_time_const);
+	fprintf_P(&serstream, PSTR("57, int32_t (%d), trig_multi_const: %d\r\n"), (uint8_t)sizeof(int32_t), x->trig_multi_const);
+	fprintf_P(&serstream, PSTR("58, int32_t (%d), comp_filter_w: %d\r\n"), (uint8_t)sizeof(int32_t), x->comp_filter_w);
+	fprintf_P(&serstream, PSTR("59, uint32_t (%d), button_hold_down: %d\r\n"), (uint8_t)sizeof(uint32_t), x->button_hold_down);
 }
 
 #endif

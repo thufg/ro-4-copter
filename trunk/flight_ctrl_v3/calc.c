@@ -108,7 +108,7 @@ volatile inline int32_t PID_mv(PID_data * pid, int32_t kp, int32_t ki, int32_t k
 		
 		if (ki != 0)
 		{
-			pid->err_sum = calc_constrain(pid->err_sum + err, INT32_MIN / 2, INT32_MAX / 2);
+			pid->err_sum = calc_constrain(pid->err_sum + err, INT64_MIN / 2, INT64_MAX / 2);
 			mv += pid->err_sum * ki;
 		}
 

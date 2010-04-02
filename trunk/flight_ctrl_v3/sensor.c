@@ -12,19 +12,13 @@
 
 #include "calc.h"
 
-#include <avr/pgmspace.h>
-#include "ser.h"
-static FILE serdebugstream = FDEV_SETUP_STREAM(ser_tx_1, NULL, _FDEV_SETUP_WRITE);
-
 static volatile int32_t adc_res_t[8];
 static volatile int32_t adc_res[8];
 static volatile int32_t adc_offset[8];
 static volatile uint8_t adc_chan;
 static volatile uint8_t adc_new_cycle;
 
-#ifdef use_ordered_sensors
 static uint8_t adc_chan_order[6];
-#endif
 
 ISR(ADC_vect)
 {
@@ -33,8 +27,9 @@ ISR(ADC_vect)
 	#else
 	adc_res_t[adc_chan] = ADC; // read
 	#endif
-	
+
 	adc_chan++; // next channel
+	
 	adc_chan %= 6; // overflow channel count
 	
 	#ifdef use_ordered_sensors
@@ -69,7 +64,6 @@ void adc_wait_stop()
 // initialize the sensor module and start the ADC
 void sens_init()
 {
-	#ifdef use_ordered_sensors
 	// set channel read order
 	adc_chan_order[0] = roll_accel_chan;
 	adc_chan_order[1] = roll_gyro_chan;
@@ -77,7 +71,6 @@ void sens_init()
 	adc_chan_order[3] = pitch_gyro_chan;
 	adc_chan_order[4] = vert_accel_chan;
 	adc_chan_order[5] = yaw_gyro_chan;
-	#endif
 	
 	// reset all values
 	for(uint8_t i = 0; i < 8; i++)

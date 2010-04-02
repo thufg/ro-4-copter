@@ -57,6 +57,7 @@ void calibration_default(Calibration * x)
 	x->pitch_ppm_chan = 2;
 	x->roll_ppm_chan = 3;
 	x->unlock_ppm_chan = 5;
+	x->gyro_miscalibrate_threshold = default_gyro_miscalibrate_threshold;
 	x->delta_time_const = default_delta_time_const;
 	x->trig_multi_const = default_trig_multi_const;
 	x->comp_filter_w = default_comp_filter_w;
@@ -234,15 +235,18 @@ void calibration_write(Calibration * x, int32_t addr, int32_t data)
 			x->unlock_ppm_chan = (uint8_t)data;
 			break;
 		case 55:
-			x->delta_time_const = (int32_t)data;
+			x->gyro_miscalibrate_threshold = (uint8_t)data;
 			break;
 		case 56:
-			x->trig_multi_const = (int32_t)data;
+			x->delta_time_const = (int32_t)data;
 			break;
 		case 57:
-			x->comp_filter_w = (int32_t)data;
+			x->trig_multi_const = (int32_t)data;
 			break;
 		case 58:
+			x->comp_filter_w = (int32_t)data;
+			break;
+		case 59:
 			x->button_hold_down = (uint32_t)data;
 			break;
 		default:
