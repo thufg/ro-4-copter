@@ -1,6 +1,6 @@
 #summary All about the firmware for the AVR based flight controller
 
-The source code for the flight controller's firmware is stored [http://code.google.com/p/ro-4-copter/source/browse/#svn/trunk/flight_ctrl_v3 here].
+The source code for the flight controller's firmware is stored [http://code.google.com/p/ro-4-copter/source/browse/#svn/trunk/ here] under flight_ctrl.
 
 == ATmega644P ==
 
