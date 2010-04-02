@@ -10,5 +10,7 @@ void hold_esc();
 void init();
 void loop();
 int main();
+void check_ppm_calibration();
+void check_sensor_calibration();
 
 #endif

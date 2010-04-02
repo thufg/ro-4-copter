@@ -221,6 +221,7 @@ ISR(USART1_RX_vect)
 
 #endif
 
+// print a number to serial port, because vprintf doesn't support 32 bit integers
 void ser_num(uint8_t p, int32_t x)
 {
 	if (x < 0)
@@ -234,7 +235,7 @@ void ser_num(uint8_t p, int32_t x)
 		return;
 	}
 	
-	int z = 0;
+	int z = 0; // leading zero flag
 	
 	for (int i = 15; i >= 0; i--)
 	{

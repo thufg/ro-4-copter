@@ -50,3 +50,7 @@ kp = 0.05
 expected max yaw error is 10000, perhaps a fitting offset would be 250us (5000 ticks) for this amount of error
 10000 * kp = 5000
 kp = 2
+
+for gyro only mode
+11.25/4.8 = 2.3
+2 * k = 10000

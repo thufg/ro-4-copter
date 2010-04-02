@@ -162,6 +162,63 @@ void freeze()
 	}
 }
 
+void check_ppm_calibration()
+{
+	for(uint8_t i = 0; i < 6; i++)
+	{
+		int32_t w = ppm_chan_read_raw(i);
+		if (w < ticks_500us * 3 - ticks_500us / 5 || w > ticks_500us * 3 + ticks_500us / 5)
+		{
+			LED2_off();
+			
+			while(1)
+			{
+				LED1_on();
+				_delay_ms(1000);
+				LED1_off();
+				_delay_ms(500);
+			}
+		}
+	}
+}
+
+void check_sensor_calibration()
+{
+	uint8_t accel_check = 1;
+	
+	if ((sens_offset(roll_accel_chan) > cal_data.roll_accel_bot + ((cal_data.roll_accel_top - cal_data.roll_accel_center) / 2)) ||
+		(sens_offset(roll_accel_chan) < cal_data.roll_accel_bot + ((cal_data.roll_accel_center - cal_data.roll_accel_bot) / 2)) ||
+		(sens_offset(pitch_accel_chan) > cal_data.pitch_accel_bot + ((cal_data.pitch_accel_top - cal_data.pitch_accel_center) / 2)) ||
+		(sens_offset(pitch_accel_chan) < cal_data.pitch_accel_bot + ((cal_data.pitch_accel_center - cal_data.pitch_accel_bot) / 2))
+		)
+	{
+		accel_check = 0;
+	}
+	
+	if ((sens_offset(yaw_gyro_chan) > cal_data.yaw_gyro_center + cal_data.gyro_miscalibrate_threshold) ||
+		(sens_offset(yaw_gyro_chan) < cal_data.yaw_gyro_center - cal_data.gyro_miscalibrate_threshold) ||
+		(sens_offset(roll_gyro_chan) > cal_data.roll_gyro_center + cal_data.gyro_miscalibrate_threshold) ||
+		(sens_offset(roll_gyro_chan) < cal_data.roll_gyro_center - cal_data.gyro_miscalibrate_threshold) ||
+		(sens_offset(pitch_gyro_chan) > cal_data.pitch_gyro_center + cal_data.gyro_miscalibrate_threshold) ||
+		(sens_offset(pitch_gyro_chan) < cal_data.pitch_gyro_center - cal_data.gyro_miscalibrate_threshold) ||
+		accel_check == 0
+	)
+	{
+		while(1)
+		{
+			LED2_off();
+			
+			while(1)
+			{
+				LED1_on();
+				_delay_ms(1000);
+				LED1_off();
+				_delay_ms(500);
+			}
+		}
+	}
+}
+
 int main()
 {
 	// test code goes here
@@ -208,6 +265,9 @@ int main()
 	
 	ppm_calibrate(50);
 	
+	// freeze if miscalibrated
+	check_ppm_calibration();
+	
 	// if switch is up, then wait for user to unlock, or else just arm the ESCs
 	if (switch_1_is_down() == 0)
 	{
@@ -235,6 +295,8 @@ int main()
 	while (ppm_is_new_data(0xFF) == 0);
 	
 	sens_calibrate(40);
+	
+	check_sensor_calibration();
 	
 	// variable initialization
 	
@@ -354,7 +416,7 @@ int main()
 			volatile static int32_t delta_time;
 			if (cal_data.delta_time_const != 0)
 			{
-				delta_time = cal_data.delta_time_const * adc_rounds_cnt(0xFF);
+				delta_time = cal_data.delta_time_const;// * adc_rounds_cnt(0xFF);
 			}
 			else
 			{
@@ -388,7 +450,7 @@ int main()
 			
 			// computer requested debug data
 			if (report_requested == 1)
-			{				
+			{
 				#ifdef use_asin
 				fprintf_P(&serdebugstream, PSTR("zero_G_val: "));
 				ser_num(1, zero_G_val);
@@ -469,8 +531,8 @@ int main()
 			// apply final throttle to all motors
 			volatile int32_t f_mot = cal_data.f_mot_bot + calc_multi_funct((throttle_cmd + yaw_mot - pitch_mot), cal_data.f_mot_scale, MATH_MULTIPLIER);
 			volatile int32_t b_mot = cal_data.b_mot_bot + calc_multi_funct((throttle_cmd + yaw_mot + pitch_mot), cal_data.b_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t l_mot = cal_data.l_mot_bot + calc_multi_funct((throttle_cmd - yaw_mot - roll_mot), cal_data.l_mot_scale, MATH_MULTIPLIER);
-			volatile int32_t r_mot = cal_data.r_mot_bot + calc_multi_funct((throttle_cmd - yaw_mot + roll_mot), cal_data.r_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t l_mot = cal_data.l_mot_bot + calc_multi_funct((throttle_cmd - yaw_mot - roll_mot),  cal_data.l_mot_scale, MATH_MULTIPLIER);
+			volatile int32_t r_mot = cal_data.r_mot_bot + calc_multi_funct((throttle_cmd - yaw_mot + roll_mot),  cal_data.r_mot_scale, MATH_MULTIPLIER);
 
 			esc_set_width(f_mot_chan, f_mot);
 			esc_set_width(b_mot_chan, b_mot);

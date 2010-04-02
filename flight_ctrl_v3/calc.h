@@ -19,7 +19,7 @@
 
 typedef struct PID_data_
 {
-	int32_t err_sum;
+	int64_t err_sum;
 	int32_t err_last;
 } PID_data;
 
