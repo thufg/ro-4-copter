@@ -10,3 +10,12 @@ The sensors are:
  * A [http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=MMA7260QT MMA7260]
 
 [http://ro-4-copter.googlecode.com/svn/trunk/doc/imu_drawing.png Here is a diagram describing the entire PCB]
+
+==Sensitivity Calculations==
+
+The ADC on the microcontroller has a resolution of 10 bits, meaning it can detect the difference between 1024 different voltage levels between 0V and the reference voltage (which is 3.3V in this circuit). The sensitivity of the ENC-03J gyros is 0.00067 volts per degree per second.
+
+3.3V divided by 1024 is about 0.0032V
+0.0032V divided by 0.00067V/deg/sec is 4.8 deg/sec . This means the ADC can only detect movement greater than (and in multiples of) 4.8 degrees per second. This is not enough sensitivity.
+
+In conclusion, avoid using this gyro unless you plan on using some sort of amplification.
