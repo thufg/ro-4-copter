@@ -1,7 +1,0 @@
-#summary Notes taken from the first few test flight
-
- * Make sure all the propellers spin level, the yaw introduced by misdirected air can't be counteracted easily by adjusting the difference in spin between the pitch and roll motor pairs.
-
- * Make sure the level of the circuit board on which the IMU is on can be finely adjusted for to compensate for any slight tilt, use spring washers for this.
-
- * A kill switch wire is added and plugged into the unused JTAG port, the operator has to pull a wire out to kill the motors, this is to prevent personal injury, the helicopter will likely crash but people won't be cut. The software has a function to go into an infinite loop that throttles down to zero when the radio operator presses a button.

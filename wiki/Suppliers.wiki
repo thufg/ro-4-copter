@@ -4,4 +4,3 @@
  * [http://hobbyking.com/ Hobby King] for motors, ESCs, batteries, connectors, and other misc RC related components
  * [http://tech-mp.com/ Tech MP] for counter-rotating propellers
  * [http://sparkfun.com/ SparkFun Electronics] for sensors, and electronic components
- * [http://www.walkera.com.hk/ Walkera] for IMUs (requires back-order)

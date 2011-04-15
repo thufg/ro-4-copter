@@ -1,11 +1,6 @@
 #summary Choosing an RC Radio
 
-The radio used with the first prototype is a [http://www.allelectronics.com/make-a-store/item/JS-6/6-CHANNEL-TRANSMITTER-AND-RECEIVER/-/1.html VEX transmitter + receiver kit]. This may be hard to find now, but any receiver with a PPM output should work with the flight controller.
-
-Here's some examples of radio systems that has a PPM output.
-
- * Placeholder
- * Placeholder
+==PPM==
 
 Here's a tech-note on PPM
 
@@ -19,5 +14,3 @@ Some more notes on PPM
  * [http://skymixer.engineering.free.fr/index.php?option=com_content&view=article&id=80:rc-receivers-hacked&catid=51:rc-receivers&Itemid=49 SkyMixer: RC Receivers Hacked]
  * [http://diydrones.com/profiles/blogs/705844:BlogPost:38393 How to hack the PPM signal from any receiver (Futaba) with Arduino]
  * [http://paparazzi.enac.fr/wiki/Other_Hardware Paparazzi RC Radio Page]
-
-If a PPM radio could not be found, another microcontroller could control the flight controller via the extension port.

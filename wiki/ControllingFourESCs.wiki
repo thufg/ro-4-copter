@@ -1,5 +1,0 @@
-#summary How a 74HC164 is used to control four ESCs
-
-The 74HC164 is a serial to parallel shift register. The ATmega644P resets this chip, then places a bit into the first bit of the shift register. The ATmega then uses its timer compare output of its timer 1 module to clock the shift register, thus moving the bit through each pin of the shift register chip, therefor pulsing each pin for a specific amount of time. This is how each ESC is commanded.
-
-Using timer 1 in this manner ensures 50 nanosecond resolution. Since the hardware output compare is used, the timing accuracy is not affected by the timing of the software.
