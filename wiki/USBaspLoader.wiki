@@ -1,0 +1,5 @@
+#summary Native USB bootloader for AVRs using V-USB
+
+USBaspLoader is a bootloader that mimics a [http://www.google.com/search?q=usbasp&btnI USBasp AVR programmer], visit its website to get the drivers you need for it.
+
+[http://www.google.com/search?q=usbasploader&btnI USBaspLoader material is found here]

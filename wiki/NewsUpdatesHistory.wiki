@@ -4,13 +4,13 @@
 
 Ro4Copter_AeroQuad code is derived from AeroQuad V2.3, which works with AeroQuad Configurator V2.7.1 and AeroQuad Configurator Mac V2.3.1
 
-Ro4Copter_MultiWiiCopter code is derived from MultiWiiCopter V1.7, which works with !MultiWiiConf V1.7
+Ro4Copter_MultiWiiCopter code is derived from MultiWiiCopter V1.7, which works with MultiWiiConf V1.7
 
-Using Arduino 0022, custom core code is based on Arduino 0022's core code
+Using Arduino 0022, custom core code is based on Arduino 0022's core code and Sanguino-0018r2_1_4's pin mapping
 
-V-USB version 20100715 is used to create the USBaspLoader bootloader
+V-USB version 20100715 is used to create the USBaspLoader bootloader, derived from USnooBie's bootloader version 20110116
 
-ATmegaBOOT version 20090131 is used to create the two STK500/Arduino compatible bootloaders
+ATmegaBOOT version 20090131 is used to create the two STK500/Arduino compatible bootloaders, derived from Sanguino-0018r2_1_4's bootloader
 
 =News=
 
