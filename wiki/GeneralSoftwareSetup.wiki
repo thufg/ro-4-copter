@@ -2,6 +2,8 @@
 
 =Software Setup Guide for Ro4Copter=
 
+You'll need Arduino installed first.
+
 =Special ATmega644PA Core=
 
 I'm using a modified Arduino core so that the Arduino sketches will compile for the ATmega644PA correctly, which obviously have different pin designations. Also some additional functionality has been added.

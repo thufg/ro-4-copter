@@ -52,7 +52,7 @@ These packages includes:
   * ATmegaBOOT based
    * source code
    * .hex binaries
-  * USBaspLoader based
+  * [USBaspLoader] based
    * source code
    * .hex binaries
  * !CadSoft EAGLE

@@ -4,9 +4,12 @@
 
 Note that in this list, all components are listed regardless of whether or not you need them.
 
-The ATmega644PA and 40 pin DIP chip socket, SparkFun breakout boards, XBee, Bluetooth Mate, and FTDI cables are not listed.
+SparkFun breakout boards, XBee, Bluetooth Mate, and FTDI cables are not listed.
+Quadcopter parts such as ESCs, RC receivers, battery, etc, are not listed
 
 ||Part||Other Attributes||Identifiers||Quantity Required||Example Product||
+||ATmega644PA||40 pin plastic DIP||IC1||1||Digikey: ATMEGA644PA-PU-ND||
+||40 pin DIP socket|| ||IC1||1||Digikey: A411-ND||
 ||4K7 ohm resistor||0805 or 0603 packaging, 1/16 W minimum||`R`1, `R`2, `R`9, `R`10||4||Digikey: P4.7KACT-ND||
 ||10K ohm resistor||0805 or 0603 packaging, 1/16 W minimum||`R`8, `R`11, `R`13||3||Digikey: P10KACT-ND||
 ||68R ohm resistor||0805 or 0603 packaging, 1/16 W minimum||`R`14, `R`15||2||Digikey: P68ACT-ND||

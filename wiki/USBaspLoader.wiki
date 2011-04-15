@@ -1,5 +1,9 @@
 #summary Native USB bootloader for AVRs using V-USB
 
+If you installed the components needed for the native USB connection, then you can use the USBaspLoader bootloader that I modified for Ro4Copter.
+
 USBaspLoader is a bootloader that mimics a [http://www.google.com/search?q=usbasp&btnI USBasp AVR programmer], visit its website to get the drivers you need for it.
 
 [http://www.google.com/search?q=usbasploader&btnI USBaspLoader material is found here]
+
+USBaspLoader is based on [http://obdev.at/products/vusb/index.html Objective Development's V-USB], which gives USB communication capabilities to AVR microcontrollers.

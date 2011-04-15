@@ -1,0 +1,18 @@
+#summary How to get help
+
+=How to get help=
+
+[http://aeroquad.com/forum.php Link to AeroQuad's Forum Community]. Since a major portion of AeroQuad's code is developed by various people around the world, it'll be great if you openly discussed any topic on a public forum (as opposed to asking just one person). I check the forum quite often.
+
+If it's a problem where you don't know what to do or how to do something that relates specifically to the electronics of the Ro4Copter PCB, then use the "Issues" tab above.
+
+If you think there's a problem where something works perfectly fine in the origial AeroQuad or MultiWiiCopter but doesn't work on Ro4Copter, then you should probably use the "Issues" tab above because I am supposed to be trying to make everything compatible, but you might want to use the forum instead because our conversation might be helpful to the community. Remember that I am only changing the parts of the software that helps make AeroQuad's code or MultiWiiCopter's code compatible with Ro4Copter's circuit. For example, I didn't write any of the sensor code, so if a particular sensor is misbehaving, you should probably try asking in the community forum, as the author of that code can help you better.
+
+If you are doing ANY sort of experimentation and would like to talk about it, then use the community forum because everybody can learn from what you are trying to do. Any experiment you do on Ro4Copter can probably be done on an Arduino, and vice-versa.
+
+If you are simply having problems using Arduino, AVR microcontrollers, or general electronics, then go to the [http://arduino.cc/forum/index.php Arduino forum] or a similar place for help.
+
+There are more communities out there:
+ * [http://diydrones.com DIY Drones], home of the !ArduCopter
+ * [http://rcgroups.com RC Groups], there's a special section for multicopters.
+ * [http://arduino.cc/forum/index.php Arduino forum]
