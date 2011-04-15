@@ -459,7 +459,7 @@ public:
 /******************************************************/
 /****************** Ro4Copter PCINT *******************/
 /******************************************************/
-#if defined(Ro4Copter) && !defined(R4C_OPTION_USE_PPM)
+#if defined(Ro4Copter) && defined(R4C_OPTION_USE_RC_PWM)
 volatile uint8_t *port_to_pcmask[] = {
   &PCMSK0,
   &PCMSK1,
@@ -716,7 +716,7 @@ public:
 /*********************************************/
 /*********** Ro4Copter PPM Input *************/
 /*********************************************/
-#if defined(Ro4Copter) && defined(R4C_OPTION_USE_PPM)
+#if defined(Ro4Copter) && defined(R4C_OPTION_USE_RC_PPM)
 #include <avr/interrupt.h>
 volatile uint16_t aq64ppm_chanPulseWidth[8] = {
   2400,2400,2400,2400,2400,2400,2400,2400};
@@ -748,7 +748,7 @@ private:
   int receiverPin[6];
 
 public:
-  Receiver_ArduCopter() :
+  Receiver_Ro4Copter_PPM() :
   Receiver(){
     // order the PPM channels here
     receiverPin[ROLL] = 0;

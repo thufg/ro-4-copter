@@ -60,12 +60,12 @@ extern "C"{
 
 #endif
  
-#define R4C_OPTION_USE_PWM_ESC
-//#define R4C_OPTION_USE_I2C_ESC
-#define R4C_OPTION_USE_BMA180_ACCEL
-//#define R4C_OPTION_USE_ADXL345_ACCEL
-#define R4C_OPTION_USE_RC_PWM
-//#define R4C_OPTION_USE_RC_PPM
+//#define R4C_OPTION_USE_PWM_ESC
+#define R4C_OPTION_USE_I2C_ESC
+//#define R4C_OPTION_USE_BMA180_ACCEL
+#define R4C_OPTION_USE_ADXL345_ACCEL
+//#define R4C_OPTION_USE_RC_PWM
+#define R4C_OPTION_USE_RC_PPM
 
 /****************************************************************************
  *********************** Define Flight Configuration ************************
