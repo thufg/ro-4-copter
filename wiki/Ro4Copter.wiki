@@ -1,4 +1,5 @@
 #summary Main introduction page
+#labels Featured
 
 =Ro4Copter=
 
