@@ -1,3 +1,5 @@
+#summary How Ro4Copter works with AeroQuad code
+
 =AeroQuad Derived Sketch=
 
 The sketch itself is a heavily modified version of AeroQuad Flight Software V2.4 , which requires the special Arduino core developed for the Ro4Copter PCB.

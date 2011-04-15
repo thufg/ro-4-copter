@@ -1,3 +1,5 @@
+#summary What to buy
+
 =Part List=
 
 Note that in this list, all components are listed regardless of whether or not you need them.

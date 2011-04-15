@@ -1,3 +1,5 @@
+#summary How Ro4Copter works with MultiWiiCopter code
+
 =MultiWiiCopter Derived Sketch=
 
 So I've taken a look at MultiWiiCopter, and I tried to make Ro4Copter compatible with it. An untested sample modification of MultiWiiCopter version 1.7 is included in the download above. Most features are supported, you should read through the code to see how it is configured differently. The matching GUI configurator utility should also be compatible.
