@@ -10,7 +10,7 @@ I've included TWI code that is more efficient than the "Wire" I2C library (the W
 
 `wiring.c` is modified so that timer0's overflow interrupt vector can be utilized to control servos without distrubing the functionality of the `millis()` function. My own timer0 servo control library called `SoftServo` is also incorporated into the core. An additional function called `millis_fast()` is also added and it is designed to be used from within interrupt routines.
 
-Install the core by copying the folder `Ro4CopterCore` into your Arduino installation such that you create `\arduino-0022\hardware\arduino\cores\Ro4Copter_Core\`.
+Install the core by copying the folder `Ro4Copter_Core` into your Arduino installation such that you create `\arduino-0022\hardware\arduino\cores\Ro4Copter_Core\`.
 
 You will also need to modify `boards.txt` to include the entry
 
@@ -29,7 +29,7 @@ Ro4Copter.bootloader.unlock_bits=0x3F
 Ro4Copter.bootloader.lock_bits=0x0F
 Ro4Copter.build.mcu=atmega644p
 Ro4Copter.build.f_cpu=16000000L
-Ro4Copter.build.core=Ro4CopterCore
+Ro4Copter.build.core=Ro4Copter_Core
 
 }}}
 
@@ -39,7 +39,7 @@ Note: settings in `boards.txt` will only take effect when you close and re-open 
 
 You'll need to change the `bootloader.file` and `upload.protocol` in `boards.txt' according to the bootloader you want to use.
 
-Several special bootloaders are developed, copy the folder `Ro4CopterBoot` as `\arduino-0022\hardware\arduino\bootloaders\Ro4Copter_Boot\`
+Several special bootloaders are developed, copy the folder `Ro4Copter_Boot` as `\arduino-0022\hardware\arduino\bootloaders\Ro4Copter_Boot\`
 
 `Ro4Copter_Boot_arduino.hex` requires the stk500 protocol, and requires you to use a FTDI cable. Use it as if the Ro4Copter is an Arduino without auto-reset. This bootloader has a timeout like the regular Arduino bootloader. It's been modified from the Sanguino bootloader.
 
