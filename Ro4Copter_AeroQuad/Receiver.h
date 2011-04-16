@@ -18,10 +18,6 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
-Edited for Ro4Copter by Frank26080115 on 20100412
-*/
-
 class  Receiver {
 public:
   int receiverData[LASTCHANNEL];
@@ -456,162 +452,6 @@ public:
 };
 #endif
 
-/******************************************************/
-/****************** Ro4Copter PCINT *******************/
-/******************************************************/
-#if defined(Ro4Copter) && defined(R4C_OPTION_USE_RC_PWM)
-volatile uint8_t *port_to_pcmask[] = {
-  &PCMSK0,
-  &PCMSK1,
-  &PCMSK2,
-  &PCMSK3
-};
-volatile static uint8_t PCintLast[1];
-// Channel data
-typedef struct {
-  byte edge;
-  unsigned long riseTime;
-  unsigned long fallTime;
-  unsigned int lastGoodWidth;
-} tPinTimingData;
-volatile static tPinTimingData pinData[LASTCHANNEL];
-
-SIGNAL(PCINT2_vect) {
-  uint8_t bit;
-  uint8_t curr;
-  uint8_t mask;
-  uint8_t pin;
-  uint32_t currentTime;
-  uint32_t time;
-
-  curr = PINC;
-  mask = curr ^ PCintLast[0];
-  PCintLast[0] = curr;
-
-  // mask is pins that have changed. screen out non pcint pins.
-  if ((mask &= PCMSK2) == 0) {
-    return;
-  }
-
-  currentTime = micros();
-
-  // mask is pcint pins that have changed.
-  for (uint8_t i=0; i < 8; i++) {
-    bit = 0x01 << i;
-    if (bit & mask) {
-      pin = i;
-      // for each pin changed, record time of change
-      if (bit & PCintLast[0]) {
-        time = currentTime - pinData[pin].fallTime;
-        pinData[pin].riseTime = currentTime;
-        if ((time >= MINOFFWIDTH) && (time <= MAXOFFWIDTH))
-          pinData[pin].edge = RISING_EDGE;
-        else
-          pinData[pin].edge = FALLING_EDGE; // invalid rising edge detected
-      }
-      else {
-        time = currentTime - pinData[pin].riseTime;
-        pinData[pin].fallTime = currentTime;
-        if ((time >= MINONWIDTH) && (time <= MAXONWIDTH) && (pinData[pin].edge == RISING_EDGE)) {
-          pinData[pin].lastGoodWidth = time;
-          pinData[pin].edge = FALLING_EDGE;
-        }
-      }
-    }
-  }
-}
-
-static byte receiverPin[6] = {4, 5, 3, 1, 6, 7}; // bit number of PORTC used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
-
-class Receiver_Ro4Copter : public Receiver {
-public:
-  void initialize() {
-    this->_initialize(); // load in calibration xmitFactor from EEPROM
-    DDRC = 0;
-    PORTC = 0;
-    PCMSK2 = B11111100;
-    PCICR |= 0x1 << 2;
-
-  for (byte channel = ROLL; channel < LASTCHANNEL; channel++)
-      pinData[receiverPin[channel]].edge = FALLING_EDGE;
-  }
-
-  // Calculate PWM pulse width of receiver data
-  // If invalid PWM measured, use last known good time
-  void read(void) {
-    for(byte channel = ROLL; channel < LASTCHANNEL; channel++) {
-      byte pin = receiverPin[channel];
-      uint8_t oldSREG = SREG;
-      cli();
-      // Get receiver value read by pin change interrupt handler
-      uint16_t lastGoodWidth = pinData[pin].lastGoodWidth;
-      SREG = oldSREG;
-
-      // Apply transmitter calibration adjustment
-      receiverData[channel] = (mTransmitter[channel] * lastGoodWidth) + bTransmitter[channel];
-      // Smooth the flight control transmitter inputs
-      transmitterCommandSmooth[channel] = filterSmooth(receiverData[channel], transmitterCommandSmooth[channel], transmitterSmooth[channel]);
-    }
-
-    // Reduce transmitter commands using xmitFactor and center around 1500
-    for (byte channel = ROLL; channel < THROTTLE; channel++)
-      transmitterCommand[channel] = ((transmitterCommandSmooth[channel] - transmitterZero[channel]) * xmitFactor) + transmitterZero[channel];
-    // No xmitFactor reduction applied for throttle, mode and AUX
-    for (byte channel = THROTTLE; channel < LASTCHANNEL; channel++)
-      transmitterCommand[channel] = transmitterCommandSmooth[channel];
-  }
-};
-
-class Receiver_Ro4Copter_Fake :
-public Receiver {
-private:
-
-public:
-  Receiver_Ro4Copter_Fake() :
-  Receiver(){
-  }
-
-  void initialize() {
-    this->_initialize(); // load in calibration xmitFactor from EEPROM
-    DDRC = 0;
-    PORTC = 0;
-    PCMSK2 = B11111100;
-    PCICR |= 0x1 << 2;
-  }
-
-  // Calculate PWM pulse width of receiver data
-  // If invalid PWM measured, use last known good time
-  void read(void) {
-    uint16_t data[6];
-    uint8_t oldSREG;
-
-    oldSREG = SREG;
-    cli();
-    // Buffer receiver values read from pin change interrupt handler
-    for (byte channel = ROLL; channel < LASTCHANNEL; channel++)
-      data[channel] = 1500;
-    SREG = oldSREG;
-
-    for(byte channel = ROLL; channel < LASTCHANNEL; channel++) {
-      //currentTime = micros();
-      // Apply transmitter calibration adjustment
-      receiverData[channel] = (mTransmitter[channel] * data[channel]) + bTransmitter[channel];
-      // Smooth the flight control transmitter inputs
-      transmitterCommandSmooth[channel] = filterSmooth(receiverData[channel], transmitterCommandSmooth[channel], transmitterSmooth[channel]);
-      //transmitterCommandSmooth[channel] = transmitterFilter[channel].filter(receiverData[channel]);
-      //previousTime = currentTime;
-    }
-
-    // Reduce transmitter commands using xmitFactor and center around 1500
-    for (byte channel = ROLL; channel < THROTTLE; channel++)
-      transmitterCommand[channel] = ((transmitterCommandSmooth[channel] - transmitterZero[channel]) * xmitFactor) + transmitterZero[channel];
-    // No xmitFactor reduction applied for throttle, mode and AUX
-    for (byte channel = THROTTLE; channel < LASTCHANNEL; channel++)
-      transmitterCommand[channel] = transmitterCommandSmooth[channel];
-  }
-};
-#endif
-
 /*********************************************/
 /********** ArduCopter PPM Input *************/
 /*********************************************/
@@ -658,7 +498,7 @@ ISR(TIMER4_CAPT_vect)//interrupt.
   }
   //Counter++;
 }
-
+//#endif
 class Receiver_ArduCopter : public Receiver {
 private:
   int receiverPin[6];
@@ -698,82 +538,6 @@ public:
       //currentTime = micros();
       // Apply transmitter calibration adjustment
       receiverData[channel] = (mTransmitter[channel] * ((PWM_RAW[receiverPin[channel]]+600)/2)) + bTransmitter[channel];
-      // Smooth the flight control transmitter inputs
-      transmitterCommandSmooth[channel] = filterSmooth(receiverData[channel], transmitterCommandSmooth[channel], transmitterSmooth[channel]);
-      //previousTime = currentTime;
-    }
-
-    // Reduce transmitter commands using xmitFactor and center around 1500
-    for (byte channel = ROLL; channel < THROTTLE; channel++)
-      transmitterCommand[channel] = ((transmitterCommandSmooth[channel] - transmitterZero[channel]) * xmitFactor) + transmitterZero[channel];
-    // No xmitFactor reduction applied for throttle, mode and
-    for (byte channel = THROTTLE; channel < LASTCHANNEL; channel++)
-      transmitterCommand[channel] = transmitterCommandSmooth[channel];
-  }
-};
-#endif
-
-/*********************************************/
-/*********** Ro4Copter PPM Input *************/
-/*********************************************/
-#if defined(Ro4Copter) && defined(R4C_OPTION_USE_RC_PPM)
-#include <avr/interrupt.h>
-volatile uint16_t aq64ppm_chanPulseWidth[8] = {
-  2400,2400,2400,2400,2400,2400,2400,2400};
-
-/****************************************************
- * Interrupt Vector
- ****************************************************/
-ISR(PCINT2_vect)
-{
-  if (PINC & (1<<2) == 0) return; // ignore falling edge
-  
-  // code borrowed from MultiWiiCopter V1.7
-  uint16_t now, diff;
-  static uint16_t last = 0;
-  static uint8_t chan = 0;
-
-  now = micros_fast();
-  diff = now - last;
-  last = now;
-  if(diff>3000) chan = 0; // extra long pulse indicates first channel
-  else {
-    if(900<diff && diff<2200 && chan<8 ) aq64ppm_chanPulseWidth[chan] = diff; // record if in range
-    chan++;
-  }
-}
-
-class Receiver_Ro4Copter_PPM : public Receiver {
-private:
-  int receiverPin[6];
-
-public:
-  Receiver_Ro4Copter_PPM() :
-  Receiver(){
-    // order the PPM channels here
-    receiverPin[ROLL] = 0;
-    receiverPin[PITCH] = 1;
-    receiverPin[YAW] = 3;
-    receiverPin[THROTTLE] = 2;
-    receiverPin[MODE] = 4;
-    receiverPin[AUX] = 5;
-  }
-
-  void initialize(void) {
-    this->_initialize(); // load in calibration and xmitFactor from EEPROM
-
-    // pin change interrupt enabled only for this one pin
-    pinMode(18, INPUT);
-    PCMSK2 |= (1<<2);
-    PCICR |= (1<<2);
-    sei();
-  }
-
-  void read(void) {
-    for(byte channel = ROLL; channel < LASTCHANNEL; channel++) {
-      //currentTime = micros();
-      // Apply transmitter calibration adjustment
-      receiverData[channel] = (mTransmitter[channel] * ((aq64ppm_chanPulseWidth[receiverPin[channel]]+600)/2)) + bTransmitter[channel];
       // Smooth the flight control transmitter inputs
       transmitterCommandSmooth[channel] = filterSmooth(receiverData[channel], transmitterCommandSmooth[channel], transmitterSmooth[channel]);
       //previousTime = currentTime;

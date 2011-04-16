@@ -162,16 +162,9 @@ void updateControls() {
 
   for(byte j=0;j<2;j++) {
     sendByteI2C(0x52, 0x00);
-    
-    // Edited by Frank26080115 for Ro4Copter on 20110412
-    #ifndef Ro4Copter
     Wire.requestFrom(0x52,6);
     for(byte i = 0; i < 6; i++) 
       buffer[i] = Wire.receive();
-    #else
-    twi_readFrom(0x52, buffer, 6);
-    #endif
-      
     if (buffer[5] & 0x02) { //If WiiMP
       NWMP_gyro[0]= (((buffer[4]>>2)<<8) +  buffer[1])/16;  //hji
       NWMP_gyro[1]= (((buffer[5]>>2)<<8) +  buffer[2])/16;  //hji

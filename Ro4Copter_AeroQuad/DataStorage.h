@@ -270,8 +270,7 @@ void writeEEPROM(void){
   writeFloat(minAcro, MINACRO_ADR);
   writeFloat(accel.getOneG(), ACCEL1G_ADR);
     
-  /*
-  #ifdef Camera
+  /*#ifdef Camera
   writeFloat(mCameraPitch, MCAMERAPITCH_ADR);
   writeFloat(mCameraRoll, MCAMERAROLL_ADR);
   writeFloat(mCameraYaw, MCAMERAYAW_ADR);
@@ -284,8 +283,7 @@ void writeEEPROM(void){
   writeFloat(servoMaxPitch, SERVOMAXPITCH_ADR);
   writeFloat(servoMaxRoll, SERVOMAXROLL_ADR);
   writeFloat(servoMaxYaw, SERVOMAXYAW_ADR);
-  #endif
-  //*/
+  #endif*/
   
   sei(); // Restart interrupts
 }

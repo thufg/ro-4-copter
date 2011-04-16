@@ -155,23 +155,13 @@ public:
     float tmp;
     
     sendByteI2C(compassAddress, 0x03);
-    
-    /*
-    Edited for Ro4Copter by Frank26080115 on 20100412
-    */
-    #ifndef Ro4Copter
     Wire.requestFrom(compassAddress, 6);
+
     measuredMagX =  ((Wire.receive() << 8) | Wire.receive()) * magCalibration[XAXIS];
     measuredMagY = -((Wire.receive() << 8) | Wire.receive()) * magCalibration[YAXIS];
     measuredMagZ = -((Wire.receive() << 8) | Wire.receive()) * magCalibration[ZAXIS];
+
     Wire.endTransmission();
-    #else
-    byte bArr[6];
-    twi_readFrom(compassAddress, bArr, 6);
-    measuredMagX =  ((bArr[0] << 8) | bArr[1]) * magCalibration[XAXIS];
-    measuredMagY = -((bArr[2] << 8) | bArr[3]) * magCalibration[YAXIS];
-    measuredMagZ = -((bArr[4]<< 8) | bArr[5]) * magCalibration[ZAXIS];
-    #endif
 
     cosRoll =  cos(roll);
     sinRoll =  sin(roll);

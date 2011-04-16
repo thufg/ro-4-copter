@@ -20,10 +20,6 @@
 
 // Written by Honk: http://aeroquad.com/showthread.php?1369-The-big-enhancement-addition-to-2.0-code&p=13282#post13282
 
-/*
-Edited for Ro4Copter by Frank26080115 on 20100412
-*/
-
 // *************************************************************************
 // ************************** Battery Monitor ******************************
 // *************************************************************************
@@ -183,8 +179,6 @@ class BatteryMonitor_AeroQuad : public BatteryMonitor {
 private:
   #if defined (__AVR_ATmega328P__)
     #define BUZZERPIN 12
-  #elif defined (Ro4Copter)
-    #define BUZZERPIN 2
   #else
     #define BUZZERPIN 49
   #endif
@@ -208,12 +202,8 @@ public:
     diode = 0.9; // measured with DMM
 #endif    
     analogReference(DEFAULT);
-
-#ifndef Ro4Copter
     pinMode(BUZZERPIN, OUTPUT); // connect a 12V buzzer to buzzer pin
     digitalWrite(BUZZERPIN, LOW);
-#endif
-
     previousBatteryTime = millis();
     state = LOW;
     firstAlarm = OFF;
@@ -222,9 +212,7 @@ public:
   void lowBatteryEvent(byte level) {
     long currentBatteryTime = millis() - previousBatteryTime;
     if (level == OK) {
-#ifndef Ro4Copter
       digitalWrite(BUZZERPIN, LOW);
-#endif
       autoDescent = 0;
     }
     if (level == WARNING) {
@@ -234,29 +222,19 @@ public:
       if (currentBatteryTime > 1100) {
         //autoDescent = 50;
         digitalWrite(LED3PIN, HIGH);
-
-#ifndef Ro4Copter
         digitalWrite(BUZZERPIN, HIGH);
-#endif
       }
       if (currentBatteryTime > 1200) {
         previousBatteryTime = millis();
         //autoDescent = 0;
         digitalWrite(LED3PIN, LOW);
-
-#ifndef Ro4Copter
         digitalWrite(BUZZERPIN, LOW);
-#endif
       }
     }
     if (level == ALARM) {
       if (firstAlarm == OFF) autoDescent = 0; // intialize autoDescent to zero if first time in ALARM state
       firstAlarm = ON;
-
-#ifndef Ro4Copter
       digitalWrite(BUZZERPIN, HIGH); // enable buzzer
-#endif
-
       digitalWrite(LED3PIN, HIGH);
       if ((currentBatteryTime > 500) && (throttle > 1400)) {
         autoDescent -= 1; // auto descend quad
