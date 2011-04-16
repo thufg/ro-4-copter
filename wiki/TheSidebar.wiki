@@ -1,18 +1,14 @@
 [Ro4Copter Introduction]
-
 Hardware
  * [PCBAssemblyAndWalkthrough PCB Assembly and Walkthrough]
   * [PartsList Parts List]
  * [ConnectionSummary Connection Summary]
  * [JumperConfigSummary Jumper Configurations Summary]
- 
 Software
  * [GeneralSoftwareSetup General Software Setup]
  * [AeroQuadDerivedCodeSetup AeroQuad Derived Code Setup]
  * [MultiWiiCopterDerivedCodeSetup MultiWiiCopter Derived Code Setup]
- 
 [StartersGuide Starter's Guide]
-
 Other Stuff
 
  * [NewsUpdatesHistory News/Updates/History]
