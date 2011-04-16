@@ -43,6 +43,7 @@ Everything else (ESCs, wires, battery, etc) you should mount using light weight 
 Links that might interest you
  * [http://www.google.com/search?q=site:aeroquad.com+wiki+Frame+FAQ&btnI AeroQuad Wiki: Frame FAQ]
  * [http://www.google.com/search?q=site:aeroquad.com+wiki+Frame+Materials&btnI AeroQuad Wiki: Frame Materials]
+ * [http://www.google.com/search?q=site:multiwiicopter.comA+design+guide+How+to+build+a+MultiCopter&btnI MultiWiiCopter: A design guide - How to build a MultiCopter]
 
 ==Four is the Magic Number==
 
@@ -59,7 +60,7 @@ First, just do some quick research on the Internet to see what motors are popula
 
 You need two pairs (thus 4 total) of counter-rotating propellers. You need them to be counter-rotating pairs because if they all spun in the same direction, you would not be able to control rotation about the yaw (vertical) axis. Read the [http://en.wikipedia.org/wiki/Quadcopter Wikipedia article about quadcopters] to understand.
 
-I recommend you find the EPP1045, which is 10 inches in diameter. You can use a smaller propeller for a lighter design, or a larger one for a heavier design. Obviously you'll need more power with heavier designs and larger propellers.
+I have used the EPP1045 before, which is 10 inches in diameter. You can use a smaller propeller for a lighter design, or a larger one for a heavier design. Obviously you'll need more power with heavier designs and larger propellers.
 
 Make sure that the propellers will fit on the shaft of the motors somehow. You need to find various adapters or "prop-savers" to do this. The propellers I use have a 3 mm diameter hole, and my motors have a 3 mm diameter shaft, and I use a 3 mm prop-saver to hold them in place.
 
@@ -76,6 +77,8 @@ If the motor is not spinning in the right direction, simply swap the connection 
 ===Orientation===
 
 This is known in AeroQuad code as "plus configuration". Note that the PCB has an arrow that indicates which corner points forward. Also take note of which propeller should spin in which direction.
+
+<img src="http://frank.circleofcurrent.com/junk/aq64_img/propellerdirections.png" />
 
 ==Remote Control==
 
@@ -115,6 +118,8 @@ You're going to need a serial connection, so get a USB-to-serial cable such as t
 You'll probably need an AVR programmer to load the firmware to the ATmega644PA.
 
 ==Generalized Wiring Diagram==
+
+<img src="http://frank.circleofcurrent.com/junk/aq64_img/generalwiringdiagram.png" />
 
 ==Software Setup==
 

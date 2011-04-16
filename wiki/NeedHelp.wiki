@@ -12,6 +12,8 @@ If you are doing ANY sort of experimentation and would like to talk about it, th
 
 If you are simply having problems using Arduino, AVR microcontrollers, or general electronics, then go to the [http://arduino.cc/forum/index.php Arduino forum] or a similar place for help.
 
+If your problem relates to RC equipment, I'll have no idea how to help, I just know where to plug stuff in and how to code the source code that reads in pulses, so go on the forums for tech support related to RC equipment.
+
 There are more communities out there:
  * [http://diydrones.com DIY Drones], home of the !ArduCopter
  * [http://rcgroups.com RC Groups], there's a special section for multicopters.
