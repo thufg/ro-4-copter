@@ -1,4 +1,5 @@
 #summary Guide for starters, the most basic setup
+#sidebar TheSidebar
 
 =Starters Guide=
 

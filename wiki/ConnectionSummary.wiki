@@ -1,4 +1,5 @@
 #summary Where what is connected and how, includes pin assignments
+#sidebar TheSidebar
 
 =Pin Assignments=
 

@@ -1,4 +1,5 @@
 #summary Native USB bootloader for AVRs using V-USB
+#sidebar TheSidebar
 
 If you installed the components needed for the native USB connection, then you can use the USBaspLoader bootloader that I modified for Ro4Copter.
 

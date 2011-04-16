@@ -1,4 +1,5 @@
 #summary How Ro4Copter works with MultiWiiCopter code
+#sidebar TheSidebar
 
 =MultiWiiCopter Derived Sketch=
 

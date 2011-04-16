@@ -1,4 +1,5 @@
 #summary Installing the custom Arduino core and bootloaders
+#sidebar TheSidebar
 
 =Software Setup Guide for Ro4Copter=
 

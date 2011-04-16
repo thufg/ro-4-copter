@@ -1,4 +1,5 @@
 #summary Sources for parts used
+#sidebar TheSidebar
 
  * [http://digikey.ca/ Digi-Key] for electronic components, and connectors
  * [http://hobbyking.com/ Hobby King] for motors, ESCs, batteries, connectors, and other misc RC related components

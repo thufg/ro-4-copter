@@ -1,4 +1,5 @@
 #summary A quick look at what each jumper does
+#sidebar TheSidebar
 
 =Jumper Configuration Summary=
 

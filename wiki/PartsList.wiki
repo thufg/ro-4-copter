@@ -1,4 +1,5 @@
 #summary What to buy
+#sidebar TheSidebar
 
 =Part List=
 
