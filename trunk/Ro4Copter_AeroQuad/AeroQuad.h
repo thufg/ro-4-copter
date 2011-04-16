@@ -18,12 +18,6 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>. 
 */
 
-/*
-
-Edited for Ro4Copter by Frank26080115 on 20100412
-
-*/
-
 #include <stdlib.h>
 #include <math.h>
 #include "WProgram.h"
@@ -32,16 +26,13 @@ Edited for Ro4Copter by Frank26080115 on 20100412
 // Flight Software Version
 #define VERSION 2.4
 
-#define BAUD 115200
-//#define BAUD 111111 // use this to be compatible with USB and XBee connections
+//#define BAUD 115200
+#define BAUD 111111 // use this to be compatible with USB and XBee connections
 //#define BAUD 57600
-
+#define LEDPIN 13
 #define ON 1
 #define OFF 0
 
-#ifndef Ro4Copter
-
-#define LEDPIN 13
 #if defined(APM_OP_CHR6DM) || defined(ArduCopter) 
   #define LED_Red 35
   #define LED_Yellow 36
@@ -60,14 +51,6 @@ Edited for Ro4Copter by Frank26080115 on 20100412
   #define LED2PIN 12
   #define LED3PIN 12
 #endif
-
-#else // Ro4Copter
-
-#define LEDPIN 0
-#define LED2PIN 1
-#define LED3PIN 2
-
-#endif // Ro4Copter
 
 // Basic axis definitions
 #define ROLL 0
@@ -301,14 +284,6 @@ unsigned long fastTelemetryTime = 0;
   #define SERIAL_READ       Serial3.read
   #define SERIAL_FLUSH      Serial3.flush
   #define SERIAL_BEGIN      Serial3.begin
-#elif defined WirelessTelemetry && defined(Ro4Copter)
-  #define SERIAL_BAUD       115200
-  #define SERIAL_PRINT      Serial1.print
-  #define SERIAL_PRINTLN    Serial1.println
-  #define SERIAL_AVAILABLE  Serial1.available
-  #define SERIAL_READ       Serial1.read
-  #define SERIAL_FLUSH      Serial1.flush
-  #define SERIAL_BEGIN      Serial1.begin
 #else
   #define SERIAL_BAUD       115200
   #define SERIAL_PRINT      Serial.print

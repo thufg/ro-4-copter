@@ -22,8 +22,6 @@
   $Id$
 */
 
-// modified for Ro4Copter by Frank26080115 on 20110412
-
 #include "wiring_private.h"
 
 // the prescaler is set so that timer0 ticks every 64 clock cycles, and the
@@ -43,9 +41,6 @@ volatile unsigned long timer0_overflow_count = 0;
 volatile unsigned long timer0_millis = 0;
 static unsigned char timer0_fract = 0;
 
-void timer0_overflow_event_placeholder(){} // do nothing
-void (*timer0_overflow_event)(void) = &timer0_overflow_event_placeholder;
-
 SIGNAL(TIMER0_OVF_vect)
 {
 	// copy these to local variables so they can be stored in registers
@@ -63,11 +58,7 @@ SIGNAL(TIMER0_OVF_vect)
 	timer0_fract = f;
 	timer0_millis = m;
 	timer0_overflow_count++;
-	
-	timer0_overflow_event();
 }
-
-inline void attachTimer0OverflowEvent(void (*eventFunct)(void)) { timer0_overflow_event = eventFunct; }
 
 unsigned long millis()
 {
@@ -107,31 +98,6 @@ unsigned long micros() {
 #endif
 
 	SREG = oldSREG;
-	
-	return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
-}
-
-// for use inside interrupt routines
-inline unsigned long micros_fast() {
-	unsigned long m;
-	uint8_t t;
-	
-	m = timer0_overflow_count;
-#if defined(TCNT0)
-	t = TCNT0;
-#elif defined(TCNT0L)
-	t = TCNT0L;
-#else
-	#error TIMER 0 not defined
-#endif
-  
-#ifdef TIFR0
-	if ((TIFR0 & _BV(TOV0)) && (t < 255))
-		m++;
-#else
-	if ((TIFR & _BV(TOV0)) && (t < 255))
-		m++;
-#endif
 	
 	return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
 }

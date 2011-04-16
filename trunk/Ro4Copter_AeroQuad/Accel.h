@@ -18,11 +18,6 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>. 
 */
 
-/*
-Edited for Ro4Copter by Frank26080115 on 20100412
-*/
-
-
 class Accel {
 public:
   float accelScaleFactor;
@@ -184,7 +179,7 @@ public:
 /******************************************************/
 /********* AeroQuad Mega v2 Accelerometer *************/
 /******************************************************/
-#if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || (defined(Ro4Copter) && defined(R4C_OPTION_USE_BMA180_ACCEL))
+#if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
 class Accel_AeroQuadMega_v2 : public Accel {
 private:
   int accelAddress;
@@ -241,7 +236,6 @@ public:
   void measure(void) {
     //int rawData[3];
 
-    #ifndef Ro4Copter
     Wire.beginTransmission(accelAddress);
     Wire.send(0x02);
     Wire.endTransmission();
@@ -254,21 +248,6 @@ public:
       //accelData[axis] = computeFirstOrder(accelADC[axis] * accelScaleFactor, &firstOrder[axis]);
       accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
     }
-    #else
-    byte bArr[6];
-    bArr[0] = 0x02;
-    twi_writeTo(accelAddress, bArr, 1, 1);
-    twi_readFrom(accelAddress, bArr, 6);
-    for (byte axis = XAXIS, bArrIdx = 0; axis < LASTAXIS; axis++, bArrIdx += 2) {
-      if (axis == XAXIS)
-        accelADC[axis] = ((bArr[bArrIdx]|(bArr[bArrIdx+1] << 8)) >> 2) - accelZero[axis];
-      else
-        accelADC[axis] = accelZero[axis] - ((bArr[bArrIdx]|(bArr[bArrIdx+1] << 8)) >> 2);
-      //accelData[axis] = computeFirstOrder(accelADC[axis] * accelScaleFactor, &firstOrder[axis]);
-      accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
-    }
-    #endif
-    
   }
 
   const int getFlightData(byte axis) {
@@ -309,7 +288,7 @@ public:
 /******************************************************/
 /********* AeroQuad Mini v1 Accelerometer *************/
 /******************************************************/
-#if defined(AeroQuad_Mini) || (defined(Ro4Copter) && defined(R4C_OPTION_USE_ADXL345_ACCEL))
+#if defined(AeroQuad_Mini)
 class Accel_AeroQuadMini : public Accel {
 private:
   int accelAddress;
@@ -345,8 +324,6 @@ public:
   void measure(void) {
 
     sendByteI2C(accelAddress, 0x32);
-    
-    #ifndef Ro4Copter
     Wire.requestFrom(accelAddress, 6);
     for (byte axis = XAXIS; axis < LASTAXIS; axis++) {
       if (axis == XAXIS)
@@ -356,18 +333,6 @@ public:
       //accelData[axis] = computeFirstOrder(accelADC[axis] * accelScaleFactor, &firstOrder[axis]);
       accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
     }
-    #else
-    byte bArr[6];
-    twi_readFrom(accelAddress, bArr, 6);
-    for (byte axis = XAXIS, bArrIdx = 0; axis < LASTAXIS; axis++, bArrIdx += 2) {
-      if (axis == XAXIS)
-        accelADC[axis] = ((bArr[bArrIdx]|(bArr[bArrIdx+1] << 8)) >> 2) - accelZero[axis];
-      else
-        accelADC[axis] = accelZero[axis] - ((bArr[bArrIdx]|(bArr[bArrIdx+1] << 8)));
-      //accelData[axis] = computeFirstOrder(accelADC[axis] * accelScaleFactor, &firstOrder[axis]);
-      accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
-    }
-    #endif
   }
 
   const int getFlightData(byte axis) {
