@@ -6,6 +6,11 @@
 /*                                                        */
 /* ATmegaBOOT.c                                           */
 /*                                                        */
+/*                                                        */
+/*                                                        */
+/*                                                        */
+/* 20110412: Changed by Frank26080115 for Ro4Copter       */
+/*                                                        */
 /* 20090131: Added 324P support from Alex Leone           */
 /*           Marius Kintel                                */
 /* 20080915: applied ADABoot mods for Sanguino 644P       */
@@ -84,7 +89,8 @@
 
 /* set the UART baud rate */
 /* 20080711: hack by Zach Hoeken */
-#define BAUD_RATE   38400
+/* 20110412: changed by Frank26080115 for Ro4Copter */
+#define BAUD_RATE   76800
 
 /* SW_MAJOR and MINOR needs to be updated from time to time to avoid warning message from AVR Studio */
 /* never allow AVR Studio to do an update !!!! */
@@ -149,7 +155,38 @@ uint8_t buff[256];
 uint8_t error_count = 0;
 uint8_t sreg;
 
-void (*app_start)(void) = 0x0000;
+#ifndef AQ64_BOOT_BTN
+void (*app_start_depends)(void) = 0x0000;
+void (*app_start_always)(void) = 0x0000;
+#else
+inline void app_start_depends(){} // blank function, never start sketch
+void (*app_start_always)(void) = 0x0000;
+#endif
+
+//#if !defined(SELECTED_USART_NUM)
+#define SELECTED_USART_NUM 0
+//#endif
+
+#define USART_REG_CAT3(a, b, c) a ## b ## c
+#define USART_REG_CAT3_EXT(a, b, c) USART_REG_CAT3(a, b, c)
+#define USART_REG_CAT2(a, b) a ## b
+#define USART_REG_CAT2_EXT(a, b) USART_REG_CAT2(a, b)
+
+#define UBRRxL USART_REG_CAT3_EXT(UBRR, SELECTED_USART_NUM, L)
+#define UBRRxH USART_REG_CAT3_EXT(UBRR, SELECTED_USART_NUM, H)
+#define UBRRx USART_REG_CAT2_EXT(UBRR, SELECTED_USART_NUM)
+#define UCSRxA USART_REG_CAT3_EXT(UCSR, SELECTED_USART_NUM, A)
+#define UCSRxB USART_REG_CAT3_EXT(UCSR, SELECTED_USART_NUM, B)
+#define UCSRxC USART_REG_CAT3_EXT(UCSR, SELECTED_USART_NUM, C)
+#define RXENx USART_REG_CAT2_EXT(RXEN, SELECTED_USART_NUM)
+#define TXENx USART_REG_CAT2_EXT(TXEN, SELECTED_USART_NUM)
+#define UCSZx0 USART_REG_CAT3_EXT(UCSZ, SELECTED_USART_NUM, 0)
+#define UCSZx1 USART_REG_CAT3_EXT(UCSZ, SELECTED_USART_NUM, 1)
+#define UCSZx2 USART_REG_CAT3_EXT(UCSZ, SELECTED_USART_NUM, 2)
+#define TXCx USART_REG_CAT2_EXT(TXC, SELECTED_USART_NUM)
+#define RXCx USART_REG_CAT2_EXT(RXC, SELECTED_USART_NUM)
+#define UDRx USART_REG_CAT2_EXT(UDR, SELECTED_USART_NUM)
+#define UDREx USART_REG_CAT2_EXT(UDRE, SELECTED_USART_NUM)
 
 /* main program starts here */
 int main(void)
@@ -169,15 +206,25 @@ int main(void)
 
     // Check if the WDT was used to reset, in which case we dont bootload and skip straight to the code. woot.
     if (! (ch &  _BV(EXTRF))) // if its a not an external reset...
-      app_start();  // skip bootloader
+      app_start_always();  // skip bootloader
+#endif
+
+#ifdef AQ64_BOOT_BTN
+	DDRB &= _BV(PB6);
+	PORTB |= _BV(PB6);
+	if (bit_is_set(PINB, PB6))
+	{
+		PORTB = 0; // reset it
+		app_start_always();  // skip bootloader
+	}
 #endif
 
 
 	//initialize our serial port.
-    UBRR0L = (uint8_t)(F_CPU/(BAUD_RATE*16L)-1);
-    UBRR0H = (F_CPU/(BAUD_RATE*16L)-1) >> 8;
-    UCSR0B = (1<<RXEN0) | (1<<TXEN0);
-    UCSR0C = (1<<UCSZ00) | (1<<UCSZ01);
+    UBRRxL = (uint8_t)(F_CPU/(BAUD_RATE*16L)-1);
+    UBRRxH = (F_CPU/(BAUD_RATE*16L)-1) >> 8;
+    UCSRxB = (1<<RXENx) | (1<<TXENx);
+    UCSRxC = (1<<UCSZx0) | (1<<UCSZx1);
 
     /* Enable internal pull-up resistor on pin D0 (RX), in order
     to supress line noise that prevents the bootloader from
@@ -232,7 +279,9 @@ int main(void)
 			else
 			{
 				if (++error_count == MAX_ERROR_COUNT)
-				    app_start();
+				{
+				    app_start_depends();
+				}
 		    }
 		}
 
@@ -459,8 +508,8 @@ int main(void)
 			else
 			{
 				if (++error_count == MAX_ERROR_COUNT)
-				    app_start();
-		    }		
+				    app_start_depends();
+		    }
 		}
     
 		/* Read memory block mode, length is big endian.  */
@@ -521,7 +570,7 @@ int main(void)
 			else
 			{
 				if (++error_count == MAX_ERROR_COUNT)
-					app_start();
+					app_start_depends();
 			}
 		}
 
@@ -531,8 +580,7 @@ int main(void)
 			byte_response(0x00);
 
 		else if (++error_count == MAX_ERROR_COUNT)
-		    app_start();
-
+		    app_start_depends();
 	}
     /* end of forever loop */
 }
@@ -583,12 +631,9 @@ void puthex(char ch)
 
 void putch(char ch)
 {
-    while (!(UCSR0A & _BV(UDRE0)));
-    UDR0 = ch;
+    while (!(UCSRxA & _BV(UDREx)));
+    UDRx = ch;
 }
-
-
-
 
 char getch(void)
 {
@@ -598,20 +643,20 @@ char getch(void)
 	LED_PORT &= ~_BV(LED);          // toggle LED to show activity - BBR/LF 10/3/2007 & 9/13/2008
 #endif
 
-    while(!(UCSR0A & _BV(RXC0)))
+    while(!(UCSRxA & _BV(RXCx)))
 	{
     	/* 20060803 DojoCorp:: Addon coming from the previous Bootloader*/               
     	/* HACKME:: here is a good place to count times*/
     	count++;
     	if (count > MAX_TIME_COUNT)
-    		app_start();
+    		app_start_depends();
      }
 
 #ifdef ADABOOT
 	LED_PORT |= _BV(LED);          // toggle LED to show activity - BBR/LF 10/3/2007 & 9/13/2008
 #endif
 
-    return UDR0;
+    return UDRx;
 }
 
 
@@ -620,8 +665,8 @@ void getNch(uint8_t count)
     uint8_t i;
     for(i=0;i<count;i++)
 	{
-		while(!(UCSR0A & _BV(RXC0)));
-		UDR0;
+		while(!(UCSRxA & _BV(RXCx)));
+		UDRx;
     }
 }
 
@@ -637,7 +682,7 @@ void byte_response(uint8_t val)
 	else
 	{
 		if (++error_count == MAX_ERROR_COUNT)
-		    app_start();
+		    app_start_depends();
     }
 }
 
@@ -652,7 +697,7 @@ void nothing_response(void)
 	else
 	{
 		if (++error_count == MAX_ERROR_COUNT)
-		    app_start();
+		    app_start_depends();
     }
 }
 

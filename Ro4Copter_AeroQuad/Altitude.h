@@ -112,6 +112,11 @@ private:
   long readRawPressure(void) {
     unsigned char msb, lsb, xlsb;
     sendByteI2C(altitudeAddress, 0xF6);
+
+    /*
+    Edited for Ro4Copter by frank26080115 on 20100416
+    */
+    #ifndef Ro4Copter
     Wire.requestFrom(altitudeAddress, 3); // request three bytes
     while(!Wire.available()); // wait until data available
     msb = Wire.receive();
@@ -119,6 +124,13 @@ private:
     lsb = Wire.receive();
     while(!Wire.available()); // wait until data available
     xlsb = Wire.receive();
+    #else
+    byte bArr[3];
+    twi_readFrom(altitudeAddress, bArr, 3);
+    msb = bArr[0];
+    lsb = bArr[1];
+    xlsb = bArr[2];
+    #endif
     return (((long)msb<<16) | ((long)lsb<<8) | ((long)xlsb)) >>(8-overSamplingSetting);
   }
 

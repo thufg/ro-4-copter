@@ -115,6 +115,7 @@ void analogWrite(uint8_t, int);
 
 unsigned long millis(void);
 unsigned long micros(void);
+unsigned long micros_fast(void);
 void delay(unsigned long);
 void delayMicroseconds(unsigned int us);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
@@ -127,6 +128,8 @@ void detachInterrupt(uint8_t);
 
 void setup(void);
 void loop(void);
+
+void attachTimer0OverflowEvent(void (*)(void));
 
 #ifdef __cplusplus
 } // extern "C"

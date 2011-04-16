@@ -36,18 +36,43 @@
 //#define AeroQuad_Mini       // Arduino Pro Mini with AeroQuad Mini Shield V1.0
 //#define AeroQuad_Wii        // Arduino 2009 with Wii Sensors and AeroQuad Shield v1.x
 //#define AeroQuadMega_v1     // Arduino Mega with AeroQuad Shield v1.7 and below
-#define AeroQuadMega_v2     // Arduino Mega with AeroQuad Shield v2.x
+//#define AeroQuadMega_v2     // Arduino Mega with AeroQuad Shield v2.x
 //#define AeroQuadMega_Wii    // Arduino Mega with Wii Sensors and AeroQuad Shield v2.x
 //#define ArduCopter          // ArduPilot Mega (APM) with APM Sensor Board
 //#define AeroQuadMega_CHR6DM // Clean Arduino Mega with CHR6DM as IMU/heading ref.
 //#define APM_OP_CHR6DM       // ArduPilot Mega with CHR6DM as IMU/heading ref., Oilpan for barometer (just uncomment AltitudeHold for baro), and voltage divider
+#define Ro4Copter           // ATmega644PA based flight controller by frank26080115
+
+/***************************************************************
+ * Ro4Copter options
+ **************************************************************/
+
+#ifdef Ro4Copter
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+// this is placed in the core specially for Ro4Copter
+#include "TwiRaw.h"
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+ 
+//#define R4C_OPTION_USE_PWM_ESC
+#define R4C_OPTION_USE_I2C_ESC
+//#define R4C_OPTION_USE_BMA180_ACCEL
+#define R4C_OPTION_USE_ADXL345_ACCEL
+//#define R4C_OPTION_USE_RC_PWM
+#define R4C_OPTION_USE_RC_PPM
 
 /****************************************************************************
  *********************** Define Flight Configuration ************************
  ****************************************************************************/
 // Use only one of the following definitions
-#define XConfig
-//#define plusConfig
+//#define XConfig
+#define plusConfig
 //#define HEXACOAXIAL
 //#define HEXARADIAL
 
@@ -66,7 +91,7 @@
 // if you only want DCM, then don't define either of the below
 // flightAngle recommendations: use FlightAngleARG if you do not have a magnetometer, use DCM if you have a magnetometer installed
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//#define FlightAngleMARG // Experimental!  Fly at your own risk! Use this if you have a magnetometer installed and enabled HeadingMagHold above
+#define FlightAngleMARG // Experimental!  Fly at your own risk! Use this if you have a magnetometer installed and enabled HeadingMagHold above
 //#define FlightAngleARG // Use this if you do not have a magnetometer installed
 //#define WirelessTelemetry  // Enables Wireless telemetry on Serial3  // Wireless telemetry enable
 //#define BinaryWrite // Enables fast binary transfer of flight data to Configurator
@@ -82,7 +107,7 @@
 // D13 to D35 for yaw, connect servo to SERVO3
 // Please note that you will need to have battery connected to power on servos with v2.0 shield
 // *******************************************************************************************************************************
-//#define CameraControl
+#define CameraControl
 
 /****************************************************************************
  ********************* End of User Definition Section ***********************
@@ -378,6 +403,59 @@
   #endif
 #endif
 
+
+#ifdef Ro4Copter
+
+  #ifdef R4C_OPTION_USE_RC_PPM
+  Receiver_Ro4Copter_PPM receiver;
+  #endif
+  #ifdef R4C_OPTION_USE_RC_PWM
+  Receiver_Ro4Copter receiver;
+  #endif
+  
+  #ifdef R4C_OPTION_USE_PWM_ESC
+  Motors_PWMtimer motors;
+  #endif
+  #ifdef R4C_OPTION_USE_I2C_ESC
+  Motors_AeroQuadI2C motors;
+  #endif
+  
+  #ifdef R4C_OPTION_USE_BMA180_ACCEL
+  Accel_AeroQuadMega_v2 accel;
+  #endif
+  #ifdef R4C_OPTION_USE_ADXL345_ACCEL
+  Accel_AeroQuadMini accel;
+  #endif
+  
+  Gyro_AeroQuadMega_v2 gyro;
+  
+  #include "FlightAngle.h"
+  #ifdef FlightAngleARG
+    FlightAngle_ARG tempFlightAngle;
+  #elif defined FlightAngleMARG
+    FlightAngle_MARG tempFlightAngle;
+  #else
+    FlightAngle_DCM tempFlightAngle;
+  #endif
+  FlightAngle *flightAngle = &tempFlightAngle;
+  #ifdef HeadingMagHold
+    #include "Compass.h"
+    Magnetometer_HMC5843 compass;
+  #endif
+  #ifdef AltitudeHold
+    #include "Altitude.h"
+    Altitude_AeroQuad_v2 altitude;
+  #endif
+  #ifdef BattMonitor
+    #include "BatteryMonitor.h"
+    BatteryMonitor_AeroQuad batteryMonitor;
+  #endif
+  #ifdef CameraControl
+    #include "Camera.h"
+    Camera_Ro4Copter camera;
+  #endif
+#endif
+
 #ifdef XConfig
   void (*processFlightControl)() = &processFlightControlXMode;
 #endif
@@ -407,13 +485,13 @@ void setup() {
   digitalWrite(10, LOW);
   digitalWrite(9, LOW);
   digitalWrite(8, LOW);
-#endif    
+#endif
 
   #if defined(AeroQuadMega_CHR6DM) || defined(APM_OP_CHR6DM)
     Serial1.begin(BAUD);
     PORTD = B00000100;
   #endif
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini)
+  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(Ro4Copter)
     pinMode(LED2PIN, OUTPUT);
     digitalWrite(LED2PIN, LOW);
     pinMode(LED3PIN, OUTPUT);
@@ -439,10 +517,41 @@ void setup() {
     pinMode(LED_Green, OUTPUT);
   #endif
   
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(AeroQuad_Wii) || defined(AeroQuadMega_Wii) || defined(AeroQuadMega_CHR6DM) || defined(APM_OP_CHR6DM) || defined(ArduCopter)
+  // take care of internal pull-up resistors depending on what shield
+  #ifndef Ro4Copter
+  // AreoQuado64's modified Wire library does not enable internal pull-up resistors on I2C signals
+  // so we need to re-enable these here if it is not compiled for Ro4Copter
+  // do this even if you didn't modify the Wire library just in case
+  #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+  pinMode(20, INPUT);
+  pinMode(21, INPUT);
+  digitalWrite(20, HIGH);
+  digitalWrite(21, HIGH);
+  #else // probably ATmega328P
+  pinMode(18, INPUT);
+  pinMode(19, INPUT);
+  digitalWrite(18, HIGH);
+  digitalWrite(19, HIGH);
+  #endif
+  #endif
+
+  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(AeroQuad_Wii) || defined(AeroQuadMega_Wii) || defined(AeroQuadMega_CHR6DM) || defined(APM_OP_CHR6DM) || defined(ArduCopter) || defined(Ro4Copter)
     Wire.begin();
   #endif
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini)
+  #if defined(Ro4Copter) // disable internal pull-up resistors
+  // the Wire library does not activate the pull-ups on the correct pins, correct this
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+  pinMode(9, OUTPUT); // TX0
+  
+  // disable pull-ups
+  digitalWrite(16, LOW);
+  digitalWrite(17, LOW);
+  pinMode(16, INPUT);
+  pinMode(17, INPUT);
+  #endif
+  
+  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(Ro4Copter)
     // Recommendation from Mgros to increase I2C speed to 400kHz
     // http://aeroquad.com/showthread.php?991-AeroQuad-Flight-Software-v2.0&p=11262&viewfull=1#post11262
     TWBR = 12;

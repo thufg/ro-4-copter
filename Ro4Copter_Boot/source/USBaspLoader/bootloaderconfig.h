@@ -47,11 +47,11 @@ these macros are defined, the boot loader usees them.
 /* This is the port where the USB bus is connected. When you configure it to
  * "B", the registers PORTB, PINB and DDRB will be used.
  */
-#define USB_CFG_DMINUS_BIT      1 // changed for AeroQuado64
+#define USB_CFG_DMINUS_BIT      1 // changed for Ro4Copter
 /* This is the bit number in USB_CFG_IOPORT where the USB D- line is connected.
  * This may be any bit in the port.
  */
-#define USB_CFG_DPLUS_BIT       2 // changed for AeroQuado64
+#define USB_CFG_DPLUS_BIT       2 // changed for Ro4Copter
 /* This is the bit number in USB_CFG_IOPORT where the USB D+ line is connected.
  * This may be any bit in the port. Please note that D+ must also be connected
  * to interrupt pin INT0!

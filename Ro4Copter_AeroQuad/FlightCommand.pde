@@ -18,6 +18,12 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>. 
 */
 
+/*
+
+Edited for Ro4Copter by frank26080115 on 20100416
+
+*/
+
 // FlightCommand.pde is responsible for decoding transmitter stick combinations
 // for setting up AeroQuad modes such as motor arming and disarming
 
@@ -86,7 +92,7 @@ void readPilotCommands() {
     // Check Mode switch for Acro or Stable
     if (receiver.getRaw(MODE) > 1500) {
       if (flightMode == ACRO) {
-        #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+        #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(Ro4Copter)
           digitalWrite(LED2PIN, HIGH);
         #endif
         zeroIntegralError();
@@ -94,7 +100,7 @@ void readPilotCommands() {
       flightMode = STABLE;
    }
     else {
-      #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2)
+      #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(Ro4Copter)
         if (flightMode == STABLE)
           digitalWrite(LED2PIN, LOW);
       #endif
