@@ -16,6 +16,10 @@ If your problem relates to RC equipment, I'll have no idea how to help, I just k
 
 If you have a question that is relevant to Ro4Copter and nothing else, then ask away in the "Issues" tab above, submit the issue as a "question".
 
+Please do a search before posting anything, and also read [http://www.catb.org/~esr/faqs/smart-questions.html this (How To Ask Questions The Smart Way)].
+
+I will not be notified of any sort of comments in the source control or the wiki comment areas, if you need my attention, either send me an email or use the "Issues" tab.
+
 There are more communities out there:
  * [http://diydrones.com DIY Drones], home of the !ArduCopter
  * [http://rcgroups.com RC Groups], there's a special section for multicopters.
