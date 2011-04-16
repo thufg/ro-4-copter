@@ -14,6 +14,8 @@ If you are simply having problems using Arduino, AVR microcontrollers, or genera
 
 If your problem relates to RC equipment, I'll have no idea how to help, I just know where to plug stuff in and how to code the source code that reads in pulses, so go on the forums for tech support related to RC equipment.
 
+If you have a question that is relevant to Ro4Copter and nothing else, then ask away in the "Issues" tab above, submit the issue as a "question".
+
 There are more communities out there:
  * [http://diydrones.com DIY Drones], home of the !ArduCopter
  * [http://rcgroups.com RC Groups], there's a special section for multicopters.
