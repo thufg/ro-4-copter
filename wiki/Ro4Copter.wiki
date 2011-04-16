@@ -15,6 +15,8 @@ This design uses the ATmega644PA AVR microcontroller, from a general view point,
 
 <img src="http://frank.circleofcurrent.com/junk/aq64_img/overview2.png" />
 
+<img src="http://frank.circleofcurrent.com/junk/aq64_img/pcbsize1.png" />
+
 ==Features and General Specifications==
 
  * ATmega644PA, 16 MHz, 64KB of flash memory, 4KB of SRAM memory 
