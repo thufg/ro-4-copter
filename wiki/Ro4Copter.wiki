@@ -39,31 +39,6 @@ This design uses the ATmega644PA AVR microcontroller, from a general view point,
  
  * The choosen 5V and 3V3 voltage regulators are rated for 800 mA
 
-==Downloads==
-
-These packages includes:
-
- * Software
-  * Arduino custom core source code
-  * sketch source code
-   * derived from AeroQuad
-   * derived from MultiWiiCopter
- * Bootloader
-  * ATmegaBOOT based
-   * source code
-   * .hex binaries
-  * [USBaspLoader] based
-   * source code
-   * .hex binaries
- * !CadSoft EAGLE
-  * schematic
-  * board
-  * library
-  * design rules
-  * CAM job
-
-[http://code.googfdgle.dfgcom/p/circle-of-current/downloads/detail?name=AeroQudfgado64-2011fgd0413.zip Download version 20110413]
-
 =Quick Feature Walkthrough=
 
 ==Sensors==
