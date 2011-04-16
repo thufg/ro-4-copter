@@ -4,7 +4,7 @@
 
 The package includes:
 
-* Software
+ * Software
   * Arduino custom core source code
   * sketch source code
    * derived from AeroQuad
