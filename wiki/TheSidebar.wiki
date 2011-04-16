@@ -4,6 +4,7 @@ Hardware
 
  * [PCBAssemblyAndWalkthrough PCB Assembly and Walkthrough]
   * [PartsList Parts List]
+
  * [ConnectionSummary Connection Summary]
  * [JumperConfigSummary Jumper Configurations Summary]
 
