@@ -1,5 +1,4 @@
 #summary Battery, power regulation, power distribution, etc
-#sidebar TheSidebar
 
 == Battery ==
 

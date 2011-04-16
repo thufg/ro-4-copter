@@ -1,5 +1,4 @@
 #summary What software is used in this project
-#sidebar TheSidebar
 
 == Other External Tools ==
 

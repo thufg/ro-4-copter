@@ -1,5 +1,4 @@
 #summary Choosing an RC Radio
-#sidebar TheSidebar
 
 ==PPM==
 

@@ -1,5 +1,4 @@
 #summary Links to Research Materials
-#sidebar TheSidebar
 
 == Flight Stabilization ==
 
