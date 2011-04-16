@@ -4,7 +4,7 @@
 
 This page is intended for people who just want a inexpensive quadcopter that flies with minimal work. This will detail the bare recommended minimum setup for Ro4Copter's PCB.
 
-I won't go into too much detail here because I'm not the best person to write them. I'm more focused towards the electronics design of Ro4Copter.
+I won't go into too much detail here because I'm not the best person to write them. I'm more focused towards the electronics design of Ro4Copter. If you want to learn more about anything, this [http://www.rcgroups.com/forums/showthread.php?t=1097355 mega link index on RC Groups] is an awesome resource.
 
 Skills I'll assume you already have:
  * Understand how a quadcopter works
