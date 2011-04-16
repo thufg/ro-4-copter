@@ -1,5 +1,4 @@
 #summary Guide for starters, the most basic setup
-#sidebar TheSidebar
 
 =Starters Guide=
 
@@ -59,7 +58,7 @@ First, just do some quick research on the Internet to see what motors are popula
 
 ===Propellers===
 
-You need two pairs (thus 4 total) of counter-rotating propellers. You need them to be counter-rotating pairs because if they all spun in the same direction, you would not be able to control rotation about the yaw (vertical) axis. Read the [http://en.wikipedia.org/wiki/Quadcopter Wikipedia article about quadcopters] to understand.
+You need two pairs (thus 4 total) of counter-rotating propellers. You need them to be counter-rotating pairs because if they all spun in the same direction, you would not be able to control rotation about the yaw (vertical) axis. Read the [http://en.wikipedia.org/wiki/Quadrotor Wikipedia article about quadcopters] to understand.
 
 I have used the EPP1045 before, which is 10 inches in diameter. You can use a smaller propeller for a lighter design, or a larger one for a heavier design. Obviously you'll need more power with heavier designs and larger propellers.
 

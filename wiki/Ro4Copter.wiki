@@ -1,6 +1,5 @@
 #summary Main introduction page
 #labels Featured
-#sidebar TheSidebar
 
 =Ro4Copter=
 

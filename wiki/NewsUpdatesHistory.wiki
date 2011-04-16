@@ -1,6 +1,5 @@
 #summary Any news, updates, and history
 #labels Featured
-#sidebar TheSidebar
 
 =Latest=
 

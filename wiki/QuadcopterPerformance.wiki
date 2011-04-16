@@ -1,5 +1,4 @@
 #summary Calculating the physical performance of the quadcopter
-#sidebar TheSidebar
 
 ==Motor Thrust==
 

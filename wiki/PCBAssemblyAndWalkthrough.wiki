@@ -1,5 +1,4 @@
 #summary Read this to figure out what to put on the PCB, where to put them, and why they are there
-#sidebar TheSidebar
 
 =Assembly Guide and Circuit Walkthrough=
 

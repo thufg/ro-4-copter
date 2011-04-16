@@ -1,5 +1,4 @@
 #summary How to get help
-#sidebar TheSidebar
 
 =How to get help=
 

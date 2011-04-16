@@ -1,5 +1,4 @@
 #summary How you can help me
-#sidebar TheSidebar
 
 =How you can help me=
 

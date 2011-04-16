@@ -1,5 +1,4 @@
 #summary Rambling a bit about the design, what I did right and what I did wrong
-#sidebar TheSidebar
 
 =Design Notes=
 
