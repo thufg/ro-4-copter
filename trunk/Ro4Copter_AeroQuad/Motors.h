@@ -1,6 +1,6 @@
 /*
   AeroQuad v2.4 - April 2011
-  www.AeroQuad.com
+  www.AeroQuad.com 
   Copyright (c) 2011 Ted Carancho.  All rights reserved.
   An Open Source Arduino based multicopter.
 
@@ -16,6 +16,10 @@
 
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+Edited for Ro4Copter by Frank26080115 on 20110415
 */
 
 class Motors {
@@ -144,11 +148,19 @@ private:
     #define LEFTMOTORPIN   6
     #define LASTMOTORPIN   7
   #else
-    #define FRONTMOTORPIN  3
-    #define REARMOTORPIN   9
-    #define RIGHTMOTORPIN 10
-    #define LEFTMOTORPIN  11
-    #define LASTMOTORPIN  12
+    #ifdef Ro4Copter
+      #define FRONTMOTORPIN  14
+      #define REARMOTORPIN   12
+      #define RIGHTMOTORPIN 13
+      #define LEFTMOTORPIN  15
+      #define LASTMOTORPIN  16
+    #else
+      #define FRONTMOTORPIN  3
+      #define REARMOTORPIN   9
+      #define RIGHTMOTORPIN 10
+      #define LEFTMOTORPIN  11
+      #define LASTMOTORPIN  12
+    #endif
   #endif
   int minCommand;
   byte pin;
@@ -204,11 +216,11 @@ The high time shall be 1000us, so the OCRxy register is set to 2000. In the code
 */
 class Motors_PWMtimer : public Motors {
 private:
-/*  Motor   Mega Pin Port        Uno Pin Port          HEXA Mega Pin Port
-    FRONT         2  PE4              3  PD3
-    REAR          3  PE5              9  PB1
-    RIGHT         5  PE3             10  PB2                      7  PH4
-    LEFT          6  PH3             11  PB3                      8  PH5
+/*  Motor   Mega Pin Port        Uno Pin Port          HEXA Mega Pin Port       Ro4Copter Pin Port
+    FRONT         2  PE4              3  PD3                                                14  PD6
+    REAR          3  PE5              9  PB1                                                12  PD4
+    RIGHT         5  PE3             10  PB2                      7  PH4                    13  PD5
+    LEFT          6  PH3             11  PB3                      8  PH5                    15  PD7
 */
 
 #define PWM_FREQUENCY 300   // in Hz
@@ -231,8 +243,12 @@ public:
 //#endif
 //#if defined (__AVR_ATmega328P__)
 #else
+  #ifdef Ro4Copter
+    DDRD |= B11110000;
+  #else
     DDRB = DDRB | B00001110;                                  // Set ports to output PB1-3
     DDRD = DDRD | B00001000;                                  // Set port to output PD3
+  #endif
 #endif
 
     commandAllMotors(1000);                                   // Initialise motors to 1000us (stopped)
@@ -279,10 +295,17 @@ public:
 //#endif
 //#if defined (__AVR_ATmega328P__)
 #else
+  #ifdef Ro4Copter
+    OCR1A = motorCommand[RIGHT] * 2 ;                       // 1000-2000 to 128-256
+    OCR1B = motorCommand[REAR]  * 2 ;
+    OCR2A = motorCommand[LEFT] / 16 ;
+    OCR2B = motorCommand[FRONT]  / 16 ;
+  #else
     OCR2B = motorCommand[FRONT] / 16 ;                       // 1000-2000 to 128-256
     OCR1A = motorCommand[REAR]  * 2 ;
     OCR1B = motorCommand[RIGHT] * 2 ;
     OCR2A = motorCommand[LEFT]  / 16 ;
+  #endif
 #endif
   }
 
@@ -320,11 +343,19 @@ private:
     #define LEFTMOTORPIN 6
     #define LASTMOTORPIN 7
   #else
-    #define FRONTMOTORPIN 3
-    #define REARMOTORPIN 9
-    #define RIGHTMOTORPIN 10
-    #define LEFTMOTORPIN 11
-    #define LASTMOTORPIN 12
+    #ifdef Ro4Copter
+      #define FRONTMOTORPIN  14
+      #define REARMOTORPIN   12
+      #define RIGHTMOTORPIN 13
+      #define LEFTMOTORPIN  15
+      #define LASTMOTORPIN  16
+    #else
+      #define FRONTMOTORPIN  3
+      #define REARMOTORPIN   9
+      #define RIGHTMOTORPIN 10
+      #define LEFTMOTORPIN  11
+      #define LASTMOTORPIN  12
+    #endif
   #endif
   int minCommand;
   byte pin;
@@ -781,30 +812,36 @@ void matrix_debug()
 
 void WireMotorWrite()
 {
-int i = 0;
-//int nmotor=0;
-int index=0;
-int tout=0;
-char buff_i2c[10];
+  int i = 0;
+  //int nmotor=0;
+  int index=0;
+  int tout=0;
+  char buff_i2c[10];
 
-Wire.endTransmission(); //end transmission
-for(byte nmotor=0;nmotor<6;nmotor++)
-  {
-  index=0x29+nmotor;
-  Wire.beginTransmission(index);
-  Wire.send(MotorI2C[nmotor]);
   Wire.endTransmission(); //end transmission
-  Wire.requestFrom(index, 1);    // request 6 bytes from device
-  i=0;
-  while(1)
-  //while((Wire.available())&&(i<6))
+  for(byte nmotor=0;nmotor<6;nmotor++)
   {
-    buff_i2c[i] = Wire.receive();  // receive one byte
-    i++;
-    if (i>6)break;
-    //Serial.print(i);
-    if (Wire.available()==0)break;
-  }
+    index=0x29+nmotor;
+    
+    #ifndef Ro4Copter
+    Wire.beginTransmission(index);
+    Wire.send(MotorI2C[nmotor]);
+    Wire.endTransmission(); //end transmission
+    Wire.requestFrom(index, 1);    // request 6 bytes from device
+    i=0;
+    while(1)
+    //while((Wire.available())&&(i<6))
+    {
+      buff_i2c[i] = Wire.receive();  // receive one byte
+      i++;
+      if (i>6)break;
+      //Serial.print(i);
+      if (Wire.available()==0)break;
+    }
+    #else
+    twi_writeTo(index, &MotorI2C[nmotor], 1, 1);
+    twi_readFrom(index, buff_i2c, 6);
+    #endif
 
   }
 

@@ -1,4 +1,4 @@
-# Modified for Ro4Copter by Frank26080115 on 20110412
+# Modified for Ro4Copter by Frank26080115 on 20110415
 
 # 16k bootloader addr = 0x3800
 # 8k bootloader addr = 0x1800

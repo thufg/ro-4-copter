@@ -1,7 +1,7 @@
 #ifndef SoftServo_h
 #define SoftServo_h
 
-#ifdef __cplusplus
+#ifdef __cplusplus 
 extern "C"{
 #endif
 

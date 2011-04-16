@@ -9,7 +9,7 @@
  */
  
 /*
-Modified for Ro4Copter by Frank26080115 on 20110412
+Modified for Ro4Copter by Frank26080115 on 20110415
 */
 
 #include <avr/io.h>

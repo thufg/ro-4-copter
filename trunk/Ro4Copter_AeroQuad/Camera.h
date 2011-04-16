@@ -22,6 +22,10 @@
 // http://aeroquad.com/showthread.php?1484-Camera-Stablisation
 // http://aeroquad.com/showthread.php?1491-Camera-Stablisation-continued
 
+/*
+Edited for Ro4Copter by frank26080115 on 20100416
+*/
+
 // ***********************************************************************
 // *********************** Camera Control ***************************
 // ***********************************************************************
@@ -218,6 +222,49 @@ public:
   }
 };
 
+#ifdef Ro4Copter
+
+#include "SoftServo.h"
+#include <avr/interrupt.h>
+
+ISR(TIMER0_COMPA_vect)
+{
+	SoftServo_onCompareMatch();
+}
+
+class Camera_Ro4Copter : public Camera {
+public:
+	Camera_Ro4Copter() : Camera() {}
+
+  void _initialize(void) {
+	  attachTimer0OverflowEvent(SoftServo_onOverflow);
+	  SoftServo_detachAll();
+
+	  SoftServo_attach(0, &PORTB, &DDRB, 3);
+	  SoftServo_attach(1, &PORTB, &DDRB, 4);
+	  SoftServo_attach(2, &PORTB, &DDRB, 5);
+	  SoftServo_attach(3, &PORTB, &DDRB, 6);
+
+	  SoftServo_engageInterrupts();
+  }
+
+  void move(void) {
+    if (mode > 0) {
+      SoftServo_set(0, servoPitch / 4);
+	  SoftServo_set(1, servoRoll / 4);
+	  SoftServo_set(2, servoYaw / 4);
+	  SoftServo_set(3, 0);
+    }
+    else {
+      SoftServo_set(0, 0);
+      SoftServo_set(1, 0);
+      SoftServo_set(2, 0);
+      SoftServo_set(3, 0);
+    }
+  }
+};
+#else
+
 class Camera_AeroQuad : public Camera {
 public:
   Camera_AeroQuad() : Camera() {}
@@ -298,4 +345,4 @@ public:
     }
   }
 };
-
+#endif

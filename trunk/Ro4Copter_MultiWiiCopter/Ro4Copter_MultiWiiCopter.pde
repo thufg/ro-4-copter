@@ -7,6 +7,9 @@ April  2011     V1.7
  the Free Software Foundation, either version 3 of the License, or
  any later version. see <http://www.gnu.org/licenses/>
 */
+/*
+Modified for Ro4Copter by Frank26080115 on 20110415
+*/
 
 /*******************************/
 /****CONFIGURABLE PARAMETERS****/
@@ -33,14 +36,15 @@ April  2011     V1.7
 #define YAW_DIRECTION 1 // if you want to reverse the yaw correction direction
 //#define YAW_DIRECTION -1
 
-#define I2C_SPEED 100000L     //100kHz normal mode, this value must be used for a genuine WMP
-//#define I2C_SPEED 400000L   //400kHz fast mode, it works only with some WMP clones
+//#define I2C_SPEED 100000L     //100kHz normal mode, this value must be used for a genuine WMP
+#define I2C_SPEED 400000L   //400kHz fast mode, it works only with some WMP clones
 
-#define PROMINI  //Arduino type
+//#define PROMINI  //Arduino type
 //#define MEGA
+#define Ro4Copter
 
 //enable internal I2C pull ups
-#define INTERNAL_I2C_PULLUPS
+//#define INTERNAL_I2C_PULLUPS
 
 //****** advanced users settings   *************
 
@@ -72,20 +76,20 @@ April  2011     V1.7
 #define TILT_ROLL_PROP    10
 
 /* I2C gyroscope */
-//#define ITG3200
+#define ITG3200
 //#define L3G4200D
 
 /* I2C accelerometer */
 //#define ADXL345
 //#define BMA020
-//#define BMA180
+#define BMA180
 //#define NUNCHACK  // if you want to use the nunckuk as a standalone I2C ACC without WMP
 
 /* I2C barometer */
-//#define BMP085
+#define BMP085
 
 /* I2C magnetometer */
-//#define HMC5843
+#define HMC5843
 //#define HMC5883
 
 /* ADC accelerometer */ // for 5DOF from sparkfun, uses analog PIN A1/A2/A3
@@ -107,8 +111,11 @@ April  2011     V1.7
    after the resistor divisor we should get [0V;5V]->[0;1023] on analog V_BATPIN
    with R1=33k and R2=51k
    vbat = [0;1023]*16/VBATSCALE */
+/* note that Ro4Copter uses R1=7K5 and R2=15K, adjust accordingly
+16*1024*10.7*7.5/(15+7.5)/5/107 = 109
+*/
 #define VBAT              // comment this line to suppress the vbat code
-#define VBATSCALE     131 // change this value if readed Battery voltage is different than real voltage
+#define VBATSCALE     109 // change this value if readed Battery voltage is different than real voltage
 #define VBATLEVEL1_3S 107 // 10,7V
 #define VBATLEVEL2_3S 103 // 10,3V
 #define VBATLEVEL3_3S 99  // 9.9V
@@ -130,7 +137,7 @@ April  2011     V1.7
 
 /* In order to save space, it's possibile to desactivate the LCD configuration functions
    comment this line only if you don't plan to used a LCD */
-#define LCD_CONF
+//#define LCD_CONF
 
 /* to use Cat's whisker TEXTSTAR LCD, uncomment following line.
    Pleae note this display needs a full 4 wire connection to (+5V, Gnd, RXD, TXD )
@@ -166,12 +173,11 @@ April  2011     V1.7
 
 #include <EEPROM.h>
 
-#define LEDPIN 13     // will be changed for MEGA in a future version
-#define POWERPIN 12   // will be changed for MEGA in a future version
-#define V_BATPIN 3    // Analog PIN 3
-#define STABLEPIN     // will be defined for MEGA in a future version
-
 #if defined(PROMINI)
+  #define LEDPIN 13     // will be changed for MEGA in a future version
+  #define POWERPIN 12   // will be changed for MEGA in a future version
+  #define V_BATPIN 0    // Analog PIN 3
+  #define STABLEPIN     // will be defined for MEGA in a future version
   #define LEDPIN_PINMODE             pinMode (13, OUTPUT);
   #define LEDPIN_SWITCH              PINB |= 1<<5;     //switch LEDPIN state (digital PIN 13)
   #define LEDPIN_OFF                 PORTB &= ~(1<<5);
@@ -199,6 +205,12 @@ April  2011     V1.7
   #define DIGITAL_BI_LEFT_PINMODE    pinMode(11,OUTPUT); 
   #define DIGITAL_BI_LEFT_HIGH       PORTB |= 1<<3;
   #define DIGITAL_BI_LEFT_LOW        PORTB &= ~(1<<3);
+  #define ATOMICPWM_PIN5_DDR         DDRD
+  #define ATOMICPWM_PIN5_PORT        PORTD
+  #define ATOMICPWM_PIN5_PIN         5
+  #define ATOMICPWM_PIN6_DDR         DDRD
+  #define ATOMICPWM_PIN6_PORT        PORTD
+  #define ATOMICPWM_PIN6_PIN         6
   #define PPM_PIN_INTERRUPT          attachInterrupt(0, rxInt, RISING); //PIN 0
   #define MOTOR_ORDER                9,10,11,3,6,5  //for a quad+: rear,right,left,front
   #define DIGITAL_CAM_PINMODE        pinMode(A2,OUTPUT);
@@ -216,6 +228,10 @@ April  2011     V1.7
   #define ISR_UART                   ISR(USART_UDRE_vect)
 #endif
 #if defined(MEGA)
+  #define LEDPIN 13     // will be changed for MEGA in a future version
+  #define POWERPIN 12   // will be changed for MEGA in a future version
+  #define V_BATPIN 0    // Analog PIN 3
+  #define STABLEPIN     // will be defined for MEGA in a future version
   #define LEDPIN_PINMODE             pinMode (13, OUTPUT);
   #define LEDPIN_SWITCH              PINB |= (1<<7);
   #define LEDPIN_OFF                 PORTB &= ~(1<<7);
@@ -257,6 +273,70 @@ April  2011     V1.7
   #define AUX2PIN                    5  //PIN 67 =  PIN A13
   #define CAM1PIN                    6  //PIN 68 =  PIN A14
   #define CAM2PIN                    7  //PIN 69 =  PIN A15
+  #define ISR_UART                   ISR(USART0_UDRE_vect)
+#endif
+#if defined(Ro4Copter)
+  #define LEDPIN 0
+  #define POWERPIN 1   // no such pin
+  #define V_BATPIN 0    // Analog PIN 0
+  #define STABLEPIN 2    // no such pin
+  #define LEDPIN_PINMODE             pinMode (0, OUTPUT);
+  #define LEDPIN_SWITCH              PINB ^= 1<<0;
+  #define LEDPIN_OFF                 PORTB &= ~(1<<0);
+  #define LEDPIN_ON                  PORTB |= (1<<0);
+  #define BUZZERPIN_PINMODE          pinMode (1, OUTPUT);
+  #define BUZZERPIN_ON               PORTB |= 1;
+  #define BUZZERPIN_OFF              PORTB &= ~1;
+  #define POWERPIN_PINMODE           pinMode (2, OUTPUT);
+  #define POWERPIN_ON                PORTB |= 1<<2;
+  #define POWERPIN_OFF               PORTB &= ~(1<<2);
+  #define I2C_PULLUPS_ENABLE         PORTC |= 1<<0; PORTC |= 1<<1;
+  #define I2C_PULLUPS_DISABLE        PORTC &= ~(1<<0); PORTC &= ~(1<<1);
+  #define PINMODE_LCD                pinMode(0, OUTPUT);
+  #define LCDPIN_OFF                 PORTB &= ~1;
+  #define LCDPIN_ON                  PORTB |= 1;
+  #define DIGITAL_SERVO_TRI_PINMODE  pinMode(27,OUTPUT);
+  #define DIGITAL_SERVO_TRI_HIGH     PORTA |= 1<<4;
+  #define DIGITAL_SERVO_TRI_LOW      PORTA &= ~(1<<4);
+  #define DIGITAL_TILT_PITCH_PINMODE pinMode(26,OUTPUT);
+  #define DIGITAL_TILT_PITCH_HIGH    PORTA |= 1<<5;
+  #define DIGITAL_TILT_PITCH_LOW     PORTA &= ~(1<<5);
+  #define DIGITAL_TILT_ROLL_PINMODE  pinMode(25,OUTPUT);
+  #define DIGITAL_TILT_ROLL_HIGH     PORTA |= 1<<6;
+  #define DIGITAL_TILT_ROLL_LOW      PORTA &= ~(1<<6);
+  #define DIGITAL_BI_LEFT_PINMODE    pinMode(24,OUTPUT); 
+  #define DIGITAL_BI_LEFT_HIGH       PORTA |= 1<<7;
+  #define DIGITAL_BI_LEFT_LOW        PORTA &= ~(1<<7);
+  #define ATOMICPWM_PIN5_DDR         DDRB
+  #define ATOMICPWM_PIN5_PORT        PORTB
+  #define ATOMICPWM_PIN5_PIN         3
+  #define ATOMICPWM_PIN6_DDR         DDRB
+  #define ATOMICPWM_PIN6_PORT        PORTB
+  #define ATOMICPWM_PIN6_PIN         4
+  #define PPM_PIN_INPUT              PINC
+  #define PPM_PIN_DDR                DDRC
+  #define PPM_PIN_PORT               PORTC
+  #define PPM_PIN_NUM                2
+  #define PPM_PCMSK                  PCMSK2
+  #define PPM_PCMSK_NUM              2
+  #define PPM_PCINT_NUM              2
+  #define PPM_PCINT_vect             PCINT2_vect
+  #define PPM_PIN_INTERRUPT          PPM_PIN_PORT |= (1<<PPM_PIN_NUM); \
+                                     PPM_PCMSK |= (1<<PPM_PCINT_NUM); \
+                                     PCICR |= (1<<PPM_PCMSK_NUM); // Ro4Copter have no available INT pins, so pretend PCINT is one
+  #define MOTOR_ORDER                12,13,14,15  //for a quad+: rear,right,left,front
+  #define DIGITAL_CAM_PINMODE        pinMode(6,OUTPUT);
+  #define DIGITAL_CAM_HIGH           PORTB |= 1<<6;
+  #define DIGITAL_CAM_LOW            PORTB &= ~(1<<6);
+  //RX PIN assignment inside the port //for PORTC
+  #define THROTTLEPIN                2
+  #define ROLLPIN                    4
+  #define PITCHPIN                   5
+  #define YAWPIN                     3
+  #define AUX1PIN                    6
+  #define AUX2PIN                    7
+  #define CAM1PIN                    7   //unused just for compatibility with MEGA
+  #define CAM2PIN                    7   //unused just for compatibility with MEGA
   #define ISR_UART                   ISR(USART0_UDRE_vect)
 #endif
 
@@ -1201,7 +1281,7 @@ void writeMotors() { // [1000;2000] => [125;250]
     analogWrite(PWM_PIN[4], motor[4]>>3);
     analogWrite(PWM_PIN[5], motor[5]>>3);
   #endif
-  #if (NUMBER_MOTOR == 6) && defined(PROMINI)
+  #if (NUMBER_MOTOR == 6) && (defined(PROMINI) || defined(Ro4Copter))
     atomicPWM_PIN5_highState = motor[5]/8;
     atomicPWM_PIN5_lowState = 255-atomicPWM_PIN5_highState;
     atomicPWM_PIN6_highState = motor[4]/8;
@@ -1320,8 +1400,11 @@ ISR(TIMER0_COMPA_vect) {
 }
 #endif
 
-#if (NUMBER_MOTOR == 6) && defined(PROMINI)
+#if (NUMBER_MOTOR == 6) && (defined(PROMINI) || defined(Ro4Copter))
 void initializeSoftPWM() {
+  ATOMICPWM_PIN5_DDR |= 1<<ATOMICPWM_PIN5_PIN;
+  ATOMICPWM_PIN6_DDR |= 1<<ATOMICPWM_PIN6_PIN;
+
   TCCR0A = 0; // normal counting mode
   TIMSK0 |= (1<<OCIE0A); // Enable CTC interrupt
   TIMSK0 |= (1<<OCIE0B);
@@ -1330,14 +1413,14 @@ void initializeSoftPWM() {
 ISR(TIMER0_COMPA_vect) {
   static uint8_t state = 0;
   if (state == 0) {
-    PORTD |= 1<<5; //digital PIN 5 high
+    ATOMICPWM_PIN5_PORT |= 1<<ATOMICPWM_PIN5_PIN; //digital PIN 5 high
     OCR0A+= atomicPWM_PIN5_highState; //250 x 4 microsecons = 1ms
     state = 1;
   } else if (state == 1) {
     OCR0A+= atomicPWM_PIN5_highState;
     state = 2;
   } else if (state == 2) {
-    PORTD &= ~(1<<5); //digital PIN 5 low
+    ATOMICPWM_PIN5_PORT &= ~(1<<ATOMICPWM_PIN5_PIN); //digital PIN 5 low
     OCR0A+= atomicPWM_PIN5_lowState;
     state = 0;
   }
@@ -1346,11 +1429,11 @@ ISR(TIMER0_COMPA_vect) {
 ISR(TIMER0_COMPB_vect) { //the same with digital PIN 6 and OCR0B counter
   static uint8_t state = 0;
   if (state == 0) {
-    PORTD |= 1<<6;OCR0B+= atomicPWM_PIN6_highState;state = 1;
+    ATOMICPWM_PIN6_PORT |= 1<<ATOMICPWM_PIN6_PIN;OCR0B+= atomicPWM_PIN6_highState;state = 1;
   } else if (state == 1) {
     OCR0B+= atomicPWM_PIN6_highState;state = 2;
   } else if (state == 2) {
-    PORTD &= ~(1<<6);OCR0B+= atomicPWM_PIN6_lowState;state = 0;
+    ATOMICPWM_PIN6_PORT &= ~(1<<ATOMICPWM_PIN6_PIN);OCR0B+= atomicPWM_PIN6_lowState;state = 0;
   }
 }
 #endif
@@ -1400,6 +1483,12 @@ void configureReceiver() {
       PCMSK2 |= (1<<0) | (1<<1) | (1<<2) | (1<<3) | (1<<4) | (1<<5) | (1<<6) | (1<<7);
       PCICR   = 1<<2; // PCINT activated only for PORTK dealing with [A8-A15] PINs
     #endif
+    #if defined(Ro4Copter)
+      // PCINT activated only for specific pin inside [D18-D23] 
+      PORTC  |= (1<<2) | (1<<3) | (1<<4) | (1<<5) | (1<<6) | (1<<7); //enable internal pull ups on the PINs of PORTC (no high impedence PINs)
+      PCMSK2 |= (1<<2) | (1<<3) | (1<<4) | (1<<5) | (1<<6) | (1<<7); 
+      PCICR   = 1<<2; // PCINT activated only for the port dealing with [D18-D23] PINs
+    #endif
   #else
     PPM_PIN_INTERRUPT
   #endif
@@ -1418,6 +1507,9 @@ ISR(PCINT2_vect) { //this ISR is common to every receiver channel, it is call ev
   #endif
   #if defined(MEGA)
     pin = PINK;             // PINK indicates the state of each PIN for the arduino port dealing with [A8-A15] digital pins (8 bits variable)
+  #endif
+  #if defined(Ro4Copter)
+    pin = PINC;             // PINC indicates the state of each PIN for the arduino port dealing with [D18-D23] digital pins (8 bits variable)
   #endif
   mask = pin ^ PCintLast;   // doing a ^ between the current interruption and the last one indicates wich pin changed
   sei();                    // re enable other interrupts at this point, the rest of this interrupt is not so time critical and can be interrupted safely
@@ -1461,6 +1553,12 @@ ISR(PCINT2_vect) { //this ISR is common to every receiver channel, it is call ev
         dTime = cTime-edgeTime[3]; if (900<dTime && dTime<2200) rcPinValue[3] = dTime;
       } else edgeTime[3] = cTime;
   #endif
+  #if defined(Ro4Copter)
+    if (mask & 1<<3)
+      if (!(pin & 1<<3)) {
+        dTime = cTime-edgeTime[3]; if (900<dTime && dTime<2200) rcPinValue[3] = dTime;
+      } else edgeTime[3] = cTime;
+  #endif
   #if defined(FAILSAFE)
     if (mask & 1<<THROTTLEPIN) {    // If pulse present on THROTTLE pin (independent from ardu version), clear FailSafe counter  - added by MIS
       if(failsafeCnt > 20) failsafeCnt -= 20; else failsafeCnt = 0; }
@@ -1468,6 +1566,9 @@ ISR(PCINT2_vect) { //this ISR is common to every receiver channel, it is call ev
 }
 
 #else 
+#if defined(Ro4Copter)
+inline
+#endif
 void rxInt() {
   uint16_t now,diff;
   static uint16_t last = 0;
@@ -1485,6 +1586,18 @@ void rxInt() {
     #endif
   }
 }
+
+#if defined(Ro4Copter)
+
+// quick hack of PCINT to become a rising edge INT, if pin is high, then it's rising edge
+ISR(PPM_PCINT_vect) {
+  if (PPM_PIN_INPUT & (1 << PPM_PIN_NUM)) {
+    rxInt();
+  }
+}
+
+#endif
+
 #endif
 
 uint16_t readRawRC(uint8_t chan) {
@@ -1844,7 +1957,7 @@ void setup() {
 
   #if defined(SERVO)
     initializeServo();
-  #elif (NUMBER_MOTOR == 6) && defined(PROMINI)
+  #elif (NUMBER_MOTOR == 6) && (defined(PROMINI) || defined(Ro4Copter))
     initializeSoftPWM();
   #endif
   previousTime = micros();

@@ -18,6 +18,10 @@
   along with this program. If not, see <http://www.gnu.org/licenses/>. 
 */
 
+/*
+Edited for Ro4Copter by frank26080115 on 20100416
+*/
+
 class Gyro {
 public:
   float gyroFullScaleOutput;
@@ -180,7 +184,7 @@ public:
 /******************************************************/
 /****************** AeroQuad_v2 Gyro ******************/
 /******************************************************/
-#if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini)
+#if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(Ro4Copter)
 /*
   10kOhm pull-ups on I2C lines.
   VDD & VIO = 3.3V
@@ -229,6 +233,8 @@ public:
   
   void measure(void) {
     sendByteI2C(gyroAddress, 0x1D);
+    
+    #ifndef Ro4Copter
     Wire.requestFrom(gyroAddress, 6);
 
     for (byte axis = ROLL; axis < LASTAXIS; axis++) {
@@ -238,6 +244,17 @@ public:
         gyroADC[axis] = gyroZero[axis] - ((Wire.receive() << 8) | Wire.receive());
       gyroData[axis] = filterSmooth((float)gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
     }
+    #else
+    byte bArr[6];
+    twi_readFrom(gyroAddress, bArr, 6);
+    for (byte axis = ROLL, bArrIdx = 0; axis < LASTAXIS; axis++, bArrIdx += 2) {
+      if (axis == ROLL)
+        gyroADC[axis] = ((bArr[bArrIdx] << 8) | bArr[bArrIdx+1]) - gyroZero[axis];
+      else
+        gyroADC[axis] = gyroZero[axis] - ((bArr[bArrIdx] << 8) | bArr[bArrIdx+1]);
+      gyroData[axis] = filterSmooth((float)gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
+    }
+    #endif
 
     //calculateHeading();
     // gyroLastADC can maybe replaced with Zero, but will leave as is for now
