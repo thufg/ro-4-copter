@@ -112,6 +112,8 @@ Important: If you select V-RC with SJ15 (to use the same voltage that the RC inp
 
 Solder `R`1 and `R`2, which are 4K7 pull-up resistors for the I2C bus. Be sure that you disable internal pull-up resistors in the software. This allows you to use 3V3 I2C sensors without using a level shifter.
 
+Note that some of the SparkFun breakout boards already include a pull-up resistor, if so, then do not install `R`1 and `R`2.
+
 You may choose to install either the 6-DOF IMU (gyro and accelerometer combined) breakout board, or a ITG-3200 gyro breakout board. If you do choose the ITG-3200, you may then also choose to install a BMA180 accelerometer breakout board. You must always have a gyro but the accelerometer is optional (it allows you to enable auto-leveling flight). Be sure to configure this correctly in the software.
 
 If you are feeling experimental, the IMU3000 breakout board also fits into the ITG-3200 breakout board footprint, with similar pin assignments.
