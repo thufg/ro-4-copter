@@ -1,5 +1,5 @@
 /*
-  AeroQuad v2.4 - April 2011
+  AeroQuad v2.4.1 - June 2011
   www.AeroQuad.com
   Copyright (c) 2011 Ted Carancho.  All rights reserved.
   An Open Source Arduino based multicopter.
@@ -19,8 +19,6 @@
 */
 
 // Written by Lokling & Honk: http://aeroquad.com/showthread.php?1287-Experimental-CHR6DM-sensor-board
-
-// Edited by frank26080115 for Ro4Copter on 20110412
 
 // Usage: define a global var such as  "CHR6DM chr6 ;" in Aeroquad.pde
 // Values can then be read such as chr6.data.pitch and so on
@@ -148,11 +146,8 @@
     const char PACKET_HEADER[] = {'s','n','p'};
     const int HEADER_CHECKSUM = 's'+'n'+'p';
 
-#ifndef Ro4Copter
+
 #include <Wire.h>
-#else
-#include <WirePatched.h>
-#endif
 
 
 
