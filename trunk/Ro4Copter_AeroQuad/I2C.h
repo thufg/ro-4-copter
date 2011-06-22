@@ -1,5 +1,5 @@
 /*
-  AeroQuad v2.4 - April 2011
+  AeroQuad v2.4.1 - June 2011
   www.AeroQuad.com
   Copyright (c) 2011 Ted Carancho.  All rights reserved.
   An Open Source Arduino based multicopter.
@@ -79,7 +79,6 @@ void updateRegisterI2C(int deviceAddress, byte dataAddress, byte dataValue) {
 }
 
 #else // old version retained since only the Ro4Copter core contains TwiRaw.h
-
 // I2C functions
 
 void sendByteI2C(int deviceAddress, byte dataValue) {
@@ -146,6 +145,5 @@ void updateRegisterI2C(int deviceAddress, byte dataAddress, byte dataValue) {
   Wire.endTransmission();
 }  
 
+
 #endif
-
-

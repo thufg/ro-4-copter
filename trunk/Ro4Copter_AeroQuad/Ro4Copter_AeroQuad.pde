@@ -1,5 +1,5 @@
 /*
-  AeroQuad v2.4 - April 2011
+  AeroQuad v2.4.1 - June 2011
   www.AeroQuad.com 
   Copyright (c) 2011 Ted Carancho.  All rights reserved.
   An Open Source Arduino based multicopter.
@@ -35,6 +35,7 @@
 //#define AeroQuad_v18        // Arduino 2009 with AeroQuad Shield v1.8
 //#define AeroQuad_Mini       // Arduino Pro Mini with AeroQuad Mini Shield V1.0
 //#define AeroQuad_Wii        // Arduino 2009 with Wii Sensors and AeroQuad Shield v1.x
+//#define AeroQuad_Paris_v3   // Define along with either AeroQuad_Wii to include specific changes for MultiWiiCopter Paris v3.0 board					
 //#define AeroQuadMega_v1     // Arduino Mega with AeroQuad Shield v1.7 and below
 //#define AeroQuadMega_v2     // Arduino Mega with AeroQuad Shield v2.x
 //#define AeroQuadMega_Wii    // Arduino Mega with Wii Sensors and AeroQuad Shield v2.x
@@ -60,12 +61,12 @@ extern "C"{
 
 #endif
  
-//#define R4C_OPTION_USE_PWM_ESC
-#define R4C_OPTION_USE_I2C_ESC
-//#define R4C_OPTION_USE_BMA180_ACCEL
-#define R4C_OPTION_USE_ADXL345_ACCEL
-//#define R4C_OPTION_USE_RC_PWM
-#define R4C_OPTION_USE_RC_PPM
+#define R4C_OPTION_USE_PWM_ESC
+//#define R4C_OPTION_USE_I2C_ESC
+#define R4C_OPTION_USE_BMA180_ACCEL
+//#define R4C_OPTION_USE_ADXL345_ACCEL
+#define R4C_OPTION_USE_RC_PWM
+//#define R4C_OPTION_USE_RC_PPM
 
 /****************************************************************************
  *********************** Define Flight Configuration ************************
@@ -82,17 +83,17 @@ extern "C"{
 // *******************************************************************************************************************************
 // You must define one of the next 3 attitude stabilization modes or the software will not build
 // *******************************************************************************************************************************
-#define HeadingMagHold // Enables HMC5843 Magnetometer, gets automatically selected if CHR6DM is defined
-#define AltitudeHold // Enables BMP085 Barometer (experimental, use at your own risk)
-#define BattMonitor //define your personal specs in BatteryMonitor.h! Full documentation with schematic there
-
+//#define HeadingMagHold // Enables HMC5843 Magnetometer, gets automatically selected if CHR6DM is defined
+//#define AltitudeHold // Enables BMP085 Barometer (experimental, use at your own risk)
+//#define BattMonitor //define your personal specs in BatteryMonitor.h! Full documentation with schematic there
+//#define RateModeOnly // Use this if you only have a gyro sensor, this will disable any attitude modes.
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // You must define *only* one of the following 2 flightAngle calculations
 // if you only want DCM, then don't define either of the below
 // flightAngle recommendations: use FlightAngleARG if you do not have a magnetometer, use DCM if you have a magnetometer installed
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define FlightAngleMARG // Experimental!  Fly at your own risk! Use this if you have a magnetometer installed and enabled HeadingMagHold above
-//#define FlightAngleARG // Use this if you do not have a magnetometer installed
+//#define FlightAngleMARG // Experimental!  Fly at your own risk! Use this if you have a magnetometer installed and enabled HeadingMagHold above
+#define FlightAngleARG // Use this if you do not have a magnetometer installed
 //#define WirelessTelemetry  // Enables Wireless telemetry on Serial3  // Wireless telemetry enable
 //#define BinaryWrite // Enables fast binary transfer of flight data to Configurator
 //#define BinaryWritePID // Enables fast binary transfer of attitude PID data
@@ -107,7 +108,10 @@ extern "C"{
 // D13 to D35 for yaw, connect servo to SERVO3
 // Please note that you will need to have battery connected to power on servos with v2.0 shield
 // *******************************************************************************************************************************
-#define CameraControl
+//#define CameraControl
+
+// On screen display implementation using MAX7456 chip. See OSD.h for more info and configuration.
+//#define MAX7456_OSD
 
 /****************************************************************************
  ********************* End of User Definition Section ***********************
@@ -118,6 +122,9 @@ extern "C"{
 #endif
 #if defined(HeadingMagHold) && defined(FlightAngleMARG) && defined(FlightAngleARG)
 #undef FlightAngleARG
+#endif
+#if defined(MAX7456_OSD) && !defined(AeroQuadMega_v2) && !defined(AeroQuadMega_Wii)
+#undef MAX7456_OSD
 #endif
 
 #include <EEPROM.h>
@@ -284,6 +291,10 @@ extern "C"{
     #include "Camera.h"
     Camera_AeroQuad camera;
   #endif
+  #ifdef MAX7456_OSD
+    #include "OSD.h"
+    OSD osd;
+  #endif
 #endif
 
 #ifdef ArduCopter
@@ -318,7 +329,7 @@ extern "C"{
   Accel_Wii accel;
   Gyro_Wii gyro;
   Receiver_AeroQuad receiver;
-  Motors_PWM motors;
+  Motors_PWMtimer motors;
   #include "FlightAngle.h"
 //  FlightAngle_CompFilter tempFlightAngle;
   #ifdef FlightAngleARG
@@ -329,9 +340,25 @@ extern "C"{
     FlightAngle_DCM tempFlightAngle;
   #endif
   FlightAngle *flightAngle = &tempFlightAngle;
+  #ifdef HeadingMagHold
+    #include "Compass.h"
+    Magnetometer_HMC5843 compass;
+  #endif
+  #ifdef AltitudeHold
+    #include "Altitude.h"
+    Altitude_AeroQuad_v2 altitude;
+  #endif
+  #ifdef BattMonitor
+    #include "BatteryMonitor.h"
+    BatteryMonitor_AeroQuad batteryMonitor;
+  #endif
   #ifdef CameraControl
     #include "Camera.h"
     Camera_AeroQuad camera;
+  #endif
+  #ifdef MAX7456_OSD
+    #include "OSD.h"
+    OSD osd;
   #endif
 #endif
 
@@ -339,7 +366,7 @@ extern "C"{
   Accel_Wii accel;
   Gyro_Wii gyro;
   Receiver_AeroQuadMega receiver;
-  Motors_PWM motors;
+  Motors_PWMtimer motors;
   #include "FlightAngle.h"
   #ifdef FlightAngleARG
     FlightAngle_ARG tempFlightAngle;
@@ -349,6 +376,18 @@ extern "C"{
     FlightAngle_DCM tempFlightAngle;
   #endif
   FlightAngle *flightAngle = &tempFlightAngle;
+  #ifdef HeadingMagHold
+    #include "Compass.h"
+    Magnetometer_HMC5843 compass;
+  #endif
+  #ifdef AltitudeHold
+    #include "Altitude.h"
+    Altitude_AeroQuad_v2 altitude;
+  #endif
+  #ifdef BattMonitor
+    #include "BatteryMonitor.h"
+    BatteryMonitor_AeroQuad batteryMonitor;
+  #endif
   #ifdef CameraControl
     #include "Camera.h"
     Camera_AeroQuad camera;
@@ -402,7 +441,6 @@ extern "C"{
     Camera_AeroQuad camera;
   #endif
 #endif
-
 
 #ifdef Ro4Copter
 
@@ -470,7 +508,7 @@ extern "C"{
 // ********************** Setup AeroQuad **********************
 // ************************************************************
 void setup() {
-  Serial.begin(BAUD);
+  SERIAL_BEGIN(BAUD);
   pinMode(LEDPIN, OUTPUT);
   digitalWrite(LEDPIN, LOW);
 
@@ -485,13 +523,13 @@ void setup() {
   digitalWrite(10, LOW);
   digitalWrite(9, LOW);
   digitalWrite(8, LOW);
-#endif
+#endif    
 
   #if defined(AeroQuadMega_CHR6DM) || defined(APM_OP_CHR6DM)
     Serial1.begin(BAUD);
     PORTD = B00000100;
   #endif
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(Ro4Copter)
+  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini)
     pinMode(LED2PIN, OUTPUT);
     digitalWrite(LED2PIN, LOW);
     pinMode(LED3PIN, OUTPUT);
@@ -534,7 +572,7 @@ void setup() {
   digitalWrite(19, HIGH);
   #endif
   #endif
-
+  
   #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(AeroQuad_Wii) || defined(AeroQuadMega_Wii) || defined(AeroQuadMega_CHR6DM) || defined(APM_OP_CHR6DM) || defined(ArduCopter) || defined(Ro4Copter)
     Wire.begin();
   #endif
@@ -575,8 +613,8 @@ void setup() {
   // Calibrate sensors
   gyro.autoZero(); // defined in Gyro.h
   zeroIntegralError();
-  levelAdjust[ROLL] = 0;
-  levelAdjust[PITCH] = 0;
+ // levelAdjust[ROLL] = 0;
+ // levelAdjust[PITCH] = 0;
   
   // Flight angle estimation
   #ifdef HeadingMagHold
@@ -610,6 +648,11 @@ void setup() {
     camera.setCenterRoll(1500); // Need to figure out nice way to set center position
     camera.setmCameraPitch(11.11);
     camera.setCenterPitch(1300);
+  #endif
+  
+  //initialising OSD
+  #if defined(MAX7456_OSD)
+    osd.initialize();
   #endif
 
   #if defined(BinaryWrite) || defined(BinaryWritePID)
@@ -775,6 +818,13 @@ void loop () {
         readPilotCommands(); // defined in FlightCommand.pde
       }
 
+      #if defined(CameraControl)
+        camera.setPitch(degrees(flightAngle->getData(PITCH)));
+        camera.setRoll(degrees(flightAngle->getData(ROLL)));
+        camera.setYaw(degrees(flightAngle->getData(YAW)));
+        camera.move();
+      #endif 
+
       #ifdef DEBUG_LOOP
         digitalWrite(10, LOW);
       #endif
@@ -827,10 +877,14 @@ void loop () {
         sendSerialTelemetry(); // defined in SerialCom.pde
       }
       
+      #ifdef MAX7456_OSD
+        osd.update();
+      #endif
+
       #ifdef DEBUG_LOOP
         digitalWrite(8, LOW);
-      #endif
-    }
+      #endif      
+	}
 
     previousTime = currentTime;
   }
