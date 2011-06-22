@@ -237,7 +237,7 @@ public:
   void measure(void) {
     //int rawData[3];
 
-	#ifndef Ro4Copter
+    #ifndef Ro4Copter
     Wire.beginTransmission(accelAddress);
     Wire.send(0x02);
     Wire.endTransmission();
