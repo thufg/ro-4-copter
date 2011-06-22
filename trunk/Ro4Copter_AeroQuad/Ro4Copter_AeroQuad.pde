@@ -529,7 +529,7 @@ void setup() {
     Serial1.begin(BAUD);
     PORTD = B00000100;
   #endif
-  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini)
+  #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuad_Mini) || defined(Ro4Copter)
     pinMode(LED2PIN, OUTPUT);
     digitalWrite(LED2PIN, LOW);
     pinMode(LED3PIN, OUTPUT);
@@ -884,7 +884,7 @@ void loop () {
       #ifdef DEBUG_LOOP
         digitalWrite(8, LOW);
       #endif      
-	}
+    }
 
     previousTime = currentTime;
   }
