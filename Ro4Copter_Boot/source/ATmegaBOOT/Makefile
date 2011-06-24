@@ -11,7 +11,7 @@
 # 64k bootloader addr for 4k bootloader = 0xF000
 # 64k bootloader addr for 2k bootloader = 0xF800
 # atmega644p fuses
-# -U lfuse:w:0xFF:m -U hfuse:w:0x98:m -U lock:w:0xFF:m
+# -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U lock:w:0xFF:m
 
 # program name should not be changed...
 PROGRAM    = Ro4Copter_Boot
@@ -59,10 +59,10 @@ $(PROGRAM)_stk500_w_btn.hex: $(PROGRAM)_stk500_w_btn.elf
 	$(OBJCOPY) -j .text -j .data -O ihex $< ../../$@
 	
 $(PROGRAM)_stk500_w_btn.elf: $(OBJ2)
-	$(CC) $(CFLAGS) -DAQ64_BOOT_BTN $(LDFLAGS) -o $@ $^ $(LIBS)
+	$(CC) $(CFLAGS) -DR4C_BOOT_BTN $(LDFLAGS) -o $@ $^ $(LIBS)
 	
 $(OBJ2): $(PROGRAM).c
-	avr-gcc $(CFLAGS) -DAQ64_BOOT_BTN $(LDFLAGS) -c -g -O2 -Wall -mmcu=$(MCU_TARGET) $(PROGRAM).c -o $(PROGRAM)_stk500_w_btn.o
+	avr-gcc $(CFLAGS) -DR4C_BOOT_BTN $(LDFLAGS) -c -g -O2 -Wall -mmcu=$(MCU_TARGET) $(PROGRAM).c -o $(PROGRAM)_stk500_w_btn.o
 
 %.lst: %.elf
 	$(OBJDUMP) -h -S $< > $@
@@ -74,5 +74,5 @@ $(OBJ2): $(PROGRAM).c
 	$(OBJCOPY) -j .text -j .data -O binary $< $@
 
 clean:
-	rm -rf *.o *.elf *.lst *.map *.sym *.lss *.eep *.srec *.bin *.hex
-	
+#	rm -rf *.o *.elf *.lst *.map *.sym *.lss *.eep *.srec *.bin *.hex
+	del *.o *.elf *.lst *.map *.sym *.lss *.eep *.srec *.bin *.hex
