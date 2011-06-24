@@ -21,9 +21,9 @@ You will also need to modify `boards.txt` to include the entry
 Ro4Copter.name=Ro4Copter
 Ro4Copter.upload.protocol=stk500
 Ro4Copter.upload.maximum_size=57344
-Ro4Copter.upload.speed=76800
+Ro4Copter.upload.speed=57600
 Ro4Copter.bootloader.low_fuses=0xFF
-Ro4Copter.bootloader.high_fuses=0x98
+Ro4Copter.bootloader.high_fuses=0xD8
 Ro4Copter.bootloader.extended_fuses=0xFF
 Ro4Copter.bootloader.path=Ro4Copter_Boot
 Ro4Copter.bootloader.file=Ro4Copter_Boot_arduino.hex
