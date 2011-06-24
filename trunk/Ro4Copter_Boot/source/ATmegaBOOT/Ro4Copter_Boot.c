@@ -90,7 +90,7 @@
 /* set the UART baud rate */
 /* 20080711: hack by Zach Hoeken */
 /* 20110412: changed by Frank26080115 for Ro4Copter */
-#define BAUD_RATE   76800
+#define BAUD_RATE   57600
 
 /* SW_MAJOR and MINOR needs to be updated from time to time to avoid warning message from AVR Studio */
 /* never allow AVR Studio to do an update !!!! */
@@ -155,11 +155,11 @@ uint8_t buff[256];
 uint8_t error_count = 0;
 uint8_t sreg;
 
-#ifndef AQ64_BOOT_BTN
+#ifndef R4C_BOOT_BTN
 void (*app_start_depends)(void) = 0x0000;
 void (*app_start_always)(void) = 0x0000;
 #else
-inline void app_start_depends(){} // blank function, never start sketch
+inline void app_start_depends() { error_count = 0; LED_PORT ^= _BV(LED); } // blank function, never start sketch
 void (*app_start_always)(void) = 0x0000;
 #endif
 
@@ -209,9 +209,11 @@ int main(void)
       app_start_always();  // skip bootloader
 #endif
 
-#ifdef AQ64_BOOT_BTN
-	DDRB &= _BV(PB6);
+#ifdef R4C_BOOT_BTN
+	DDRB &= ~_BV(PB6);
 	PORTB |= _BV(PB6);
+	PORTB |= _BV(PB6); PORTB |= _BV(PB6); PORTB |= _BV(PB6); PORTB |= _BV(PB6); PORTB |= _BV(PB6);
+	PORTB |= _BV(PB6); PORTB |= _BV(PB6); PORTB |= _BV(PB6); PORTB |= _BV(PB6); PORTB |= _BV(PB6);
 	if (bit_is_set(PINB, PB6))
 	{
 		PORTB = 0; // reset it
@@ -650,6 +652,11 @@ char getch(void)
     	count++;
     	if (count > MAX_TIME_COUNT)
     		app_start_depends();
+    		
+#ifdef R4C_BOOT_BTN
+		if (count > MAX_TIME_COUNT)
+    		count = 0;
+#endif
      }
 
 #ifdef ADABOOT
