@@ -138,7 +138,7 @@ There's a set of four 3-pin headers labelled "SERVO" 1 to 4. Solder these if you
 
 There is a section designed with [http://obdev.at/products/vusb/index.html V-USB circuitry] so the ATmega644PA can communicate with a computer via native low speed USB. This can be used to implement FTDI-less communication, bootloading, and configuration. This is current meant just for experimentation.
 
-===IMPORTANT NOTE: Testing proved that V-USB will not work with a 16 MHz resonator===
+===[UsbTesting IMPORTANT NOTE: Testing proved that V-USB will not work with a 16 MHz ceramic resonator]===
 
 SJ18 is used to join the 5V power supply with the 5V coming from the computer's USB port, this is not recommended as the 5V from the computer is also connected to PB0 so that it can detect whether or not USB is connected.
 
