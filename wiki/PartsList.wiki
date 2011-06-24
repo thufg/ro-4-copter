@@ -35,3 +35,5 @@ Quadcopter parts such as ESCs, RC receivers, battery, etc, are not listed
 ||Barrel jack|| ||Battery||1||SparkFun: PRT-00119||
 ||USB mini-B female connector||Surface mount||USB||1||SparkFun: PRT-00587||
 ||2mm female pin headers|| ||Xbee||2||SparkFun: PRT-08272||
+
+===IMPORTANT NOTE: R14, R15, R16, USB, D3, D4, C10, should not be placed if you are using a 16 MHz resonator, I found out this after testing===
