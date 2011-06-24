@@ -22,7 +22,7 @@
 Edited for Ro4Copter by frank26080115 on 20100416
 */
 
-#ifdef Ro4Copter
+#if defined(Ro4Copter) && defined(R4C_OPTION_USE_TWI_RAW)
 
 #ifdef __cplusplus
 extern "C"{

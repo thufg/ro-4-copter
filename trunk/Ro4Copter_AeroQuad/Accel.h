@@ -237,20 +237,7 @@ public:
   void measure(void) {
     //int rawData[3];
 
-    #ifndef Ro4Copter
-    Wire.beginTransmission(accelAddress);
-    Wire.send(0x02);
-    Wire.endTransmission();
-    Wire.requestFrom(accelAddress, 6);
-    for (byte axis = XAXIS; axis < LASTAXIS; axis++) {
-      if (axis == XAXIS)
-        accelADC[axis] = ((Wire.receive()|(Wire.receive() << 8)) >> 2) - accelZero[axis];
-      else
-        accelADC[axis] = accelZero[axis] - ((Wire.receive()|(Wire.receive() << 8)) >> 2);
-      //accelData[axis] = computeFirstOrder(accelADC[axis] * accelScaleFactor, &firstOrder[axis]);
-      accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
-    }
-    #else
+    #if defined(Ro4Copter) && defined(R4C_OPTION_USE_TWI_RAW)
     byte bArr[6];
     bArr[0] = 0x02;
     twi_writeTo(accelAddress, bArr, 1, 1);
@@ -260,6 +247,19 @@ public:
         accelADC[axis] = ((bArr[bArrIdx]|(bArr[bArrIdx+1] << 8)) >> 2) - accelZero[axis];
       else
         accelADC[axis] = accelZero[axis] - ((bArr[bArrIdx]|(bArr[bArrIdx+1] << 8)) >> 2);
+      //accelData[axis] = computeFirstOrder(accelADC[axis] * accelScaleFactor, &firstOrder[axis]);
+      accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
+    }
+    #else
+    Wire.beginTransmission(accelAddress);
+    Wire.send(0x02);
+    Wire.endTransmission();
+    Wire.requestFrom(accelAddress, 6);
+    for (byte axis = XAXIS; axis < LASTAXIS; axis++) {
+      if (axis == XAXIS)
+        accelADC[axis] = ((Wire.receive()|(Wire.receive() << 8)) >> 2) - accelZero[axis];
+      else
+        accelADC[axis] = accelZero[axis] - ((Wire.receive()|(Wire.receive() << 8)) >> 2);
       //accelData[axis] = computeFirstOrder(accelADC[axis] * accelScaleFactor, &firstOrder[axis]);
       accelData[axis] = filterSmooth(accelADC[axis] * accelScaleFactor, accelData[axis], smoothFactor);
     }

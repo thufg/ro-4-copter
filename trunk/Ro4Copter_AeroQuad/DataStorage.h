@@ -298,5 +298,17 @@ void writeEEPROM(void){
   writeFloat(servoMaxYaw, SERVOMAXYAW_ADR);
   #endif*/
   
+#if defined(Ro4Copter)
+  nvrWriteFloat(1234, 2048-9); // write a signature
+#endif
+  
   sei(); // Restart interrupts
 }
+
+#if defined(Ro4Copter)
+boolean checkEepromSig()
+{
+  float sig = nvrReadFloat(2048-9);
+  return (1234 == sig);
+}
+#endif

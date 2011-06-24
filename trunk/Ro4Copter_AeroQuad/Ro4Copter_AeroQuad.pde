@@ -68,6 +68,8 @@ extern "C"{
 #define R4C_OPTION_USE_RC_PWM
 //#define R4C_OPTION_USE_RC_PPM
 
+//#define R4C_OPTION_USE_TWI_RAW // do not enable yet, needs more testing
+
 /****************************************************************************
  *********************** Define Flight Configuration ************************
  ****************************************************************************/
@@ -597,6 +599,15 @@ void setup() {
 
   // Read user values from EEPROM
   readEEPROM(); // defined in DataStorage.h
+  
+#if defined(Ro4Copter)
+  if (checkEepromSig() == false)
+  {
+    initializeEEPROM();
+    writeEEPROM();
+    readEEPROM();
+  }
+#endif
   
   // Configure motors
   motors.initialize(); // defined in Motors.h
