@@ -63,9 +63,11 @@ Edited for Ro4Copter by frank26080115 on 20100416
 
 #else // Ro4Copter
 
+#if defined(Ro4Copter)
 #define LEDPIN 0
 #define LED2PIN 1
 #define LED3PIN 2
+#endif
 
 #endif // Ro4Copter
 
@@ -231,8 +233,8 @@ int delta;
 
 #define RISING_EDGE 1
 #define FALLING_EDGE 0
-#define MINONWIDTH 950
-#define MAXONWIDTH 2075
+#define MINONWIDTH 900
+#define MAXONWIDTH 2100
 #define MINOFFWIDTH 12000
 #define MAXOFFWIDTH 24000
 

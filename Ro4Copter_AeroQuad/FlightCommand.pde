@@ -41,6 +41,10 @@ void readPilotCommands() {
       #if defined(APM_OP_CHR6DM) || defined(ArduCopter) 
       digitalWrite(LED_Red, LOW);
       #endif
+      
+      #if defined(Ro4Copter)
+      digitalWrite(LED3PIN, LOW);
+      #endif
     }    
     // Zero Gyro and Accel sensors (left stick lower left, right stick lower right corner)
     if ((receiver.getRaw(YAW) < MINCHECK) && (receiver.getRaw(ROLL) > MAXCHECK) && (receiver.getRaw(PITCH) < MINCHECK)) {
@@ -67,6 +71,11 @@ void readPilotCommands() {
       #if defined(APM_OP_CHR6DM) || defined(ArduCopter) 
       digitalWrite(LED_Red, HIGH);
       #endif
+      
+      #if defined(Ro4Copter)
+      digitalWrite(LED3PIN, HIGH);
+      #endif
+      
       for (byte motor = FRONT; motor < LASTMOTOR; motor++)
         motors.setMinCommand(motor, MINTHROTTLE);
       //   delay(100);

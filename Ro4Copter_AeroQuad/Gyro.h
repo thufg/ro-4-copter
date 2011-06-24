@@ -232,17 +232,7 @@ public:
   void measure(void) {
     sendByteI2C(gyroAddress, 0x1D);
     
-    #ifndef Ro4Copter
-    Wire.requestFrom(gyroAddress, 6);
-
-    for (byte axis = ROLL; axis < LASTAXIS; axis++) {
-      if (axis == ROLL)
-        gyroADC[axis] = ((Wire.receive() << 8) | Wire.receive()) - gyroZero[axis];
-      else
-        gyroADC[axis] = gyroZero[axis] - ((Wire.receive() << 8) | Wire.receive());
-      gyroData[axis] = filterSmooth((float)gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
-    }
-    #else
+    #if defined(Ro4Copter) && defined(R4C_OPTION_USE_TWI_RAW)
     byte bArr[6];
     twi_readFrom(gyroAddress, bArr, 6);
     for (byte axis = ROLL, bArrIdx = 0; axis < LASTAXIS; axis++, bArrIdx += 2) {
@@ -250,6 +240,16 @@ public:
         gyroADC[axis] = ((bArr[bArrIdx] << 8) | bArr[bArrIdx+1]) - gyroZero[axis];
       else
         gyroADC[axis] = gyroZero[axis] - ((bArr[bArrIdx] << 8) | bArr[bArrIdx+1]);
+      gyroData[axis] = filterSmooth((float)gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
+    }
+    #else
+    Wire.requestFrom(gyroAddress, 6);
+
+    for (byte axis = ROLL; axis < LASTAXIS; axis++) {
+      if (axis == ROLL)
+        gyroADC[axis] = ((Wire.receive() << 8) | Wire.receive()) - gyroZero[axis];
+      else
+        gyroADC[axis] = gyroZero[axis] - ((Wire.receive() << 8) | Wire.receive());
       gyroData[axis] = filterSmooth((float)gyroADC[axis] * gyroScaleFactor, gyroData[axis], smoothFactor);
     }
     #endif

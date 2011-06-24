@@ -477,13 +477,8 @@ public:
 /****************** Ro4Copter PCINT *******************/
 /******************************************************/
 #if defined(Ro4Copter) && defined(R4C_OPTION_USE_RC_PWM)
-volatile uint8_t *port_to_pcmask[] = {
-  &PCMSK0,
-  &PCMSK1,
-  &PCMSK2,
-  &PCMSK3
-};
-volatile static uint8_t PCintLast[1];
+
+volatile static uint8_t PCintLast;
 // Channel data
 typedef struct {
   byte edge;
@@ -497,48 +492,41 @@ SIGNAL(PCINT2_vect) {
   uint8_t bit;
   uint8_t curr;
   uint8_t mask;
-  uint8_t pin;
   uint32_t currentTime;
   uint32_t time;
 
   curr = PINC;
-  mask = curr ^ PCintLast[0];
-  PCintLast[0] = curr;
-
-  // mask is pins that have changed. screen out non pcint pins.
-  if ((mask &= PCMSK2) == 0) {
-    return;
-  }
+  mask = curr ^ PCintLast;
+  PCintLast = curr;
 
   currentTime = micros();
 
   // mask is pcint pins that have changed.
-  for (uint8_t i=0; i < 8; i++) {
-    bit = 0x01 << i;
+  for (uint8_t i=0; i < 6; i++) {
+    bit = 0x04 << i;
     if (bit & mask) {
-      pin = i;
       // for each pin changed, record time of change
-      if (bit & PCintLast[0]) {
-        time = currentTime - pinData[pin].fallTime;
-        pinData[pin].riseTime = currentTime;
+      if (bit & PCintLast) {
+        time = currentTime - pinData[i].fallTime;
+        pinData[i].riseTime = currentTime;
         if ((time >= MINOFFWIDTH) && (time <= MAXOFFWIDTH))
-          pinData[pin].edge = RISING_EDGE;
+          pinData[i].edge = RISING_EDGE;
         else
-          pinData[pin].edge = FALLING_EDGE; // invalid rising edge detected
+          pinData[i].edge = FALLING_EDGE; // invalid rising edge detected
       }
       else {
-        time = currentTime - pinData[pin].riseTime;
-        pinData[pin].fallTime = currentTime;
-        if ((time >= MINONWIDTH) && (time <= MAXONWIDTH) && (pinData[pin].edge == RISING_EDGE)) {
-          pinData[pin].lastGoodWidth = time;
-          pinData[pin].edge = FALLING_EDGE;
+        time = currentTime - pinData[i].riseTime;
+        pinData[i].fallTime = currentTime;
+        if ((time >= MINONWIDTH) && (time <= MAXONWIDTH) && (pinData[i].edge == RISING_EDGE)) {
+          pinData[i].lastGoodWidth = time;
+          pinData[i].edge = FALLING_EDGE;
         }
       }
     }
   }
 }
 
-static byte receiverPin[6] = {4, 5, 3, 1, 6, 7}; // bit number of PORTC used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
+static byte receiverPin[6] = {2-2, 3-2, 5-2, 4-2, 6-2, 7-2}; // bit number of PORTC used for ROLL, PITCH, YAW, THROTTLE, MODE, AUX
 
 class Receiver_Ro4Copter : public Receiver {
 public:
@@ -547,7 +535,7 @@ public:
     DDRC = 0;
     PORTC = 0;
     PCMSK2 = B11111100;
-    PCICR |= 0x1 << 2;
+    PCICR |= 0x01 << 2;
 
   for (byte channel = ROLL; channel < LASTCHANNEL; channel++)
       pinData[receiverPin[channel]].edge = FALLING_EDGE;
