@@ -2,6 +2,8 @@
 
 =Ro4Copter Package=
 
+NOTE: This package is not ready yet but it's in the SVN
+
 The package includes:
 
  * Software
@@ -11,9 +13,6 @@ The package includes:
    * derived from MultiWiiCopter
  * Bootloader
   * ATmegaBOOT based
-   * source code
-   * .hex binaries
-  * [USBaspLoader] based
    * source code
    * .hex binaries
  * [SoftwareTools CadSoft EAGLE]
