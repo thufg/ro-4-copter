@@ -32,8 +32,8 @@ Edited for Ro4Copter by frank26080115 on 20100416
 // Flight Software Version
 #define VERSION 2.4
 
-#define BAUD 115200
-//#define BAUD 111111 // use this to be compatible with USB and XBee connections
+//#define BAUD 115200
+#define BAUD 111111 // use this to be compatible with USB and XBee connections
 //#define BAUD 57600
 
 #define ON 1
@@ -309,12 +309,12 @@ unsigned long fastTelemetryTime = 0;
   #define SERIAL_BEGIN      Serial3.begin
 #elif defined WirelessTelemetry && defined(Ro4Copter)
   #define SERIAL_BAUD       115200
-  #define SERIAL_PRINT      Serial1.print
-  #define SERIAL_PRINTLN    Serial1.println
-  #define SERIAL_AVAILABLE  Serial1.available
-  #define SERIAL_READ       Serial1.read
-  #define SERIAL_FLUSH      Serial1.flush
-  #define SERIAL_BEGIN      Serial1.begin
+  #define SERIAL_PRINT      Serial.print
+  #define SERIAL_PRINTLN    Serial.println
+  #define SERIAL_AVAILABLE  Serial.available
+  #define SERIAL_READ       Serial.read
+  #define SERIAL_FLUSH      Serial.flush
+  #define SERIAL_BEGIN      Serial.begin
 #else
   #define SERIAL_BAUD       115200
   #define SERIAL_PRINT      Serial.print

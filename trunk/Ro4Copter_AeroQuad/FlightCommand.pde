@@ -99,7 +99,7 @@ void readPilotCommands() {
     flightMode = ACRO;
   #else
     // Check Mode switch for Acro or Stable
-    if (receiver.getRaw(MODE) > 1500) {
+    if (receiver.getRaw(MODE) > 1600) {
       if (flightMode == ACRO) {
         #if defined(AeroQuad_v18) || defined(AeroQuadMega_v2) || defined(AeroQuadMega_Wii) || defined(Ro4Copter)
           digitalWrite(LED2PIN, HIGH);
