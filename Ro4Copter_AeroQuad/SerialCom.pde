@@ -545,7 +545,7 @@ float readFloatSerial() {
       timeout = 0;
       index++;
     }
-  }  
+  }
   while ((index == 0 || data[index-1] != ';') && (timeout < 5) && (index < sizeof(data)-1));
   data[index] = '\0';
   return atof(data);
